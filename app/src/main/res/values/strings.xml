@@ -1,0 +1,7 @@
+<resources>
+    <string name="STR_PARK_INFO">주차조회</string>
+    <string name="STR_SHOW_LOCATION">위치 보기</string>
+    <string name="STR_PARKING_TIME">주차 시간</string>
+    <string name="STR_CAR_NUMBER">차량 번호</string>
+    <string name="STR_PARKING_LOCATION">주차 위치</string>
+</resources>

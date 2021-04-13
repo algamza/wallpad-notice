@@ -1,0 +1,2 @@
+rootProject.name = "wallpad-parking"
+include ':app', ':wallpad-module-aidl'

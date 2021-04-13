@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.wallpad.parking">
+
+    <uses-permission android:name="com.gsmart.permission.HA_RESPONSE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/app_ic_parking_check_cotta_charcoal"
+        android:name="com.wallpad.parking.Parking"
+        android:label="@string/STR_PARK_INFO"
+        android:supportsRtl="true"
+        android:theme="@style/KDWallPad.Dark.CotaCharcoal">
+        <activity
+            android:name="com.wallpad.parking.view.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

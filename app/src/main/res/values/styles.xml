@@ -1,0 +1,120 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="StatusBarDim" parent="@style/Theme.AppCompat.Dialog.Alert">
+        <item name="android:statusBarColor">#ffaa8b75</item>
+    </style>
+
+    <style name="SwitchCustomTheme" parent="Theme.AppCompat">
+        <item name="colorAccent">#8196ff</item>
+    </style>
+
+    <style name="KDWallPad.Light.SatinGray"  parent="@style/KDWallPad.Light">
+        <item name="KDBackColor">@color/sg_back</item>
+        <item name="KDIcon">@drawable/app_ic_parking_check_satin_gray</item>
+        <item name="android:statusBarColor">@color/sg_back</item>
+        <item name="android:windowBackground">@color/sg_back</item>
+    </style>
+
+    <style name="KDWallPad.Light.SatinBeige"  parent="@style/KDWallPad.Light">
+        <item name="KDBackColor">@color/sb_back</item>
+        <item name="KDIcon">@drawable/app_ic_parking_check_satin_beige</item>
+        <item name="android:statusBarColor">@color/sb_back</item>
+        <item name="android:windowBackground">@color/sb_back</item>
+    </style>
+
+    <style name="KDWallPad.Dark.CotaCharcoal"  parent="@style/KDWallPad.Dark">
+        <item name="KDBackColor">@color/cc_back</item>
+        <item name="KDIcon">@drawable/app_ic_parking_check_cotta_charcoal</item>
+        <item name="android:statusBarColor">@color/cc_back</item>
+        <item name="android:windowBackground">@color/cc_back</item>
+    </style>
+
+    <style name="KDWallPad.Dark.GlamNavy"  parent="@style/KDWallPad.Dark">
+        <item name="KDBackColor">@color/gn_back</item>
+        <item name="KDIcon">@drawable/app_ic_parking_check_glam_navy</item>
+        <item name="android:statusBarColor">@color/gn_back</item>
+        <item name="android:windowBackground">@color/gn_back</item>
+    </style>
+
+    <style name="KDWallPad.Dark" parent="KDWallPad">
+        <item name="KDFontColor">@color/light</item>
+        <item name="KDBackIcon">@drawable/btn_depth_back_dark</item>
+    </style>
+
+    <style name="KDWallPad.Light" parent="KDWallPad">
+        <item name="KDFontColor">@color/dark</item>
+        <item name="KDBackIcon">@drawable/btn_depth_back_light</item>
+    </style>
+
+    <style name="KDWallPad"  parent="@style/MaterialAnimations">
+        <item name="KDFontColor">@color/light</item>
+        <item name="KDBackColor">@color/cc_back</item>
+        <item name="KDBackIcon">@drawable/btn_ic_card_depth</item>
+        <item name="KDIcon">@drawable/app_ic_parking_check_common</item>
+        <item name="android:statusBarColor">@color/cc_back</item>
+        <item name="android:windowBackground">@color/cc_back</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">true</item>
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
+    <style name="MaterialAnimations"  parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+
+    <style name="MaterialAnimations.Icon">
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <style name="MaterialAnimations.Icon.Big">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_height">150dp</item>
+    </style>
+
+    <style name="MaterialAnimations.Icon.Medium">
+        <item name="android:layout_width">84dp</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:layout_height">84dp</item>
+    </style>
+
+    <style name="MaterialAnimations.Text">
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="MaterialAnimations.Text.Big">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <style name="MaterialAnimations.Text.Small">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="LauncherDialog" parent="@style/Theme.AppCompat.Dialog">
+        <item name="windowNoTitle">true</item>
+    </style>
+
+</resources>
