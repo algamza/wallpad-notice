@@ -1,0 +1,3 @@
+[submodule "wallpad-module-aidl"]
+	path = wallpad-module-aidl
+	url = http://git.kdiwin.com:7990/scm/hnnhn1051/wallpad-module-aidl.git
