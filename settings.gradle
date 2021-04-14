@@ -1,2 +1,2 @@
-rootProject.name = "wallpad-parking"
+rootProject.name = "wallpad-notice"
 include ':app', ':wallpad-module-aidl'

@@ -1,3 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="dialog_width_one_touch">724dp</dimen>
+    <dimen name="dialog_height_one_touch">430dp</dimen>
+
+    <dimen name="dialog_width_app_edit">726dp</dimen>
+    <dimen name="dialog_height_app_edit">530dp</dimen>
+
+    <dimen name="notice_font_size_select">24sp</dimen>
+    <dimen name="notice_font_size_unselect">18sp</dimen>
 </resources>

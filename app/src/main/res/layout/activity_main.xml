@@ -1,7 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="com.wallpad.notice.view.MainViewModel.MODE"/>
+        <variable
+            name="notice"
+            type="com.wallpad.notice.view.MainViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -9,7 +13,7 @@
         android:background="?attr/KDBackColor">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageView30"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="26dp"
@@ -20,30 +24,146 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:text="@string/STR_PARK_INFO"
+            android:layout_marginStart="6dp"
+            android:text="@string/STR_NOTICE"
             android:textColor="?attr/KDFontColor"
             android:textSize="31sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageView" />
+            app:layout_constraintBottom_toBottomOf="@+id/imageView30"
+            app:layout_constraintStart_toEndOf="@+id/imageView30"
+            app:layout_constraintTop_toTopOf="@+id/imageView30" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_width="1024dp"
             android:layout_height="488dp"
             android:layout_marginTop="58dp"
-            android:background="@color/dark_40"
+            android:background="@color/black_alpha_40"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout27"
+                android:layout_width="200dp"
+                android:layout_height="488dp"
+                android:background="@color/black_alpha_20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="31dp"
+                    android:layout_marginTop="17dp"
+                    android:gravity="start|center_vertical"
+                    android:onClick="@{()->notice.onClickMode(MODE.NOTIFICATION)}"
+                    android:text="@string/STR_NOTIFICATION"
+                    android:textColor="@{notice.mode==MODE.NOTIFICATION?@color/card_font:@color/card_font_alpha_0_5}"
+                    android:textSize="@{notice.mode==MODE.NOTIFICATION?@dimen/notice_font_size_select:@dimen/notice_font_size_unselect}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textStyle="@{notice.mode==MODE.NOTIFICATION?1:0}" />
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="5dp"
+                    app:goneUnless="@{notice.notificationNewCount!=0}"
+                    android:src="@drawable/ic_notice_menu_new"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView25"
+                    app:layout_constraintStart_toEndOf="@+id/textView25"
+                    app:layout_constraintTop_toTopOf="@+id/textView25" />
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="31dp"
+                    android:gravity="start|center_vertical"
+                    android:onClick="@{()->notice.onClickMode(MODE.REFERENDUM)}"
+                    android:text="@string/STR_REFERENDUM"
+                    android:textColor="@{notice.mode==MODE.REFERENDUM?@color/card_font:@color/card_font_alpha_0_5}"
+                    android:textSize="@{notice.mode==MODE.REFERENDUM?@dimen/notice_font_size_select:@dimen/notice_font_size_unselect}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView25"
+                    app:textStyle="@{notice.mode==MODE.REFERENDUM?1:0}" />
+
+                <ImageView
+                    android:id="@+id/imageView31"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="5dp"
+                    app:goneUnless="@{notice.referendumNewCount!=0}"
+                    android:src="@drawable/ic_notice_menu_new"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView26"
+                    app:layout_constraintStart_toEndOf="@+id/textView26"
+                    app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+                <TextView
+                    android:id="@+id/textView27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="31dp"
+                    android:gravity="start|center_vertical"
+                    android:onClick="@{()->notice.onClickMode(MODE.DELIVERY)}"
+                    android:text="@string/STR_DELIVERY"
+                    android:textColor="@{notice.mode==MODE.DELIVERY?@color/card_font:@color/card_font_alpha_0_5}"
+                    android:textSize="@{notice.mode==MODE.DELIVERY?@dimen/notice_font_size_select:@dimen/notice_font_size_unselect}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView26"
+                    app:textStyle="@{notice.mode==MODE.DELIVERY?1:0}" />
+
+                <ImageView
+                    android:id="@+id/imageView32"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/ic_notice_menu_new"
+                    app:goneUnless="@{notice.deliveryNewCount!=0}"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView27"
+                    app:layout_constraintStart_toEndOf="@+id/textView27"
+                    app:layout_constraintTop_toTopOf="@+id/textView27" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="31dp"
+                    android:gravity="start|center_vertical"
+                    android:onClick="@{()->notice.onClickMode(MODE.VISTOR)}"
+                    android:text="@string/STR_VISITOR_CONFIRM"
+                    android:textColor="@{notice.mode==MODE.VISTOR?@color/card_font:@color/card_font_alpha_0_5}"
+                    android:textSize="@{notice.mode==MODE.VISTOR?@dimen/notice_font_size_select:@dimen/notice_font_size_unselect}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView27"
+                    app:textStyle="@{notice.mode==MODE.VISTOR?1:0}" />
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="5dp"
+                    app:goneUnless="@{notice.visitorNewCount!=0}"
+                    android:src="@drawable/ic_notice_menu_new"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView21"
+                    app:layout_constraintStart_toEndOf="@+id/textView21"
+                    app:layout_constraintTop_toTopOf="@+id/textView21" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:id="@+id/notice_view"
+                android:layout_width="824dp"
+                android:layout_height="488dp"
+                app:layout_constraintStart_toEndOf="@+id/constraintLayout27"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

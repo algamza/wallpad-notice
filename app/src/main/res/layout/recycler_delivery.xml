@@ -1,0 +1,84 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="delivery"
+            type="com.wallpad.notice.view.notice.delivery.DeliveryData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="756dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="@{()->delivery.callback.onClick(delivery.id)}"
+        android:background="@color/dialog_back">
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:ellipsize="end"
+            android:gravity="left|center_vertical"
+            android:maxLines="1"
+            android:text="@{delivery.arriveTime}"
+            android:textColor="@color/dialog_font"
+            android:textSize="22sp"
+            android:maxWidth="430dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@string/STR_NEW"
+            android:textColor="@color/dialog_font_new"
+            android:textSize="16sp"
+            app:goneUnless="@{!delivery.read}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView24"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginStart="312dp"
+            android:gravity="left|center_vertical"
+            android:text="@{delivery.pickupTime}"
+            android:textColor="@color/dialog_font"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginStart="578dp"
+            android:gravity="left|center_vertical"
+            android:text="@{delivery.boxNum.toString()}"
+            android:textColor="@color/dialog_font"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginStart="670dp"
+            android:gravity="left|center_vertical"
+            android:text="@{delivery.receipt?@string/delivery_state_pickup:@string/delivery_state_no_pickup}"
+            android:textColor="@color/dialog_font"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

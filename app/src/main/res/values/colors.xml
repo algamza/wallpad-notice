@@ -4,10 +4,176 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
-    <color name="sg_back">#c1c1c1</color>
-    <color name="sb_back">#dad3cc</color>
+    <color name="SatinGray_back">#c1c1c1</color>
+    <color name="SatinBeige_back">#dad3cc</color>
+    <color name="CotaCharcoal_back">#a58c78</color>
+    <color name="CotaCharcoal_back_dim">#66a58c78</color>
+    <color name="GlamNavy_back">#5e697b</color>
+
+    <color name="current_time_color">#d3f9ff</color>
+    <color name="title">#ffffff</color>
+    <color name="status_title">#e3ffff</color>
+    <color name="status">#66d9ff</color>
+    <color name="drive">#00e0ff</color>
+    <color name="mode">#000000</color>
+    <color name="mode_disable">#333333</color>
+    <color name="wind">#000000</color>
+    <color name="menu">#b8c6c8</color>
+
+    <color name="background">#000000</color>
+
+    <color name="card01">#DFFF00</color>
+    <color name="card02">#FFBF00</color>
+    <color name="card03">#FF7F50</color>
+    <color name="card04">#DE3163</color>
+    <color name="card05">#9FE2BF</color>
+    <color name="card06">#40E0D0</color>
+    <color name="card07">#6495ED</color>
+    <color name="card08">#CCCCFF</color>
+
+    <color name="app_edit_checked">#444444</color>
+    <color name="app_edit_unchecked">#bbbbbb</color>
+
+    <color name="bg_light_on">#dddddd</color>
+    <color name="bg_light_off">#aaaaaa</color>
+
+    <color name="bg_notice_on">#eeeeee</color>
+    <color name="bg_notice_off">#888888</color>
+
+    <color name="text_notice_off">#000000</color>
+    <color name="text_notice_on">#69ccf1</color>
+
+    <color name="home_card_view_select">#555555</color>
+    <color name="home_card_view_unselect">#999999</color>
+
+    <color name="home_font_alpha_dd">#ddffffff</color>
+    <color name="home_font_alpha_99">#99ffffff</color>
+    <color name="home_font_alpha_77">#77ffffff</color>
+    <color name="home_font_disable">#55ffffff</color>
+
+    <color name="home_app_background">#645751</color>
+
+    <color name="card_back_1">#8d7a6a</color>
+    <color name="card_back_2">#80644f</color>
+    <color name="card_back_3">#645751</color>
+    <color name="card_back_4">#4a3c38</color>
+
+    <color name="card_mode_on">#44ffffff</color>
+    <color name="card_mode_off">#00ffffff</color>
+
+    <color name="card_button">#11ffffff</color>
+    <color name="card_select">#33ffffff</color>
+
+    <color name="home_back_dim">#66a58c78</color>
+    <color name="home_card_select">#7fa58c78</color>
+    <color name="home_card_unselect_black">#33000000</color>
+    <color name="home_back_0_75">#bf000000</color>
+    <color name="home_back_0_2">#33000000</color>
+    <color name="home_back_0_4">#66000000</color>
+
+    <color name="card_font">#ffffff</color>
+    <color name="card_font_alpha_0_8">#ccffffff</color>
+    <color name="card_font_alpha_0_7">#b2ffffff</color>
+    <color name="card_font_alpha_0_6">#99ffffff</color>
+    <color name="card_font_alpha_0_5">#7fffffff</color>
+    <color name="card_font_alpha_0_4">#66ffffff</color>
+    <color name="card_font_alpha_0_3_5">#59ffffff</color>
+    <color name="card_font_alpha_0_3">#4cffffff</color>
+    <color name="card_font_alpha_0_2">#33ffffff</color>
+    <color name="card_font_alpha_0_1">#19ffffff</color>
+
+    <color name="dialog_back">#ffffffff</color>
+    <color name="dialog_font">#ff000000</color>
+    <color name="dialog_font_0_8">#cc000000</color>
+    <color name="dialog_font_0_7">#e5000000</color>
+    <color name="dialog_font_0_6_5">#A5000000</color>
+    <color name="dialog_font_0_2">#33000000</color>
+    <color name="dialog_font_0_3">#4c000000</color>
+    <color name="dialog_font_0_1_5">#26000000</color>
+    <color name="dialog_font_0_0_5">#0C000000</color>
+    <color name="dialog_button_bg">#19e36d3e</color>
+    <color name="dialog_button_select">#e5e36d3e</color>
+    <color name="dialog_button_ok">#26000000</color>
+    <color name="dialog_button_font">#e36d3e</color>
+    <color name="dialog_error_font">#ccb00020</color>
+
+    <color name="dialog_font_new">#e36d3e</color>
+
+
+    <color name="home_font">#ffffffff</color>
+    <color name="idle_back">#00ffffff</color>
+    <color name="dark_font">#ffffff</color>
+    <color name="light_font">#545454</color>
+    <color name="home_card_unselect">#00a58c78</color>
+
+    <color name="black_alpha_75">#bf000000</color>
+    <color name="black_alpha_40">#66000000</color>
+    <color name="black_alpha_30">#4c000000</color>
+    <color name="black_alpha_20">#33000000</color>
+
+    <color name="white">#ffffff</color>
+    <color name="white_alpha_00">#00ffffff</color>
+    <color name="white_alpha_30">#4cffffff</color>
+
     <color name="cc_back">#a58c78</color>
+    <color name="cc_back_alpha_50">#7fa58c78</color>
+    <color name="cc_back_mode">#2b2623</color>
+    <color name="cc_back_call">#514236</color>
+    <color name="cc_back_ventilation">#725546</color>
+    <color name="cc_back_one_touch">#6f5b4f</color>
+    <color name="cc_back_heating">#694c3d</color>
+    <color name="cc_back_cooling">#443532</color>
+    <color name="cc_back_report">#5d4f49</color>
+    <color name="cc_back_light">#896c57</color>
+    <color name="cc_back_parking">#6b5244</color>
+    <color name="cc_back_charging">#493c34</color>
+    <color name="cc_back_edit">#514943</color>
+    <color name="cc_back_all_menu">#bf000000</color>
+
     <color name="gn_back">#5e697b</color>
+    <color name="gn_back_alpha_50">#7f5e697b</color>
+    <color name="gn_back_mode">#1b2230</color>
+    <color name="gn_back_call">#252d3d</color>
+    <color name="gn_back_ventilation">#293a4c</color>
+    <color name="gn_back_one_touch">#2f3b4e</color>
+    <color name="gn_back_heating">#1d2c4c</color>
+    <color name="gn_back_cooling">#32445f</color>
+    <color name="gn_back_report">#16273d</color>
+    <color name="gn_back_light">#323942</color>
+    <color name="gn_back_parking">#222b44</color>
+    <color name="gn_back_charging">#383f54</color>
+    <color name="gn_back_edit">#292e38</color>
+    <color name="gn_back_all_menu">#1b2230</color>
+
+    <color name="sb_back">#dad3cc</color>
+    <color name="sb_back_alpha_50">#7fdad3cc</color>
+    <color name="sb_back_mode">#775c50</color>
+    <color name="sb_back_call">#62534b</color>
+    <color name="sb_back_ventilation">#8b715e</color>
+    <color name="sb_back_one_touch">#967e6f</color>
+    <color name="sb_back_heating">#916e5a</color>
+    <color name="sb_back_cooling">#665244</color>
+    <color name="sb_back_report">#9e7f63</color>
+    <color name="sb_back_light">#7e6045</color>
+    <color name="sb_back_parking">#9d806c</color>
+    <color name="sb_back_charging">#8b6b57</color>
+    <color name="sb_back_edit">#6d6059</color>
+    <color name="sb_back_all_menu">#685951</color>
+
+    <color name="sg_back">#c1c1c1</color>
+    <color name="sg_back_alpha_50">#7fc1c1c1</color>
+    <color name="sg_back_mode">#717171</color>
+    <color name="sg_back_call">#676a6c</color>
+    <color name="sg_back_ventilation">#899198</color>
+    <color name="sg_back_one_touch">#878d8c</color>
+    <color name="sg_back_heating">#949596</color>
+    <color name="sg_back_cooling">#646971</color>
+    <color name="sg_back_report">#8f97a1</color>
+    <color name="sg_back_light">#636d76</color>
+    <color name="sg_back_parking">#7e868c</color>
+    <color name="sg_back_charging">#5c666f</color>
+    <color name="sg_back_edit">#3f4246</color>
+    <color name="sg_back_all_menu">#474b53</color>
 
     <color name="menu_text">#ffffff</color>
     <color name="content_text">#000000</color>
@@ -26,6 +192,4 @@
     <color name="dialog_menu_text">#797979</color>
     <color name="dialog_temp">#6d6d6d</color>
 
-    <color name="black_alpha_30">#4c000000</color>
-    <color name="white_alpha_30">#4cffffff</color>
 </resources>

@@ -1,7 +1,33 @@
 <resources>
-    <string name="STR_PARK_INFO">주차조회</string>
-    <string name="STR_SHOW_LOCATION">위치 보기</string>
-    <string name="STR_PARKING_TIME">주차 시간</string>
-    <string name="STR_CAR_NUMBER">차량 번호</string>
-    <string name="STR_PARKING_LOCATION">주차 위치</string>
+    <string name="referendum_state_complete">진행 완료</string>
+    <string name="referendum_state_ongoing">진행중</string>
+
+    <string name="delivery_state_pickup">수령</string>
+    <string name="delivery_state_no_pickup">미수령</string>
+
+    <string name="referendum_vote_ok">1. 동의한다 (%1$d)</string>
+    <string name="referendum_vote_no">2. 동의하지 않는다 (%1$d)</string>
+
+    <string name="STR_NOTICE">알림</string>
+    <string name="STR_VOTE_ONGOING">투표 진행중입니다.</string>
+    <string name="STR_VOTE_OK">1.동의한다</string>
+    <string name="STR_VOTE_NO">2.동의하지 않는다</string>
+    <string name="STR_VOTE">투표하기</string>
+    <string name="STR_DELETE">삭제</string>
+    <string name="STR_NOTIFICATION">공지사항</string>
+    <string name="STR_REFERENDUM">주민투표</string>
+    <string name="STR_DELIVERY">택배</string>
+    <string name="STR_VISITOR_CONFIRM">방문자 확인</string>
+    <string name="STR_NEW">NEW</string>
+    <string name="STR_NOTICE_DATE">공지일</string>
+    <string name="STR_STATE">상태</string>
+    <string name="STR_ARRIVAL_TIME">도착시간</string>
+    <string name="STR_PICKUP_TIME">수령시간</string>
+    <string name="STR_COURIER">택배함</string>
+    <string name="STR_VISITOR_SCREEN">방문자 화면</string>
+    <string name="STR_ENTRANCE">현관</string>
+    <string name="STR_VISIT_TIME">방문 시간</string>
+    <string name="STR_SELECT_DELETE">선택 삭제</string>
+    <string name="STR_ALL_DELETE">전체 삭제</string>
+    <string name="STR_CONFIRM">확인</string>
 </resources>

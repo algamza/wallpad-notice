@@ -3,5 +3,4 @@
     <attr name="KDFontColor" format="reference" />
     <attr name="KDBackColor" format="reference" />
     <attr name="KDBackIcon" format="reference" />
-    <attr name="KDIcon" format="reference" />
 </resources>
