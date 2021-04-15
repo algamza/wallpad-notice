@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.wallpad.notice.model.DeliveryModel;
 import com.wallpad.notice.model.NoticeModel;
-import com.wallpad.notice.model.ReferendumModel;
+import com.wallpad.notice.model.VoteModel;
 import com.wallpad.notice.model.VisitorModel;
 import com.wallpad.notice.repository.Repository;
 
@@ -41,9 +41,9 @@ public class MainViewModel extends ViewModel {
             for ( NoticeModel model : models ) if ( !model.isRead() ) count++;
             return count;
         });
-        referendumNewCount = Transformations.map(repository.getReferendums(), models -> {
+        referendumNewCount = Transformations.map(repository.getVote(), models -> {
             int count = 0;
-            for ( ReferendumModel model : models ) if ( !model.isRead() ) count++;
+            for ( VoteModel model : models ) if ( !model.isRead() ) count++;
             return count;
         });
         visitorNewCount = Transformations.map(repository.getVisitors(), models -> {

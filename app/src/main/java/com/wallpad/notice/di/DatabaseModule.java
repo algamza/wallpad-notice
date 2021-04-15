@@ -7,7 +7,7 @@ import androidx.room.Room;
 import com.wallpad.notice.repository.local.LocalDatabase;
 import com.wallpad.notice.repository.local.dao.DeliveryDao;
 import com.wallpad.notice.repository.local.dao.NoticeDao;
-import com.wallpad.notice.repository.local.dao.ReferendumDao;
+import com.wallpad.notice.repository.local.dao.VoteDao;
 import com.wallpad.notice.repository.local.dao.VisitorDao;
 
 import javax.inject.Singleton;
@@ -31,7 +31,7 @@ public class DatabaseModule {
     public NoticeDao provideNoticeDao(LocalDatabase database) { return database.noticeDao(); }
 
     @Provides
-    public ReferendumDao provideReferendumDao(LocalDatabase database) { return database.referendumDao(); }
+    public VoteDao provideReferendumDao(LocalDatabase database) { return database.referendumDao(); }
 
     @Provides
     public DeliveryDao provideDeliveryDao(LocalDatabase database) { return database.deliveryDao(); }

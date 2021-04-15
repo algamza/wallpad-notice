@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="vote"
+            type="com.wallpad.notice.view.notice.vote.VoteDialogViewModel" />
+        <variable
+            name="view"
+            type="com.wallpad.notice.view.notice.vote.VoteDialog" />
+        <import type="android.text.Html"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dialog_back">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="24dp"
+            android:text="@{vote.vote.title}"
+            android:textColor="@color/dialog_font"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="702dp"
+            android:layout_marginTop="21dp"
+            android:onClick="@{()->view.onClickClose()}"
+            android:src="@drawable/btn_ic_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout3"
+            android:layout_width="754dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="75dp"
+            android:alpha="0.15"
+            android:background="@color/dialog_font"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/scrollView3"
+            android:layout_width="754dp"
+            android:layout_height="357dp"
+            android:layout_marginTop="76dp"
+            android:fadeScrollbars="false"
+            android:orientation="vertical"
+            android:scrollbarSize="12dp"
+            android:scrollbarThumbVertical="@color/white"
+            android:scrollbarTrackVertical="@color/black_alpha_20"
+            android:scrollbars="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.8"
+                    android:paddingStart="28dp"
+                    android:paddingTop="24dp"
+                    android:paddingEnd="28dp"
+                    android:paddingBottom="16dp"
+                    android:text="@{Html.fromHtml(vote.vote.content)}"
+                    android:textColor="@color/dialog_font"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <FrameLayout
+                    android:id="@+id/frameLayout2"
+                    android:layout_width="698dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="16dp"
+                    android:alpha="0.2"
+                    android:background="@color/dark_999999"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="26dp"
+                    android:src="@drawable/ic_information_warning"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/frameLayout2" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:textColor="#b00020"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toTopOf="@+id/imageView"
+                    app:text="@{vote.vote.resIdTextState}" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="672dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="754dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="463dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:background="@color/dark_15"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{()->view.onClickVote()}"
+                android:clickable="@{vote.vote.voteAble}"
+                android:text="@string/STR_VOTE"
+                android:textColor="@color/content_text"
+                android:alpha="@{vote.vote.voteAble?1.0f:0.2f}"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{()->view.onClickOk()}"
+                android:text="@string/STR_CONFIRM"
+                android:textColor="@color/content_text"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="57dp"
+            android:background="@color/content_text"
+            android:alpha="0.2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

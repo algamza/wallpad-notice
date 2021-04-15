@@ -186,10 +186,15 @@
     <color name="dark_40">#66000000</color>
     <color name="dark_90">#E5000000</color>
     <color name="dark_05">#0C000000</color>
+    <color name="dark_999999">#999999</color>
     <color name="light_90">#E5ffffff</color>
 
     <color name="dialog_select">#e36d3e</color>
     <color name="dialog_menu_text">#797979</color>
     <color name="dialog_temp">#6d6d6d</color>
 
+    <color name="circle_select">#e36d3e</color>
+
+    <color name="input_num_back">#f2f2f2</color>
+    <color name="input_num">#3c3b3b</color>
 </resources>

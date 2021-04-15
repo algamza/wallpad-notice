@@ -1,7 +1,4 @@
 <resources>
-    <string name="referendum_state_complete">진행 완료</string>
-    <string name="referendum_state_ongoing">진행중</string>
-
     <string name="delivery_state_pickup">수령</string>
     <string name="delivery_state_no_pickup">미수령</string>
 
@@ -30,4 +27,29 @@
     <string name="STR_SELECT_DELETE">선택 삭제</string>
     <string name="STR_ALL_DELETE">전체 삭제</string>
     <string name="STR_CONFIRM">확인</string>
+
+    <string name="STR_IS_PROGRESS_COMPLETED">투표 완료되었습니다.</string>
+    <string name="STR_IS_PROCEEDING">투표 진행중입니다.</string>
+    <string name="STR_IS_BEFORE_PROCEEDING">투표 진행 전입니다.</string>
+
+    <string name="STR_PROGRESS_COMPLETED">진행 완료</string>
+    <string name="STR_PROCEEDING">진행중</string>
+    <string name="STR_BEFORE_PROCEEDING">진행전</string>
+
+    <string name="STR_VOTE_MENU_INT_STR">%1$d.%2$s</string>
+
+    <string name="STR_NUM_0">0</string>
+    <string name="STR_NUM_1">1</string>
+    <string name="STR_NUM_2">2</string>
+    <string name="STR_NUM_3">3</string>
+    <string name="STR_NUM_4">4</string>
+    <string name="STR_NUM_5">5</string>
+    <string name="STR_NUM_6">6</string>
+    <string name="STR_NUM_7">7</string>
+    <string name="STR_NUM_8">8</string>
+    <string name="STR_NUM_9">9</string>
+
+    <string name="STR_ALL_REMOVE">전체\n지움</string>
+    <string name="STR_CANCEL">취소</string>
+    <string name="STR_APPLY">적용</string>
 </resources>

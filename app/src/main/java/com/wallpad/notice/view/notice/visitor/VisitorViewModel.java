@@ -44,6 +44,6 @@ public class VisitorViewModel extends ViewModel {
         }
     };
 
-    private void readNotice(int id) { repository.readNoticeReferendums(id); }
+    private void readNotice(int id) { repository.readNoticeVote(id); }
     public LiveData<List<VisitorData>> getVisitors() { return visitors; }
 }

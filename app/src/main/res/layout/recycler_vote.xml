@@ -2,14 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="referendum"
-            type="com.wallpad.notice.view.notice.referendum.ReferendumData" />
+            name="vote"
+            type="com.wallpad.notice.view.notice.vote.VoteViewModel.VoteData" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="756dp"
         android:layout_height="64dp"
         android:layout_marginBottom="10dp"
-        android:onClick="@{()->referendum.callback.onClick(referendum.id)}"
+        android:onClick="@{()->vote.callback.onClick(vote.masterId)}"
         android:background="@color/dialog_back">
 
         <TextView
@@ -20,10 +20,10 @@
             android:ellipsize="end"
             android:gravity="left|center_vertical"
             android:maxLines="1"
-            android:text="@{referendum.title}"
+            android:text="@{vote.title}"
             android:textColor="@color/dialog_font"
             android:textSize="22sp"
-            android:maxWidth="430dp"
+            android:maxWidth="300dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +36,7 @@
             android:text="@string/STR_NEW"
             android:textColor="@color/dialog_font_new"
             android:textSize="16sp"
-            app:goneUnless="@{!referendum.read}"
+            app:goneUnless="@{!vote.read}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView24"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +46,7 @@
             android:layout_height="26dp"
             android:layout_marginStart="376dp"
             android:gravity="left|center_vertical"
-            android:text="@{referendum.date}"
+            android:text="@{vote.date}"
             android:textColor="@color/dialog_font"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +58,7 @@
             android:layout_height="26dp"
             android:layout_marginStart="642dp"
             android:gravity="left|center_vertical"
-            android:text="@{referendum.state==0?@string/referendum_state_complete:@string/referendum_state_ongoing}"
+            app:text="@{vote.resIdTextStatus}"
             android:textColor="@color/dialog_font"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"

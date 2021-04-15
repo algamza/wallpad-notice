@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.wallpad.notice.repository.Repository;
 import com.wallpad.notice.repository.local.dao.DeliveryDao;
 import com.wallpad.notice.repository.local.dao.NoticeDao;
-import com.wallpad.notice.repository.local.dao.ReferendumDao;
+import com.wallpad.notice.repository.local.dao.VoteDao;
 import com.wallpad.notice.repository.local.dao.VisitorDao;
 import com.wallpad.notice.repository.remote.ContentProviderHelper;
 import com.wallpad.notice.repository.remote.IWallpadServiceHelper;
@@ -49,7 +49,7 @@ public class RepositoryModule {
             ContentProviderHelper contentProviderHelper,
             IWallpadServiceHelper iWallpadServiceHelper,
             NoticeDao noticeDao,
-            ReferendumDao referendumDao,
+            VoteDao voteDao,
             DeliveryDao deliveryDao,
             VisitorDao visitorDao
             ) {
@@ -58,7 +58,7 @@ public class RepositoryModule {
                 contentProviderHelper,
                 iWallpadServiceHelper,
                 noticeDao,
-                referendumDao,
+                voteDao,
                 deliveryDao,
                 visitorDao
         );
