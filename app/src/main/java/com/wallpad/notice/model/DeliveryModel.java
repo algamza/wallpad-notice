@@ -1,14 +1,14 @@
 package com.wallpad.notice.model;
 
 public class DeliveryModel {
-    int id;
-    String arriveTime;
-    String pickupTime;
-    int boxNum;
-    boolean receipt;
-    boolean read;
+    private long id;
+    private String arriveTime;
+    private String pickupTime;
+    private int boxNum;
+    private boolean receipt;
+    private boolean read;
 
-    public DeliveryModel(int id, String arriveTime, String pickupTime, int boxNum, boolean receipt, boolean read) {
+    public DeliveryModel(long id, String arriveTime, String pickupTime, int boxNum, boolean receipt, boolean read) {
         this.id = id;
         this.arriveTime = arriveTime;
         this.pickupTime = pickupTime;
@@ -17,11 +17,11 @@ public class DeliveryModel {
         this.read = read;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

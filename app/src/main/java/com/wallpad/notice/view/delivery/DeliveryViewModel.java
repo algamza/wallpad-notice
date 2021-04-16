@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.wallpad.notice.model.DeliveryModel;
 import com.wallpad.notice.repository.Repository;
+import com.wallpad.notice.view.common.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,8 @@ public class DeliveryViewModel extends ViewModel {
                 data.add(new DeliveryData(
                         callback,
                         model.getId(),
-                        mapToChargingTime(model.getArriveTime()),
-                        mapToChargingTime(model.getPickupTime()),
+                        Mapper.mapToChargingTime(model.getArriveTime()),
+                        Mapper.mapToChargingTime(model.getPickupTime()),
                         model.getBoxNum(),
                         model.isReceipt(),
                         model.isRead()
@@ -34,37 +35,23 @@ public class DeliveryViewModel extends ViewModel {
         });
     }
     private final DeliveryData.ICallback callback = this::readNotice;
-    private void readNotice(int id) { repository.readNoticeDelivery(id); }
+    private void readNotice(long id) { repository.readNoticeDelivery(id); }
     public LiveData<List<DeliveryData>> getDeliveries() { return deliveries; }
-
-    private String mapToChargingTime(String start) {
-        String time = "";
-        if ( start == null || start.length() < 14 ) return time;
-        time = start;
-        int hour = Integer.parseInt(time.substring(8, 10));
-        String apm = " AM";
-        if ( hour > 12 ) {
-            apm = " PM";
-            hour = hour - 12;
-        }
-        time = time.substring(0, 4)+"."+time.substring(4, 6)+"."+time.substring(6, 8)+apm+String.format("%02d", hour)+":"+time.substring(10, 12);
-        return time;
-    }
 
     public static class DeliveryData implements Comparable {
         public interface ICallback {
-            void onClick(int id);
+            void onClick(long id);
         }
 
         private ICallback callback;
-        private int id;
+        private long id;
         private String arriveTime;
         private String pickupTime;
         private Integer boxNum;
         private boolean receipt;
         private boolean read;
 
-        public DeliveryData(ICallback callback, int id, String arriveTime, String pickupTime, Integer boxNum, boolean receipt, boolean read) {
+        public DeliveryData(ICallback callback, long id, String arriveTime, String pickupTime, Integer boxNum, boolean receipt, boolean read) {
             this.callback = callback;
             this.id = id;
             this.arriveTime = arriveTime;
@@ -77,7 +64,7 @@ public class DeliveryViewModel extends ViewModel {
         @Override
         public int compareTo(Object o) {
             DeliveryData data = (DeliveryData)o;
-            return Integer.compare(data.id, this.id);
+            return Long.compare(data.id, this.id);
         }
 
         public ICallback getCallback() {
@@ -88,11 +75,11 @@ public class DeliveryViewModel extends ViewModel {
             this.callback = callback;
         }
 
-        public int getId() {
+        public long getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(long id) {
             this.id = id;
         }
 

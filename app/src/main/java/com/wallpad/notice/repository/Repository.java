@@ -130,7 +130,7 @@ public class Repository {
         return deliveries;
     }
 
-    public void readNoticeDelivery(int id) {
+    public void readNoticeDelivery(long id) {
         executorService.execute(() -> deliveryDao.updateRead(id, true));
     }
 

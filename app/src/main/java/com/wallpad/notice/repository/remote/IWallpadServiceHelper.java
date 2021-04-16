@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.wallpad.IWallpadData;
 
+import javax.inject.Inject;
+
 
 public class IWallpadServiceHelper {
 
@@ -12,6 +14,7 @@ public class IWallpadServiceHelper {
 
     private IWallpadData iWallpadData;
 
+    @Inject
     public IWallpadServiceHelper() { }
 
     public void setIWallpadService(IWallpadData iWallpadData) {

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.wallpad.notice.R;
 import com.wallpad.notice.model.VoteModel;
 import com.wallpad.notice.repository.Repository;
+import com.wallpad.notice.view.common.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class VoteViewModel extends ViewModel {
             List<VoteData> data = new ArrayList<>();
             for ( VoteModel model : models ) {
                 data.add(new VoteData(callback, model.getMasterId(), model.getTitle(),
-                        mapToChargingTime(model.getStartDate()),
+                        Mapper.mapToChargingTime(model.getStartDate()),
                         mapToResIdTextState(model.getState()), model.isRead()));
             }
             return data;
@@ -34,17 +35,7 @@ public class VoteViewModel extends ViewModel {
     private final VoteData.Callback callback = id -> voteItem.postValue(new VoteItem(id));
     public LiveData<List<VoteData>> getVoteData() { return voteDatas; }
     public LiveData<VoteItem> getVoteItem() { return voteItem; }
-
-    private String mapToChargingTime(String start) {
-        String time = "";
-        if ( start.length() < 14 ) return time;
-        time = start;
-        int hour = Integer.parseInt(time.substring(8, 10));
-        String apm = " AM";
-        if ( hour > 12 ) apm = " PM";
-        time = time.substring(0, 4)+"."+time.substring(4, 6)+"."+time.substring(6, 8)+apm+hour+":"+time.substring(10, 12);
-        return time;
-    }
+    public void readVote(int id) { repository.readNoticeVote(id);}
 
     private int mapToResIdTextState(VoteModel.STATE state) {
         switch (state) {

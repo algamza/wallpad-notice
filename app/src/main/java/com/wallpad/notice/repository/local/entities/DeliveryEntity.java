@@ -6,14 +6,14 @@ import androidx.room.PrimaryKey;
 @Entity
 public class DeliveryEntity {
     @PrimaryKey
-    private int id;
+    private long id;
     private String arriveTime;
     private String pickupTime;
     private int boxNum;
     private boolean receipt;
     private boolean read;
 
-    public DeliveryEntity(int id, String arriveTime, String pickupTime, int boxNum, boolean receipt, boolean read) {
+    public DeliveryEntity(long id, String arriveTime, String pickupTime, int boxNum, boolean receipt, boolean read) {
         this.id = id;
         this.arriveTime = arriveTime;
         this.pickupTime = pickupTime;
@@ -22,11 +22,11 @@ public class DeliveryEntity {
         this.read = read;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

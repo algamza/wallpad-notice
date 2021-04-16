@@ -26,14 +26,14 @@ public interface DeliveryDao {
     void updateEntity(DeliveryEntity entity);
 
     @Query("UPDATE DeliveryEntity SET read=:read WHERE id=:id")
-    void updateRead(int id, boolean read);
+    void updateRead(long id, boolean read);
 
     @Query("DELETE FROM DeliveryEntity WHERE id = :id")
-    void deleteEntity(int id);
+    void deleteEntity(long id);
 
     @Query("DELETE FROM DeliveryEntity")
     void deleteEntities();
 
     @Query("DELETE FROM DeliveryEntity WHERE id NOT IN (:ids)")
-    void deleteNotInclude(List<Integer> ids);
+    void deleteNotInclude(List<Long> ids);
 }

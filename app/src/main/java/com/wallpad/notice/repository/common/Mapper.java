@@ -116,7 +116,7 @@ public class Mapper {
         List<RemoteParcelEntity.Resource.Delivery_Info_List> infos = resource.getDelivery_Info_List();
         if ( infos == null || infos.size() == 0 ) return entities;
         for ( RemoteParcelEntity.Resource.Delivery_Info_List delivery : infos ) {
-            entities.add(new DeliveryEntity(getBigKey((int)Long.parseLong(delivery.getArrive_Time()),
+            entities.add(new DeliveryEntity(getBigKey(Long.parseLong(delivery.getArrive_Time()),
                     Integer.parseInt(delivery.getDelivery_Box_Info())),
                     delivery.getArrive_Time(),
                     delivery.getReceive_Time(),
@@ -126,10 +126,10 @@ public class Mapper {
         }
         return entities;
     }
-    public static List<Integer> getDeliveryKeys(List<DeliveryEntity> entities) {
-        List<Integer> keys = new ArrayList<>();
+    public static List<Long> getDeliveryKeys(List<DeliveryEntity> entities) {
+        List<Long> keys = new ArrayList<>();
         for ( DeliveryEntity entity : entities ) {
-            keys.add(getBigKey((int)Long.parseLong(entity.getArriveTime()), entity.getBoxNum()));
+            keys.add(getBigKey(Long.parseLong(entity.getArriveTime()), entity.getBoxNum()));
         }
         return keys;
     }
@@ -149,7 +149,7 @@ public class Mapper {
         return new VisitorEntity(model.getId(), model.getScreen(), model.getPlace(), model.getDate(), model.isRead());
     }
 
-    public static int getBigKey(int group, int channel) {
+    public static long getBigKey(long group, int channel) {
         return group*1000+channel;
     }
 }

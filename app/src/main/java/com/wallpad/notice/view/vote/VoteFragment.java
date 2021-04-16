@@ -39,6 +39,7 @@ public class VoteFragment extends Fragment {
         viewModel.getVoteItem().observe(getViewLifecycleOwner(), data -> {
             VoteDialog dialog = new VoteDialog(data.getId());
             dialog.show(requireActivity().getSupportFragmentManager(), dialog.getTag());
+            viewModel.readVote(data.getId());
         });
         return binding.getRoot();
     }
