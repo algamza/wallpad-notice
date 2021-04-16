@@ -1,4 +1,4 @@
-package com.wallpad.notice.view.notice.delivery;
+package com.wallpad.notice.view.delivery;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.wallpad.notice.R;
 import com.wallpad.notice.databinding.FragmentDeliveryBinding;
+
+import java.util.Collections;
 
 import javax.inject.Inject;
 
@@ -31,7 +33,10 @@ public class DeliveryFragment extends Fragment {
         FragmentDeliveryBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_delivery, container, false);
         binding.recyclerView.setAdapter(adapter);
         binding.setLifecycleOwner(this);
-        viewModel.getDeliveries().observe(getViewLifecycleOwner(), data -> adapter.setData(data));
+        viewModel.getDeliveries().observe(getViewLifecycleOwner(), data -> {
+            Collections.sort(data);
+            adapter.setData(data);
+        });
         return binding.getRoot();
     }
 }

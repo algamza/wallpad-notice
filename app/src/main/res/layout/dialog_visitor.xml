@@ -4,10 +4,10 @@
     <data>
         <variable
             name="visitor"
-            type="com.wallpad.notice.view.notice.visitor.VisitorDialogViewModel" />
+            type="com.wallpad.notice.view.visitor.VisitorDialogViewModel" />
         <variable
             name="view"
-            type="com.wallpad.notice.view.notice.visitor.VisitorDialog" />
+            type="com.wallpad.notice.view.visitor.VisitorDialog" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

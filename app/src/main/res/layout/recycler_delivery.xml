@@ -3,7 +3,7 @@
     <data>
         <variable
             name="delivery"
-            type="com.wallpad.notice.view.notice.delivery.DeliveryData" />
+            type="com.wallpad.notice.view.delivery.DeliveryViewModel.DeliveryData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

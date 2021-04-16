@@ -21,10 +21,10 @@ import com.wallpad.notice.R;
 import com.wallpad.notice.databinding.ActivityMainBinding;
 import com.wallpad.notice.repository.Repository;
 import com.wallpad.notice.view.common.BaseActivity;
-import com.wallpad.notice.view.notice.delivery.DeliveryFragment;
-import com.wallpad.notice.view.notice.notification.NotificationFragment;
-import com.wallpad.notice.view.notice.vote.VoteFragment;
-import com.wallpad.notice.view.notice.visitor.VisitorFragment;
+import com.wallpad.notice.view.delivery.DeliveryFragment;
+import com.wallpad.notice.view.notification.NotificationFragment;
+import com.wallpad.notice.view.vote.VoteFragment;
+import com.wallpad.notice.view.visitor.VisitorFragment;
 
 import javax.inject.Inject;
 

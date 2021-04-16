@@ -3,7 +3,7 @@
     <data>
         <variable
             name="notification"
-            type="com.wallpad.notice.view.notice.notification.NotificationData" />
+            type="com.wallpad.notice.view.notification.NotificationData" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="756dp"

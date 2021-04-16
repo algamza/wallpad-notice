@@ -4,10 +4,10 @@
     <data>
         <variable
             name="notification"
-            type="com.wallpad.notice.view.notice.notification.NotificationDialogViewModel" />
+            type="com.wallpad.notice.view.notification.NotificationDialogViewModel" />
         <variable
             name="view"
-            type="com.wallpad.notice.view.notice.notification.NotificationDialog" />
+            type="com.wallpad.notice.view.notification.NotificationDialog" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="menu"
-            type="com.wallpad.notice.view.notice.vote.VoteDialogViewModel.Vote.Menu" />
+            type="com.wallpad.notice.view.vote.VoteDialogViewModel.Vote.Menu" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="672dp"

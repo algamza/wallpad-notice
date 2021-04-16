@@ -3,7 +3,7 @@
     <data>
         <variable
             name="visitor"
-            type="com.wallpad.notice.view.notice.visitor.VisitorData" />
+            type="com.wallpad.notice.view.visitor.VisitorData" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="756dp"

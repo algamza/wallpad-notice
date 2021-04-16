@@ -4,10 +4,10 @@
     <data>
         <variable
             name="vote"
-            type="com.wallpad.notice.view.notice.vote.VoteDialogViewModel" />
+            type="com.wallpad.notice.view.vote.VoteDialogViewModel" />
         <variable
             name="view"
-            type="com.wallpad.notice.view.notice.vote.VoteDialog" />
+            type="com.wallpad.notice.view.vote.VoteDialog" />
         <import type="android.text.Html"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout

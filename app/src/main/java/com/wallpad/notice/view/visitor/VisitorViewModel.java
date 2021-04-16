@@ -1,4 +1,4 @@
-package com.wallpad.notice.view.notice.visitor;
+package com.wallpad.notice.view.visitor;
 
 import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.LiveData;

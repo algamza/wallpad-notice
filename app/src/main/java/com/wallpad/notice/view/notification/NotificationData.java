@@ -1,27 +1,24 @@
-package com.wallpad.notice.view.notice.visitor;
+package com.wallpad.notice.view.notification;
 
-public class VisitorData {
+public class NotificationData {
     public interface ICallback {
         void onClick(int id);
-        void onClickCheck(int id, boolean check);
     }
 
     private ICallback callback;
     private int id;
-    private Integer screen;
-    private String place;
+    private String title;
+    private String content;
     private String date;
     private boolean read;
-    private boolean check;
 
-    public VisitorData(ICallback callback, int id, Integer screen, String place, String date, boolean read, boolean check) {
+    public NotificationData(ICallback callback, int id, String title, String content, String date, boolean read) {
         this.callback = callback;
         this.id = id;
-        this.screen = screen;
-        this.place = place;
+        this.title = title;
+        this.content = content;
         this.date = date;
         this.read = read;
-        this.check = check;
     }
 
     public ICallback getCallback() {
@@ -36,24 +33,24 @@ public class VisitorData {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getScreen() {
-        return screen;
+    public String getTitle() {
+        return title;
     }
 
-    public void setScreen(int screen) {
-        this.screen = screen;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getPlace() {
-        return place;
+    public String getContent() {
+        return content;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getDate() {
@@ -70,13 +67,5 @@ public class VisitorData {
 
     public void setRead(boolean read) {
         this.read = read;
-    }
-
-    public boolean isCheck() {
-        return check;
-    }
-
-    public void setCheck(boolean check) {
-        this.check = check;
     }
 }

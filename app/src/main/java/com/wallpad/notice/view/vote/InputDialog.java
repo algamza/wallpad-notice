@@ -1,4 +1,4 @@
-package com.wallpad.notice.view.notice.vote;
+package com.wallpad.notice.view.vote;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.wallpad.notice.R;
@@ -20,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class InputDialog extends BaseDialog {
-    private final MutableLiveData<String> target = new MutableLiveData<>();
     private VoteDialogViewModel viewModel;
 
     @NonNull

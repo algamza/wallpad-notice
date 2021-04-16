@@ -38,8 +38,8 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    public IWallpadServiceHelper provideAidlHelper(@ApplicationContext Context context) {
-        return new IWallpadServiceHelper(context);
+    public IWallpadServiceHelper provideAidlHelper() {
+        return new IWallpadServiceHelper();
     }
 
     @Provides

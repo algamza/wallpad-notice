@@ -1,4 +1,4 @@
-package com.wallpad.notice.view.notice.notification;
+package com.wallpad.notice.view.notification;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

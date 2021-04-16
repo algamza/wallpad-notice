@@ -32,7 +32,6 @@ public class ContentProviderHelper {
 
     private static final String URI_INFO = "content://com.wallpad.service.provider.InfoContentProvider/t_info";
 
-    // info
     public static final String CONTENT_KEY = "content";
     public static final String CONTENT_ID = "id";
     public static final String ID_PARCEL_INFO = "3";                  //2ND01_02

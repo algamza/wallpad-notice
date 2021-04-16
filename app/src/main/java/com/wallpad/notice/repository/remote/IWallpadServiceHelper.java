@@ -1,6 +1,5 @@
 package com.wallpad.notice.repository.remote;
 
-import android.content.Context;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -10,14 +9,10 @@ import com.wallpad.IWallpadData;
 public class IWallpadServiceHelper {
 
     private final String TAG = this.getClass().getSimpleName();
-    private final Context context;
 
     private IWallpadData iWallpadData;
-    private boolean login = false;
 
-    public IWallpadServiceHelper(Context context) {
-        this.context = context;
-    }
+    public IWallpadServiceHelper() { }
 
     public void setIWallpadService(IWallpadData iWallpadData) {
         this.iWallpadData = iWallpadData;

@@ -4,10 +4,10 @@
     <data>
         <variable
             name="viewModel"
-            type="com.wallpad.notice.view.notice.vote.VoteDialogViewModel" />
+            type="com.wallpad.notice.view.vote.VoteDialogViewModel" />
         <variable
             name="view"
-            type="com.wallpad.notice.view.notice.vote.InputDialog" />
+            type="com.wallpad.notice.view.vote.InputDialog" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

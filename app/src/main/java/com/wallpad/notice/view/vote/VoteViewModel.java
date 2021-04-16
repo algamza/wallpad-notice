@@ -1,4 +1,4 @@
-package com.wallpad.notice.view.notice.vote;
+package com.wallpad.notice.view.vote;
 
 import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.LiveData;

@@ -1,4 +1,4 @@
-package com.wallpad.notice.view.notice.notification;
+package com.wallpad.notice.view.notification;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

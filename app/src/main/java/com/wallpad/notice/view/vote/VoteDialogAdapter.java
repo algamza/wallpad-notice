@@ -1,4 +1,4 @@
-package com.wallpad.notice.view.notice.vote;
+package com.wallpad.notice.view.vote;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="vote"
-            type="com.wallpad.notice.view.notice.vote.VoteViewModel.VoteData" />
+            type="com.wallpad.notice.view.vote.VoteViewModel.VoteData" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="756dp"

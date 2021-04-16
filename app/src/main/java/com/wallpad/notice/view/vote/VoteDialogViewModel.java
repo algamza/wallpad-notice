@@ -1,4 +1,4 @@
-package com.wallpad.notice.view.notice.vote;
+package com.wallpad.notice.view.vote;
 
 import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.LiveData;
@@ -12,8 +12,6 @@ import com.wallpad.notice.repository.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 public class VoteDialogViewModel extends ViewModel {
     private final Repository repository;
