@@ -18,9 +18,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class NotificationDialog extends BaseDialog {
     private NotificationDialogViewModel viewModel;
-    private final NotificationData data;
-    public NotificationDialog(NotificationData data) {
-        this.data = data;
+    private String title;
+    private String content;
+    public NotificationDialog(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 
     @NonNull
@@ -29,8 +31,8 @@ public class NotificationDialog extends BaseDialog {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.LauncherDialog);
         viewModel = new ViewModelProvider(this).get(NotificationDialogViewModel.class);
-        viewModel.setContent(data.getContent());
-        viewModel.setTitle(data.getTitle());
+        viewModel.setContent(content);
+        viewModel.setTitle(title);
         DialogNotificationBinding binding = DialogNotificationBinding.inflate(LayoutInflater.from(getContext()));
         binding.setLifecycleOwner(this);
         binding.setView(this);

@@ -1,11 +1,11 @@
 package com.wallpad.notice.model;
 
 public class VisitorModel {
-    int id;
-    int screen;
-    String place;
-    String date;
-    boolean read;
+    private int id;
+    private int screen;
+    private String place;
+    private String date;
+    private boolean read;
 
     public VisitorModel(int id, int screen, String place, String date, boolean read) {
         this.id = id;

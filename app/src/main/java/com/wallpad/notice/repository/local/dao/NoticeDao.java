@@ -34,7 +34,6 @@ public interface NoticeDao {
     @Query("DELETE FROM NoticeEntity")
     void deleteEntities();
 
-    @Query("DELETE FROM DeliveryEntity WHERE id NOT IN (:ids)")
+    @Query("DELETE FROM NoticeEntity WHERE id NOT IN (:ids)")
     void deleteNotInclude(List<Integer> ids);
-
 }

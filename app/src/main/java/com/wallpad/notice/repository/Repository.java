@@ -95,21 +95,11 @@ public class Repository {
     }
 
     public LiveData<List<NoticeModel>> getNotices() {
-        //executorService.execute(() -> setNotices(contentProviderHelper.getNotices()));
+        // TODO:
+        executorService.execute(contentProviderHelper::testNoticeUpdate);
         return notices;
     }
-    public void setNotices(List<NoticeModel> models) {
-        List<NoticeEntity> entities = new ArrayList<>();
-        List<Integer> ids = new ArrayList<>();
-        for ( NoticeModel model : models ) {
-            entities.add(Mapper.mapToNoticeEntity(model));
-            ids.add(model.getId());
-        }
-        executorService.execute(() -> {
-            noticeDao.deleteNotInclude(ids);
-            noticeDao.insertEntities(entities);
-        });
-    }
+
     public void readNoticeNotification(int id) {
         executorService.execute(() -> noticeDao.updateRead(id, true));
     }
@@ -182,6 +172,20 @@ public class Repository {
             executorService.execute(() -> {
                 voteDao.insertDetails(entities);
             });
+        }
+
+        @Override
+        public void onUpdateNotice(List<NoticeEntity> entities) {
+            if ( entities == null || entities.size() == 0 ) return;
+            executorService.execute(() -> {
+                noticeDao.deleteNotInclude(Mapper.getNoticeIds(entities));
+                noticeDao.insertEntities(entities);
+            });
+        }
+
+        @Override
+        public void onUpdateVisitor(List<VisitorEntity> entities) {
+
         }
     };
 }

@@ -10,8 +10,8 @@
             type="com.wallpad.notice.view.notification.NotificationDialog" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="754dp"
+    android:layout_height="558dp"
     android:background="@color/dialog_back">
 
     <ImageView
@@ -50,7 +50,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="378dp"
+        android:layout_height="338dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="96dp"
         android:layout_marginEnd="20dp"
@@ -85,6 +85,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="64dp"
+        android:layout_marginTop="454dp"
         android:background="@color/dialog_font_0_1_5"
         android:gravity="center"
         android:onClick="@{()->view.onClickOk()}"
@@ -92,7 +93,8 @@
         android:textColor="@color/dialog_font"
         android:textSize="23sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

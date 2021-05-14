@@ -12,6 +12,7 @@ import com.wallpad.notice.repository.local.entities.VoteDetailEntity;
 import com.wallpad.notice.repository.local.entities.VoteEntity;
 import com.wallpad.notice.repository.local.entities.VisitorEntity;
 import com.wallpad.notice.repository.local.entities.VoteInfoEntity;
+import com.wallpad.notice.repository.remote.entities.RemoteNoticeEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteParcelEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteVoteDetailEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteVoteEntity;
@@ -22,10 +23,23 @@ import java.util.List;
 public class Mapper {
 
     public static NoticeModel mapToNoticeModel(NoticeEntity entity) {
-        return new NoticeModel(entity.getId(), entity.getTitle(), entity.getContent(), entity.getDate(), entity.isRead());
+        return new NoticeModel(entity.getId(), entity.getTitle(), entity.getContent(), entity.getDate(), entity.getPath(), entity.isRead());
     }
     public static NoticeEntity mapToNoticeEntity(NoticeModel model) {
-        return new NoticeEntity(model.getId(), model.getTitle(), model.getContent(), model.getDate(), model.isRead());
+        return new NoticeEntity(model.getId(), model.getTitle(), model.getContent(), model.getDate(), model.getPath(), model.isRead());
+    }
+    public static List<NoticeEntity> mapToEntities(RemoteNoticeEntity notice) {
+        List<NoticeEntity> entities = new ArrayList<>();
+        if ( notice == null ) return entities;
+        RemoteNoticeEntity.Resource resource = notice.getResource();
+        int count = resource.getTotal_Count();
+        List<RemoteNoticeEntity.Resource.Notice_Board_List> list = resource.getNotice_Board_List();
+        if ( list == null || list.size() == 0 ) return entities;
+        for (RemoteNoticeEntity.Resource.Notice_Board_List content : list ) {
+            entities.add(new NoticeEntity(Integer.parseInt(content.getNotice_Board_Seq()), content.getNotice_Board_Title(),
+                    content.getNotice_Board_Contents(), content.getReg_Date(), content.getNotice_Board_File_Path(), false));
+        }
+        return entities;
     }
 
     public static VoteModel mapToModel(VoteEntity entity) {
@@ -138,6 +152,14 @@ public class Mapper {
         List<Integer> keys = new ArrayList<>();
         for ( VoteInfoEntity entity : entities ) {
             keys.add(entity.getMasterKey());
+        }
+        return keys;
+    }
+
+    public static List<Integer> getNoticeIds(List<NoticeEntity> entities) {
+        List<Integer> keys = new ArrayList<>();
+        for ( NoticeEntity entity : entities ) {
+            keys.add(entity.getId());
         }
         return keys;
     }
