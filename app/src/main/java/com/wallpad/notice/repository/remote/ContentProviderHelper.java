@@ -20,6 +20,7 @@ import com.wallpad.notice.repository.local.entities.DeliveryEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteVoteDetailEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteVoteEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -264,7 +265,41 @@ public class ContentProviderHelper {
         });
     }
 
+    // TEST
+    List<VisitorEntity> visitors = new ArrayList<>();
     public void testVisitorUpdate() {
-
+        visitors.add(new VisitorEntity(0, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20190405132030.mp4", "02000011", "20200404132030", false));
+        visitors.add(new VisitorEntity(1, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20190305132030.mp4", "Door", "20200401132030", false));
+        visitors.add(new VisitorEntity(2, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20190205132030.mp4", "Door", "20200320132030", false));
+        visitors.add(new VisitorEntity(3, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20190105132030.mp4", "Motion", "20200319132030", false));
+        visitors.add(new VisitorEntity(4, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20180805132030.mp4", "Motion", "20200315132030", false));
+        visitors.add(new VisitorEntity(5, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20180605132030.mp4", "02000011", "20200311132030", false));
+        visitors.add(new VisitorEntity(6, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20180505132030.mp4", "02000011", "20200212132030", false));
+        visitors.add(new VisitorEntity(7, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20180405132030.mp4", "02000011", "20200211132030", false));
+        visitors.add(new VisitorEntity(8, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20180305132030.mp4", "Motion", "20200209132030", false));
+        visitors.add(new VisitorEntity(9, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20180205132030.mp4", "02000011", "20200101132030", false));
+        if ( callback == null ) return;
+        callback.onUpdateVisitor(visitors);
     }
+    public void deleteVisitors(List<Integer> ids) {
+        for ( int id : ids ) {
+            VisitorEntity entity = findVisitor(id);
+            if ( entity == null ) continue;
+            visitors.remove(entity);
+        }
+    }
+    public void deleteVisitor(int id) {
+        VisitorEntity entity = findVisitor(id);
+        if ( entity != null ) visitors.remove(entity);
+    }
+
+    public List<VisitorEntity> getVisitor() { return visitors; }
+
+    private VisitorEntity findVisitor(int id) {
+        for ( VisitorEntity visitor: visitors ) {
+            if ( id == visitor.getId() ) return visitor;
+        }
+        return null;
+    }
+
 }

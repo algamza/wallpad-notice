@@ -3,13 +3,13 @@
     <data>
         <variable
             name="visitor"
-            type="com.wallpad.notice.view.visitor.VisitorData" />
+            type="com.wallpad.notice.view.visitor.VisitorViewModel.VisitorData" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="756dp"
         android:layout_height="64dp"
         android:layout_marginBottom="10dp"
-        android:onClick="@{()->visitor.callback.onClick(visitor.id)}"
+        android:onClick="@{()->visitor.callback.onClick(visitor.id, visitor.place, visitor.date, visitor.path)}"
         android:background="@color/dialog_back">
 
         <TextView
@@ -20,7 +20,7 @@
             android:ellipsize="end"
             android:gravity="left|center_vertical"
             android:maxLines="1"
-            android:text="@{visitor.screen.toString()}"
+            android:text="path"
             android:textColor="@color/dialog_font"
             android:textSize="22sp"
             android:maxWidth="430dp"
@@ -67,8 +67,8 @@
 
         <ImageView
             android:id="@+id/imageView13"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
             android:layout_marginStart="706dp"
             android:onClick="@{()->visitor.callback.onClickCheck(visitor.id, !visitor.check)}"
             android:src="@{visitor.check?@drawable/check_box_on:@drawable/check_box_off}"

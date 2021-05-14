@@ -168,7 +168,15 @@ public class Mapper {
         return new VisitorModel(entity.getId(), entity.getScreen(), entity.getPlace(), entity.getDate(), entity.isRead());
     }
     public static VisitorEntity mapToVisitorEntity(VisitorModel model) {
-        return new VisitorEntity(model.getId(), model.getScreen(), model.getPlace(), model.getDate(), model.isRead());
+        return new VisitorEntity(model.getId(), model.getPath(), model.getPlace(), model.getDate(), model.isRead());
+    }
+
+    public static List<Integer> getVisitorIds(List<VisitorEntity> entities) {
+        List<Integer> keys = new ArrayList<>();
+        for ( VisitorEntity entity : entities ) {
+            keys.add(entity.getId());
+        }
+        return keys;
     }
 
     public static long getBigKey(long group, int channel) {

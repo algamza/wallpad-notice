@@ -125,23 +125,27 @@ public class Repository {
     }
 
     public LiveData<List<VisitorModel>> getVisitors() {
-        //executorService.execute(() -> setVisitors(contentProviderHelper.getVisitors()));
+        executorService.execute(contentProviderHelper::testVisitorUpdate);
         return visitors;
     }
-    public void setVisitors(List<VisitorModel> models) {
-        List<VisitorEntity> entities = new ArrayList<>();
-        List<Integer> ids = new ArrayList<>();
-        for ( VisitorModel model : models ) {
-            entities.add(Mapper.mapToVisitorEntity(model));
-            ids.add(model.getId());
-        }
+    public void readNoticeVisitor(int id) { executorService.execute(() -> visitorDao.updateRead(id, true)); }
+
+    public void deleteVisitors(List<Integer> ids) {
+        // TODO:
         executorService.execute(() -> {
-            visitorDao.deleteNotInclude(ids);
-            visitorDao.insertEntities(entities);
+            contentProviderHelper.deleteVisitors(ids);
+            visitorDao.deleteNotInclude(Mapper.getVisitorIds(contentProviderHelper.getVisitor()));
+            visitorDao.insertEntities(contentProviderHelper.getVisitor());
         });
     }
-    public void readNoticeVisitor(int id) {
-        executorService.execute(() -> visitorDao.updateRead(id, true));
+
+    public void deleteVisitor(int id) {
+        // TODO:
+        executorService.execute(() -> {
+            contentProviderHelper.deleteVisitor(id);
+            visitorDao.deleteNotInclude(Mapper.getVisitorIds(contentProviderHelper.getVisitor()));
+            visitorDao.insertEntities(contentProviderHelper.getVisitor());
+        });
     }
 
     private final ContentProviderHelper.ICallback contentProviderCallback = new ContentProviderHelper.ICallback() {
@@ -185,7 +189,11 @@ public class Repository {
 
         @Override
         public void onUpdateVisitor(List<VisitorEntity> entities) {
-
+            if ( entities == null || entities.size() == 0 ) return;
+            executorService.execute(() -> {
+                visitorDao.deleteNotInclude(Mapper.getVisitorIds(entities));
+                visitorDao.insertEntities(entities);
+            });
         }
     };
 }

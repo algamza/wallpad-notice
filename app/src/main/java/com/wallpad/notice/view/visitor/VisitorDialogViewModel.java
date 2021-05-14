@@ -5,12 +5,17 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.wallpad.notice.repository.Repository;
+
 public class VisitorDialogViewModel extends ViewModel {
+    public final Repository repository;
     private MutableLiveData<String> place = new MutableLiveData<>();
     private MutableLiveData<String> date = new MutableLiveData<>();
-    private MutableLiveData<Integer> screen = new MutableLiveData<>();
+    private MutableLiveData<String> screen = new MutableLiveData<>();
 
-    @ViewModelInject public VisitorDialogViewModel() {}
+    @ViewModelInject public VisitorDialogViewModel(Repository repository) {
+        this.repository = repository;
+    }
 
     public LiveData<String> getPlace() {
         return place;
@@ -28,11 +33,15 @@ public class VisitorDialogViewModel extends ViewModel {
         this.date.postValue(date);
     }
 
-    public LiveData<Integer> getScreen() {
+    public LiveData<String> getScreen() {
         return screen;
     }
 
-    public void setScreen(Integer screen) {
+    public void setScreen(String screen) {
         this.screen.postValue(screen);
+    }
+
+    public void deleteVisitor(int id) {
+        repository.deleteVisitor(id);
     }
 }

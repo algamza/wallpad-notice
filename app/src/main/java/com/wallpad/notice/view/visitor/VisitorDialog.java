@@ -18,8 +18,16 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class VisitorDialog extends BaseDialog {
     private VisitorDialogViewModel viewModel;
-    private final VisitorData data;
-    public VisitorDialog(VisitorData data) { this.data = data; }
+    private final int id;
+    private final String place;
+    private final String date;
+    private final String path;
+    public VisitorDialog(int id, String place, String date, String path) {
+        this.id = id;
+        this.place = place;
+        this.date = date;
+        this.path = path;
+    }
 
     @NonNull
     @Override
@@ -27,9 +35,9 @@ public class VisitorDialog extends BaseDialog {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.LauncherDialog);
         viewModel = new ViewModelProvider(this).get(VisitorDialogViewModel.class);
-        viewModel.setDate(this.data.getDate());
-        viewModel.setPlace(this.data.getPlace());
-        viewModel.setScreen(this.data.getScreen());
+        viewModel.setDate(this.date);
+        viewModel.setPlace(this.place);
+        viewModel.setScreen(this.path);
         DialogVisitorBinding binding = DialogVisitorBinding.inflate(LayoutInflater.from(getContext()));
         binding.setLifecycleOwner(this);
         binding.setView(this);
@@ -41,7 +49,7 @@ public class VisitorDialog extends BaseDialog {
     public void onClickClose() { dismiss(); }
 
     public void onClickDelete() {
-        // TODO :
+        viewModel.deleteVisitor(id);
         dismiss();
     }
 }

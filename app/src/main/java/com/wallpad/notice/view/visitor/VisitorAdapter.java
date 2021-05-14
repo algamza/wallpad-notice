@@ -4,10 +4,14 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.AsyncListDiffer;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wallpad.notice.BR;
 import com.wallpad.notice.databinding.RecyclerVisitorBinding;
+import com.wallpad.notice.view.notification.NotificationAdapter;
+import com.wallpad.notice.view.notification.NotificationViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +19,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.VisitorHolder> {
-    private final ArrayList<VisitorData> data = new ArrayList<>();
+    private final AsyncListDiffer<VisitorViewModel.VisitorData> differ = new AsyncListDiffer<>(this, new VisitorAdapter.DiffCallback());
 
     @Inject public VisitorAdapter() { }
 
@@ -27,19 +31,32 @@ public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.VisitorH
 
     @Override
     public void onBindViewHolder(@NonNull VisitorHolder holder, int position) {
-        holder.bind(data.get(position));
+        holder.bind(differ.getCurrentList().get(position));
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return differ.getCurrentList().size();
     }
 
-    public void setData(List<VisitorData> data) {
-        this.data.clear();
-        this.data.addAll(data);
-        notifyDataSetChanged();
+    public void setData(List<VisitorViewModel.VisitorData> data) {
+        differ.submitList(data);
     }
+
+    public void updateData(int id, boolean check) {
+        List<VisitorViewModel.VisitorData> data = differ.getCurrentList();
+        int i = 0;
+        for (VisitorViewModel.VisitorData visitor : data) {
+            if ( id == visitor.getId() ) {
+                visitor.setCheck(check);
+                break;
+            }
+            i++;
+        }
+        differ.submitList(data);
+        notifyItemChanged(i);
+    }
+
 
     static class VisitorHolder extends RecyclerView.ViewHolder {
         RecyclerVisitorBinding binding;
@@ -47,6 +64,20 @@ public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.VisitorH
             super(binding.getRoot());
             this.binding = binding;
         }
-        void bind(VisitorData data) { binding.setVariable(BR.visitor, data); }
+        void bind(VisitorViewModel.VisitorData data) { binding.setVariable(BR.visitor, data); }
+    }
+
+    static class DiffCallback extends DiffUtil.ItemCallback<VisitorViewModel.VisitorData> {
+        @Override
+        public boolean areItemsTheSame(@NonNull VisitorViewModel.VisitorData oldItem, @NonNull VisitorViewModel.VisitorData newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull VisitorViewModel.VisitorData oldItem, @NonNull VisitorViewModel.VisitorData newItem) {
+            return oldItem.getId() == newItem.getId() &&
+                    oldItem.isRead() == newItem.isRead() &&
+                    oldItem.isCheck() == newItem.isCheck();
+        }
     }
 }
