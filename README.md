@@ -20,3 +20,4 @@ Notice Application project for HN NHN-051.
 
 ### Class Diagram
 
+![](https://github.com/algamza/wallpad-notice/blob/main/notice.png?raw=true)
