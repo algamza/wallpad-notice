@@ -95,21 +95,11 @@ public class Repository {
     }
 
     public LiveData<List<NoticeModel>> getNotices() {
-        //executorService.execute(() -> setNotices(contentProviderHelper.getNotices()));
+        // TODO:
+        executorService.execute(contentProviderHelper::testNoticeUpdate);
         return notices;
     }
-    public void setNotices(List<NoticeModel> models) {
-        List<NoticeEntity> entities = new ArrayList<>();
-        List<Integer> ids = new ArrayList<>();
-        for ( NoticeModel model : models ) {
-            entities.add(Mapper.mapToNoticeEntity(model));
-            ids.add(model.getId());
-        }
-        executorService.execute(() -> {
-            noticeDao.deleteNotInclude(ids);
-            noticeDao.insertEntities(entities);
-        });
-    }
+
     public void readNoticeNotification(int id) {
         executorService.execute(() -> noticeDao.updateRead(id, true));
     }
@@ -135,23 +125,27 @@ public class Repository {
     }
 
     public LiveData<List<VisitorModel>> getVisitors() {
-        //executorService.execute(() -> setVisitors(contentProviderHelper.getVisitors()));
+        executorService.execute(contentProviderHelper::testVisitorUpdate);
         return visitors;
     }
-    public void setVisitors(List<VisitorModel> models) {
-        List<VisitorEntity> entities = new ArrayList<>();
-        List<Integer> ids = new ArrayList<>();
-        for ( VisitorModel model : models ) {
-            entities.add(Mapper.mapToVisitorEntity(model));
-            ids.add(model.getId());
-        }
+    public void readNoticeVisitor(int id) { executorService.execute(() -> visitorDao.updateRead(id, true)); }
+
+    public void deleteVisitors(List<Integer> ids) {
+        // TODO:
         executorService.execute(() -> {
-            visitorDao.deleteNotInclude(ids);
-            visitorDao.insertEntities(entities);
+            contentProviderHelper.deleteVisitors(ids);
+            visitorDao.deleteNotInclude(Mapper.getVisitorIds(contentProviderHelper.getVisitor()));
+            visitorDao.insertEntities(contentProviderHelper.getVisitor());
         });
     }
-    public void readNoticeVisitor(int id) {
-        executorService.execute(() -> visitorDao.updateRead(id, true));
+
+    public void deleteVisitor(int id) {
+        // TODO:
+        executorService.execute(() -> {
+            contentProviderHelper.deleteVisitor(id);
+            visitorDao.deleteNotInclude(Mapper.getVisitorIds(contentProviderHelper.getVisitor()));
+            visitorDao.insertEntities(contentProviderHelper.getVisitor());
+        });
     }
 
     private final ContentProviderHelper.ICallback contentProviderCallback = new ContentProviderHelper.ICallback() {
@@ -181,6 +175,24 @@ public class Repository {
             if ( entities == null || entities.size() == 0 ) return;
             executorService.execute(() -> {
                 voteDao.insertDetails(entities);
+            });
+        }
+
+        @Override
+        public void onUpdateNotice(List<NoticeEntity> entities) {
+            if ( entities == null || entities.size() == 0 ) return;
+            executorService.execute(() -> {
+                noticeDao.deleteNotInclude(Mapper.getNoticeIds(entities));
+                noticeDao.insertEntities(entities);
+            });
+        }
+
+        @Override
+        public void onUpdateVisitor(List<VisitorEntity> entities) {
+            if ( entities == null || entities.size() == 0 ) return;
+            executorService.execute(() -> {
+                visitorDao.deleteNotInclude(Mapper.getVisitorIds(entities));
+                visitorDao.insertEntities(entities);
             });
         }
     };

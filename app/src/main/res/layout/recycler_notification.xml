@@ -3,13 +3,13 @@
     <data>
         <variable
             name="notification"
-            type="com.wallpad.notice.view.notification.NotificationData" />
+            type="com.wallpad.notice.view.notification.NotificationViewModel.NotificationData" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="756dp"
         android:layout_height="64dp"
         android:layout_marginBottom="10dp"
-        android:onClick="@{()->notification.callback.onClick(notification.id)}"
+        android:onClick="@{()->notification.callback.onClick(notification.id, notification.title, notification.content)}"
         android:background="@color/dialog_back">
 
         <TextView

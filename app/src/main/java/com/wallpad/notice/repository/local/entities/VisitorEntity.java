@@ -7,12 +7,12 @@ import androidx.room.PrimaryKey;
 public class VisitorEntity {
     @PrimaryKey
     private int id;
-    private int screen;
+    private String screen;
     private String place;
     private String date;
     private boolean read;
 
-    public VisitorEntity(int id, int screen, String place, String date, boolean read) {
+    public VisitorEntity(int id, String screen, String place, String date, boolean read) {
         this.id = id;
         this.screen = screen;
         this.place = place;
@@ -28,11 +28,11 @@ public class VisitorEntity {
         this.id = id;
     }
 
-    public int getScreen() {
+    public String getScreen() {
         return screen;
     }
 
-    public void setScreen(int screen) {
+    public void setScreen(String screen) {
         this.screen = screen;
     }
 

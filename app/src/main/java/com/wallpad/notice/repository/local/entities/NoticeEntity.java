@@ -10,13 +10,15 @@ public class NoticeEntity {
     private String title;
     private String content;
     private String date;
+    private String path;
     private boolean read;
 
-    public NoticeEntity(int id, String title, String content, String date, boolean read) {
+    public NoticeEntity(int id, String title, String content, String date, String path, boolean read) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
+        this.path = path;
         this.read = read;
     }
 
@@ -50,6 +52,14 @@ public class NoticeEntity {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public boolean isRead() {
