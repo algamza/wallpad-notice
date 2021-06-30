@@ -95,8 +95,7 @@ public class Repository {
     }
 
     public LiveData<List<NoticeModel>> getNotices() {
-        // TODO:
-        executorService.execute(contentProviderHelper::testNoticeUpdate);
+        executorService.execute(iWallpadServiceHelper::refreshNotificationInfo);
         return notices;
     }
 

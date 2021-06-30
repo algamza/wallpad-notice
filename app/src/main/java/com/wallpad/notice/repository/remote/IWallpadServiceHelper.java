@@ -23,6 +23,15 @@ public class IWallpadServiceHelper {
         refreshVoteInfo();
     }
 
+    public void refreshNotificationInfo() {
+        if ( iWallpadData == null ) return;
+        try {
+            iWallpadData.refreshNoticeInfo("128", "1");
+        } catch (RemoteException e) {
+            Log.e(TAG, "error="+e);
+        }
+    }
+
     public void refreshParcelInfo() {
         if ( iWallpadData == null ) return;
         try {

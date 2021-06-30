@@ -21,7 +21,7 @@ import javax.inject.Inject;
 public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.VisitorHolder> {
     private final AsyncListDiffer<VisitorViewModel.VisitorData> differ = new AsyncListDiffer<>(this, new VisitorAdapter.DiffCallback());
 
-    @Inject public VisitorAdapter() { }
+    @Inject public VisitorAdapter() {  }
 
     @NonNull
     @Override
@@ -56,7 +56,6 @@ public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.VisitorH
         differ.submitList(data);
         notifyItemChanged(i);
     }
-
 
     static class VisitorHolder extends RecyclerView.ViewHolder {
         RecyclerVisitorBinding binding;

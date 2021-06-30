@@ -45,6 +45,7 @@ public class ContentProviderHelper {
     public static final String ID_VOTE_INFO = "11";                                 //2VO01_01
     public static final String ID_VOTE_DETAIL_INFO = "12";                   //2VO01_02
     public static final String ID_VOTING_COMPLETE_NOTIFY = "13";     //2VO01_03
+    public static final String ID_NOTICE_INFO = "14";                                      //2NB01_01
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final Context context;
@@ -66,6 +67,7 @@ public class ContentProviderHelper {
         context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_VOTE_INFO), false, observer);
         context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_VOTE_DETAIL_INFO), false, observer);
         context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_VOTING_COMPLETE_NOTIFY), false, observer);
+        context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_NOTICE_INFO), false, observer);
     }
 
     private final ContentObserver observer = new ContentObserver(new Handler()) {
@@ -83,7 +85,25 @@ public class ContentProviderHelper {
             case ID_PARCEL_INFO: updateParcelInfo(Integer.parseInt(ID_PARCEL_INFO)); break;
             case ID_VOTE_INFO: updateVoteInfo(Integer.parseInt(ID_VOTE_INFO)); break;
             case ID_VOTE_DETAIL_INFO: updateVoteDetail(Integer.parseInt(ID_VOTE_DETAIL_INFO)); break;
+            case ID_NOTICE_INFO: updateNoticeInfo(Integer.parseInt(ID_NOTICE_INFO)); break;
         }
+    }
+
+    private void updateNoticeInfo(int id) {
+        executorService.execute(() -> {
+            RemoteNoticeEntity entity = null;
+            try (Cursor cursor = context.getContentResolver().query(Uri.parse(URI_INFO), null, null, null, null)) {
+                if (cursor == null || !cursor.moveToFirst()) return;
+                do {
+                    if ( Integer.parseInt(cursor.getString(cursor.getColumnIndex(CONTENT_ID))) == id ) {
+                        String notice = cursor.getString(cursor.getColumnIndex(CONTENT_KEY));
+                        entity = gson.fromJson(notice, RemoteNoticeEntity.class);
+                    }
+                } while (cursor.moveToNext());
+            } catch (Exception ignored) { }
+            if ( callback == null || entity == null ) return;
+            callback.onUpdateNotice(Mapper.mapToEntities(entity));
+        });
     }
 
     private void updateVoteDetail(int id) {

@@ -8,6 +8,7 @@
         <variable
             name="view"
             type="com.wallpad.notice.view.notification.NotificationDialog" />
+        <import type="android.text.Html"/>
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="754dp"
@@ -74,7 +75,7 @@
             android:paddingTop="26dp"
             android:paddingEnd="28dp"
             android:paddingBottom="20dp"
-            android:text="@{notification.content}"
+            android:text="@{notification.content==null?null:Html.fromHtml(notification.content)}"
             android:textColor="@color/dialog_font_0_8"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
