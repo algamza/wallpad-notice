@@ -73,7 +73,6 @@ public class VisitorViewModel extends ViewModel {
             if ( !data.isCheck() ) continue;
             ids.add(data.getId());
             // TODO:
-            Log.d("KSKIM", "delete="+data.getId());
         }
         repository.deleteVisitors(ids);
     }

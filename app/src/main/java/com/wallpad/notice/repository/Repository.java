@@ -1,6 +1,9 @@
 package com.wallpad.notice.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.wallpad.IWallpadData;
@@ -33,6 +36,9 @@ import javax.inject.Singleton;
 
 @Singleton
 public class Repository {
+    public interface Callback {
+        void onLogin(boolean on);
+    }
     private final ExecutorService executorService = Executors.newFixedThreadPool(6);
     private final IWallpadServiceHelper iWallpadServiceHelper;
     private final ContentProviderHelper contentProviderHelper;
@@ -47,6 +53,7 @@ public class Repository {
     private final LiveData<List<VoteModel>> vote;
     private final LiveData<List<DeliveryModel>> deliveries;
     private final LiveData<List<VisitorModel>> visitors;
+    private Callback callback;
 
     @Inject public Repository( TestHelper testHelper,
         ContentProviderHelper contentProviderHelper,
@@ -89,10 +96,23 @@ public class Repository {
         });
     }
 
+    public void injectIWallpadService(IWallpadData iWallpadData, Callback callback) {
+        this.callback = callback;
+        injectIWallpadService(iWallpadData);
+    }
+
     public void injectIWallpadService(IWallpadData iWallpadData) {
         contentProviderHelper.setCallback(contentProviderCallback);
-        iWallpadServiceHelper.setIWallpadService(iWallpadData);
+        iWallpadServiceHelper.setIWallpadService(iWallpadData, iCallback);
     }
+
+    private IWallpadServiceHelper.ICallback iCallback = new IWallpadServiceHelper.ICallback() {
+        @Override
+        public void onUpdateLogin(boolean on) {
+            if ( !on || callback == null) return;
+            callback.onLogin(on);
+        }
+    };
 
     public LiveData<List<NoticeModel>> getNotices() {
         executorService.execute(iWallpadServiceHelper::refreshNotificationInfo);
@@ -112,6 +132,13 @@ public class Repository {
     }
     public void requestVote(int masterId, int voteCode) {
         iWallpadServiceHelper.requestVoting(masterId, voteCode);
+    }
+
+    public void refreshNotice() {
+        executorService.execute(iWallpadServiceHelper::refreshParcelInfo);
+        executorService.execute(iWallpadServiceHelper::refreshVoteInfo);
+        executorService.execute(iWallpadServiceHelper::refreshNotificationInfo);
+        executorService.execute(contentProviderHelper::testVisitorUpdate);
     }
 
     public LiveData<List<DeliveryModel>> getDeliveries() {
@@ -146,6 +173,8 @@ public class Repository {
             visitorDao.insertEntities(contentProviderHelper.getVisitor());
         });
     }
+
+    public void refreshLogin() { iWallpadServiceHelper.refreshLogin(); }
 
     private final ContentProviderHelper.ICallback contentProviderCallback = new ContentProviderHelper.ICallback() {
         @Override

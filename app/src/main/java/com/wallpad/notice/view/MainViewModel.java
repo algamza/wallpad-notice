@@ -27,7 +27,6 @@ public class MainViewModel extends ViewModel {
     private final LiveData<Integer> referendumNewCount;
     private final LiveData<Integer> visitorNewCount;
 
-
     @ViewModelInject
     public MainViewModel(Repository repository) {
         this.repository = repository;
