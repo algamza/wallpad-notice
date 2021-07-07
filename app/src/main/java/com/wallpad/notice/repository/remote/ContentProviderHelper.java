@@ -15,8 +15,10 @@ import com.wallpad.notice.repository.local.entities.VoteDetailEntity;
 import com.wallpad.notice.repository.local.entities.VoteEntity;
 import com.wallpad.notice.repository.local.entities.VoteInfoEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteNoticeEntity;
+import com.wallpad.notice.repository.remote.entities.RemoteNoticeNotifyEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteParcelEntity;
 import com.wallpad.notice.repository.local.entities.DeliveryEntity;
+import com.wallpad.notice.repository.remote.entities.RemoteParcelNotifyEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteVoteDetailEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteVoteEntity;
 
@@ -30,9 +32,11 @@ import javax.inject.Inject;
 public class ContentProviderHelper {
     public interface ICallback {
         void onUpdateParcels(List<DeliveryEntity> entities);
+        void onUpdateParcelNotify(DeliveryEntity entity);
         void onUpdateVotes(List<VoteInfoEntity> entities);
         void onUpdateDetailVotes(List<VoteDetailEntity> entities);
         void onUpdateNotice(List<NoticeEntity> entities);
+        void onUpdateNoticeNotify(NoticeEntity entity);
         void onUpdateVisitor(List<VisitorEntity> entities);
     }
 
@@ -46,6 +50,7 @@ public class ContentProviderHelper {
     public static final String ID_VOTE_DETAIL_INFO = "12";                   //2VO01_02
     public static final String ID_VOTING_COMPLETE_NOTIFY = "13";     //2VO01_03
     public static final String ID_NOTICE_INFO = "14";                                      //2NB01_01
+    public static final String ID_NOTICE_NOTIFY = "15";                                    //2NB01_02
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final Context context;
@@ -68,6 +73,7 @@ public class ContentProviderHelper {
         context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_VOTE_DETAIL_INFO), false, observer);
         context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_VOTING_COMPLETE_NOTIFY), false, observer);
         context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_NOTICE_INFO), false, observer);
+        context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_NOTICE_NOTIFY), false, observer);
     }
 
     private final ContentObserver observer = new ContentObserver(new Handler()) {
@@ -83,9 +89,11 @@ public class ContentProviderHelper {
         String id = uri.substring(uri.lastIndexOf(URI_INFO)+URI_INFO.length()+1);
         switch (id) {
             case ID_PARCEL_INFO: updateParcelInfo(Integer.parseInt(ID_PARCEL_INFO)); break;
+            case ID_PARCEL_NOTIFY: updateParcelNotify(Integer.parseInt(ID_PARCEL_NOTIFY)); break;
             case ID_VOTE_INFO: updateVoteInfo(Integer.parseInt(ID_VOTE_INFO)); break;
             case ID_VOTE_DETAIL_INFO: updateVoteDetail(Integer.parseInt(ID_VOTE_DETAIL_INFO)); break;
             case ID_NOTICE_INFO: updateNoticeInfo(Integer.parseInt(ID_NOTICE_INFO)); break;
+            case ID_NOTICE_NOTIFY: updateNoticeNotify(Integer.parseInt(ID_NOTICE_NOTIFY)); break;
         }
     }
 
@@ -103,6 +111,23 @@ public class ContentProviderHelper {
             } catch (Exception ignored) { }
             if ( callback == null || entity == null ) return;
             callback.onUpdateNotice(Mapper.mapToEntities(entity));
+        });
+    }
+
+    private void updateNoticeNotify(int id) {
+        executorService.execute(() -> {
+            RemoteNoticeNotifyEntity entity = null;
+            try (Cursor cursor = context.getContentResolver().query(Uri.parse(URI_INFO), null, null, null, null)) {
+                if (cursor == null || !cursor.moveToFirst()) return;
+                do {
+                    if ( Integer.parseInt(cursor.getString(cursor.getColumnIndex(CONTENT_ID))) == id ) {
+                        String notice = cursor.getString(cursor.getColumnIndex(CONTENT_KEY));
+                        entity = gson.fromJson(notice, RemoteNoticeNotifyEntity.class);
+                    }
+                } while (cursor.moveToNext());
+            } catch (Exception ignored) { }
+            if ( callback == null || entity == null ) return;
+            callback.onUpdateNoticeNotify(Mapper.mapToEntity(entity));
         });
     }
 
@@ -154,6 +179,23 @@ public class ContentProviderHelper {
             } catch (Exception ignored) { }
             if ( callback == null || entity == null ) return;
             callback.onUpdateParcels(Mapper.mapToDeliveryEntities(entity));
+        });
+    }
+
+    private void updateParcelNotify(int id) {
+        executorService.execute(() -> {
+            RemoteParcelNotifyEntity entity = null;
+            try (Cursor cursor = context.getContentResolver().query(Uri.parse(URI_INFO), null, null, null, null)) {
+                if (cursor == null || !cursor.moveToFirst()) return;
+                do {
+                    if ( Integer.parseInt(cursor.getString(cursor.getColumnIndex(CONTENT_ID))) == id ) {
+                        String parcel = cursor.getString(cursor.getColumnIndex(CONTENT_KEY));
+                        entity = gson.fromJson(parcel, RemoteParcelNotifyEntity.class);
+                    }
+                } while (cursor.moveToNext());
+            } catch (Exception ignored) { }
+            if ( callback == null || entity == null ) return;
+            callback.onUpdateParcelNotify(Mapper.mapToDeliveryEntity(entity));
         });
     }
 

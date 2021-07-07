@@ -187,6 +187,12 @@ public class Repository {
         }
 
         @Override
+        public void onUpdateParcelNotify(DeliveryEntity entity) {
+            if ( entity == null ) return;
+            executorService.execute(() -> deliveryDao.insertEntity(entity));
+        }
+
+        @Override
         public void onUpdateVotes(List<VoteInfoEntity> entities) {
             if ( entities == null || entities.size() == 0 ) return;
             executorService.execute(() -> {
@@ -216,6 +222,12 @@ public class Repository {
         }
 
         @Override
+        public void onUpdateNoticeNotify(NoticeEntity entity) {
+            if ( entity == null ) return;
+            executorService.execute(() -> noticeDao.insertEntity(entity));
+        }
+
+        @Override
         public void onUpdateVisitor(List<VisitorEntity> entities) {
             if ( entities == null || entities.size() == 0 ) return;
             executorService.execute(() -> {
@@ -223,5 +235,7 @@ public class Repository {
                 visitorDao.insertEntities(entities);
             });
         }
+
+
     };
 }

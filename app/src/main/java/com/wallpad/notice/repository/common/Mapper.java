@@ -13,7 +13,9 @@ import com.wallpad.notice.repository.local.entities.VoteEntity;
 import com.wallpad.notice.repository.local.entities.VisitorEntity;
 import com.wallpad.notice.repository.local.entities.VoteInfoEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteNoticeEntity;
+import com.wallpad.notice.repository.remote.entities.RemoteNoticeNotifyEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteParcelEntity;
+import com.wallpad.notice.repository.remote.entities.RemoteParcelNotifyEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteVoteDetailEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteVoteEntity;
 
@@ -40,6 +42,12 @@ public class Mapper {
                     content.getNotice_Board_Contents(), content.getReg_Date(), content.getNotice_Board_File_Path(), false));
         }
         return entities;
+    }
+
+    public static NoticeEntity mapToEntity(RemoteNoticeNotifyEntity notice) {
+        if ( notice == null ) return null;
+        return new NoticeEntity(Integer.parseInt(notice.getNotice_Board_Seq()), notice.getNotice_Board_Title(),
+                notice.getNotice_Board_Contents(), notice.getReg_Date(), notice.getNotice_Board_File_Path(), false);
     }
 
     public static VoteModel mapToModel(VoteEntity entity) {
@@ -140,6 +148,17 @@ public class Mapper {
         }
         return entities;
     }
+
+    public static DeliveryEntity mapToDeliveryEntity(RemoteParcelNotifyEntity delivery) {
+        if ( delivery == null ) return null;
+        return new DeliveryEntity(getBigKey(Long.parseLong(delivery.getEvent_Time()),
+                Integer.parseInt(delivery.getDelivery_Box_Info())),
+                delivery.getEvent_Time(), "",
+                Integer.parseInt(delivery.getDelivery_Box_Info()),
+                Integer.parseInt(delivery.getDelivery_Event_Type()) == 1,
+                false);
+    }
+
     public static List<Long> getDeliveryKeys(List<DeliveryEntity> entities) {
         List<Long> keys = new ArrayList<>();
         for ( DeliveryEntity entity : entities ) {
