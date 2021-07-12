@@ -246,18 +246,21 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="368dp"
             android:layout_height="64dp"
             android:background="@color/dark_15"
+            android:weightSum="368"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/textView16"
-                android:layout_width="184dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="184"
                 android:gravity="center"
                 android:onClick="@{()->view.onClickCancel()}"
                 android:text="@string/STR_CANCEL"
@@ -267,9 +270,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:alpha="0.2"
+                android:background="@color/content_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
-                android:layout_width="184dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="183"
                 android:textSize="23sp"
                 android:textColor="@color/content_text"
                 android:text="@string/STR_VOTE"
@@ -279,18 +294,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <FrameLayout
-                android:layout_width="1dp"
-                android:layout_height="64dp"
-                android:alpha="0.2"
-                android:background="@color/content_text"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textView16"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

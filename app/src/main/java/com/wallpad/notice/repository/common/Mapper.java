@@ -194,8 +194,8 @@ public class Mapper {
         return new VisitorEntity(model.getId(), model.getPath(), model.getPlace(), model.getDate(), model.isRead());
     }
 
-    public static List<Integer> getVisitorIds(List<VisitorEntity> entities) {
-        List<Integer> keys = new ArrayList<>();
+    public static List<String> getVisitorIds(List<VisitorEntity> entities) {
+        List<String> keys = new ArrayList<>();
         for ( VisitorEntity entity : entities ) {
             keys.add(entity.getId());
         }

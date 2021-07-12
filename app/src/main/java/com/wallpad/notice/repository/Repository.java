@@ -1,5 +1,7 @@
 package com.wallpad.notice.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
@@ -141,7 +143,7 @@ public class Repository {
         executorService.execute(iWallpadServiceHelper::refreshParcelInfo);
         executorService.execute(iWallpadServiceHelper::refreshVoteInfo);
         executorService.execute(iWallpadServiceHelper::refreshNotificationInfo);
-        executorService.execute(contentProviderHelper::testVisitorUpdate);
+        executorService.execute(contentProviderHelper::requestVisitorInfo);
     }
 
     public LiveData<List<DeliveryModel>> getDeliveries() {
@@ -154,26 +156,30 @@ public class Repository {
     }
 
     public LiveData<List<VisitorModel>> getVisitors() {
-        executorService.execute(contentProviderHelper::testVisitorUpdate);
+        executorService.execute(contentProviderHelper::requestVisitorInfo);
         return visitors;
     }
-    public void readNoticeVisitor(int id) { executorService.execute(() -> visitorDao.updateRead(id, true)); }
+    public void readNoticeVisitor(String id) { executorService.execute(() -> visitorDao.updateRead(id, true)); }
 
-    public void deleteVisitors(List<Integer> ids) {
-        // TODO:
+    public void deleteVisitors(List<String> ids) {
         executorService.execute(() -> {
             contentProviderHelper.deleteVisitors(ids);
+            contentProviderHelper.requestVisitorInfo();
+            /*
             visitorDao.deleteNotInclude(Mapper.getVisitorIds(contentProviderHelper.getVisitor()));
             visitorDao.insertEntities(contentProviderHelper.getVisitor());
+             */
         });
     }
 
-    public void deleteVisitor(int id) {
-        // TODO:
+    public void deleteVisitor(String id) {
         executorService.execute(() -> {
             contentProviderHelper.deleteVisitor(id);
+            contentProviderHelper.requestVisitorInfo();
+            /*
             visitorDao.deleteNotInclude(Mapper.getVisitorIds(contentProviderHelper.getVisitor()));
             visitorDao.insertEntities(contentProviderHelper.getVisitor());
+             */
         });
     }
 
@@ -233,7 +239,5 @@ public class Repository {
                 visitorDao.insertEntities(entities);
             });
         }
-
-
     };
 }

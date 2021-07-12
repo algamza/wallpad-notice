@@ -26,14 +26,14 @@ public interface VisitorDao {
     void updateEntity(VisitorEntity entity);
 
     @Query("UPDATE VisitorEntity SET read=:read WHERE id=:id")
-    void updateRead(int id, boolean read);
+    void updateRead(String id, boolean read);
 
     @Query("DELETE FROM VisitorEntity WHERE id = :id")
-    void deleteEntity(int id);
+    void deleteEntity(String id);
 
     @Query("DELETE FROM VisitorEntity")
     void deleteEntities();
 
     @Query("DELETE FROM VisitorEntity WHERE id NOT IN (:ids)")
-    void deleteNotInclude(List<Integer> ids);
+    void deleteNotInclude(List<String> ids);
 }

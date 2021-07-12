@@ -41,7 +41,7 @@ public class VisitorDialogViewModel extends ViewModel {
         this.screen.postValue(screen);
     }
 
-    public void deleteVisitor(int id) {
+    public void deleteVisitor(String id) {
         repository.deleteVisitor(id);
     }
 }

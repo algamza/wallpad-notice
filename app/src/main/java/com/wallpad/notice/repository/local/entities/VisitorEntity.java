@@ -1,18 +1,20 @@
 package com.wallpad.notice.repository.local.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class VisitorEntity {
     @PrimaryKey
-    private int id;
+    @NonNull
+    private String id;
     private String screen;
     private String place;
     private String date;
     private boolean read;
 
-    public VisitorEntity(int id, String screen, String place, String date, boolean read) {
+    public VisitorEntity(String id, String screen, String place, String date, boolean read) {
         this.id = id;
         this.screen = screen;
         this.place = place;
@@ -20,11 +22,11 @@ public class VisitorEntity {
         this.read = read;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

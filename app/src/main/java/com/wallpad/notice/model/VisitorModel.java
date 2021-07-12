@@ -1,13 +1,13 @@
 package com.wallpad.notice.model;
 
 public class VisitorModel {
-    private int id;
+    private String id;
     private String path;
     private String place;
     private String date;
     private boolean read;
 
-    public VisitorModel(int id, String path, String place, String date, boolean read) {
+    public VisitorModel(String id, String path, String place, String date, boolean read) {
         this.id = id;
         this.path = path;
         this.place = place;
@@ -15,11 +15,11 @@ public class VisitorModel {
         this.read = read;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

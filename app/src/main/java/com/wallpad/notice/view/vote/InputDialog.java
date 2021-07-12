@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.wallpad.notice.R;
@@ -18,7 +19,7 @@ import com.wallpad.notice.view.common.BaseDialog;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class InputDialog extends BaseDialog {
+public class InputDialog extends DialogFragment {
     private VoteDialogViewModel viewModel;
 
     @NonNull

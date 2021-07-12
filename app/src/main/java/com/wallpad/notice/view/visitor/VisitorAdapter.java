@@ -43,11 +43,11 @@ public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.VisitorH
         differ.submitList(data);
     }
 
-    public void updateData(int id, boolean check) {
+    public void updateData(String id, boolean check) {
         List<VisitorViewModel.VisitorData> data = differ.getCurrentList();
         int i = 0;
         for (VisitorViewModel.VisitorData visitor : data) {
-            if ( id == visitor.getId() ) {
+            if ( id.equals(visitor.getId()) ) {
                 visitor.setCheck(check);
                 break;
             }
@@ -69,12 +69,12 @@ public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.VisitorH
     static class DiffCallback extends DiffUtil.ItemCallback<VisitorViewModel.VisitorData> {
         @Override
         public boolean areItemsTheSame(@NonNull VisitorViewModel.VisitorData oldItem, @NonNull VisitorViewModel.VisitorData newItem) {
-            return oldItem.getId() == newItem.getId();
+            return oldItem.getId().equals(newItem.getId());
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull VisitorViewModel.VisitorData oldItem, @NonNull VisitorViewModel.VisitorData newItem) {
-            return oldItem.getId() == newItem.getId() &&
+            return oldItem.getId().equals(newItem.getId()) &&
                     oldItem.isRead() == newItem.isRead() &&
                     oldItem.isCheck() == newItem.isCheck();
         }

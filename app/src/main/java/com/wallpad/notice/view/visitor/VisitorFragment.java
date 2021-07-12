@@ -38,7 +38,7 @@ public class VisitorFragment extends Fragment {
         binding.recyclerView.setAdapter(adapter);
         binding.setLifecycleOwner(this);
         viewModel.getVisitors().observe(getViewLifecycleOwner(), data -> {
-            Collections.sort(data);
+            //Collections.sort(data);
             adapter.setData(data);
         });
         viewModel.getVisitorCallback().observe(getViewLifecycleOwner(), data -> {

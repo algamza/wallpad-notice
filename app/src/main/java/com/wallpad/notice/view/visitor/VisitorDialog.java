@@ -18,11 +18,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class VisitorDialog extends BaseDialog {
     private VisitorDialogViewModel viewModel;
-    private final int id;
+    private final String id;
     private final String place;
     private final String date;
     private final String path;
-    public VisitorDialog(int id, String place, String date, String path) {
+    public VisitorDialog(String id, String place, String date, String path) {
         this.id = id;
         this.place = place;
         this.date = date;
@@ -42,7 +42,6 @@ public class VisitorDialog extends BaseDialog {
         binding.setLifecycleOwner(this);
         binding.setView(this);
         binding.setVisitor(viewModel);
-        builder.setView(binding.getRoot());
         return builder.create();
     }
 

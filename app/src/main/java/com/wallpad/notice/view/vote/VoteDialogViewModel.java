@@ -26,7 +26,6 @@ public class VoteDialogViewModel extends ViewModel {
     }
 
     public void setId(int masterId) {
-        Log.d("KSKIM", "setId="+masterId);
         this.masterId = masterId;
         vote = Transformations.map(repository.getVoteDetail(masterId), model -> {
             if ( model == null ) return null;
@@ -54,7 +53,6 @@ public class VoteDialogViewModel extends ViewModel {
     public LiveData<Integer> getVoteCode() { return voteCode; }
     public void setVoteCode(int voteCode) { this.voteCode.postValue(voteCode); }
     public void applyVote() {
-        Log.d("KSKIM", "applyVote="+masterId);
         repository.requestVote(masterId, voteCode.getValue());
     }
 

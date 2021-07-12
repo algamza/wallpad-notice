@@ -41,7 +41,6 @@ public class ContentProviderHelper {
     }
 
     private static final String URI_INFO = "content://com.wallpad.service.provider.InfoContentProvider/t_info";
-
     public static final String CONTENT_KEY = "content";
     public static final String CONTENT_ID = "id";
     public static final String ID_PARCEL_INFO = "3";                  //2ND01_02
@@ -51,6 +50,11 @@ public class ContentProviderHelper {
     public static final String ID_VOTING_COMPLETE_NOTIFY = "13";     //2VO01_03
     public static final String ID_NOTICE_INFO = "14";                                      //2NB01_01
     public static final String ID_NOTICE_NOTIFY = "15";                                    //2NB01_02
+
+    public static final String VISITOR_CONTENT_URI = "content://com.wallpad.service.provider.VisitorInfoContentProvider/t_visitorInfo";
+    public static final String KEY_VISITOR_FILE_NAME = "filename";
+    public static final String KEY_VISITOR_TYPE = "type";
+    public static final String KEY_VISITOR_TIME = "time";
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final Context context;
@@ -64,7 +68,6 @@ public class ContentProviderHelper {
     }
 
     public void setCallback(ICallback callback) { this.callback = callback; }
-
 
     private void registObserver() {
         context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_PARCEL_INFO), false, observer);
@@ -199,169 +202,56 @@ public class ContentProviderHelper {
         });
     }
 
-    public void testNoticeUpdate() {
-        executorService.execute(() -> {
-            String str = "{\n" +
-                    "\n" +
-                    "\"Error_Cd\":0000,\n" +
-                    "\"Error_Nm\":\"성공\",\n" +
-                    "\n" +
-                    "\"Resource\" : {\n" +
-                    "\n" +
-                    "           Total_Count: 8,\n" +
-                    "\n" +
-                    "           Notice_Board_List : [\n" +
-                    "\n" +
-                    "                     {\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Seq\":\"12345\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Title\":\"반려견 금지\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Contents\":\"민원이 많이 옵니다. 키우지 마세요.\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_File_Path\":\"파일경로\",\n" +
-                    "\n" +
-                    "                                \"Reg_Date\":\"20200522154321500\"\n" +
-                    "\n" +
-                    "                     },\n" +
-                    "                                          {\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Seq\":\"12335\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Title\":\"화단앞 주차 금지\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Contents\":\"민원이 많이 옵니다. 주차하지 마세요.\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_File_Path\":\"파일경로\",\n" +
-                    "\n" +
-                    "                                \"Reg_Date\":\"20200521154321500\"\n" +
-                    "\n" +
-                    "                     },\n" +
-                    "                                          {\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Seq\":\"12245\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Title\":\"주민투표 공지\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Contents\":\"주민 투표에 참여하세요\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_File_Path\":\"파일경로\",\n" +
-                    "\n" +
-                    "                                \"Reg_Date\":\"20200520154321500\"\n" +
-                    "\n" +
-                    "                     },\n" +
-                    "                                          {\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Seq\":\"11345\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Title\":\"방역 작업 안내\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Contents\":\"방역 작업 진행 예정입니다.\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_File_Path\":\"파일경로\",\n" +
-                    "\n" +
-                    "                                \"Reg_Date\":\"20200519154321500\"\n" +
-                    "\n" +
-                    "                     },\n" +
-                    "                                          {\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Seq\":\"11245\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Title\":\"분리수거 안내\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Contents\":\"분리수거 철저하게 해주세요.\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_File_Path\":\"파일경로\",\n" +
-                    "\n" +
-                    "                                \"Reg_Date\":\"20200518154321500\"\n" +
-                    "\n" +
-                    "                     },\n" +
-                    "                                          {\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Seq\":\"11145\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Title\":\"택배 안내\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Contents\":\"택배 일주일 안에 받아가세요\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_File_Path\":\"파일경로\",\n" +
-                    "\n" +
-                    "                                \"Reg_Date\":\"20200517154321500\"\n" +
-                    "\n" +
-                    "                     },\n" +
-                    "                                          {\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Seq\":\"10345\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Title\":\"배달 음식 금지\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Contents\":\"배달 음식 금지\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_File_Path\":\"파일경로\",\n" +
-                    "\n" +
-                    "                                \"Reg_Date\":\"20200516154321500\"\n" +
-                    "\n" +
-                    "                     },\n" +
-                    "                                          {\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Seq\":\"10245\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Title\":\"화단 공사 안내\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_Contents\":\"화단 공사가 진행될 예정입니다.\",\n" +
-                    "\n" +
-                    "                                \"Notice_Board_File_Path\":\"파일경로\",\n" +
-                    "\n" +
-                    "                                \"Reg_Date\":\"20200510154321500\"\n" +
-                    "\n" +
-                    "                     }\n" +
-                    "\n" +
-                    "           ]\n" +
-                    "}\n" +
-                    "\n" +
-                    "}";
-            RemoteNoticeEntity entity = gson.fromJson(str, RemoteNoticeEntity.class);
-            if ( callback == null || entity == null ) return;
-            callback.onUpdateNotice(Mapper.mapToEntities(entity));
-        });
+    public void requestVisitorInfo() {
+        List<VisitorEntity> entities = new ArrayList<>();
+        try (Cursor cursor = context.getContentResolver().query(Uri.parse(VISITOR_CONTENT_URI), null, null, null, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    if (cursor.moveToFirst()) {
+                        while (!cursor.isAfterLast()) {
+                            try {
+                                String filename = cursor.getString(cursor.getColumnIndex(KEY_VISITOR_FILE_NAME));
+                                String type = cursor.getString(cursor.getColumnIndex(KEY_VISITOR_TYPE));
+                                String time = cursor.getString(cursor.getColumnIndex(KEY_VISITOR_TIME));
+                                entities.add(new VisitorEntity(time+filename, filename, type, time, false));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            cursor.moveToNext();
+                        }
+                    }
+                } while (cursor.moveToNext());
+            }
+        }
+        if ( callback != null ) callback.onUpdateVisitor(entities);
     }
 
-    // TEST
-    List<VisitorEntity> visitors = new ArrayList<>();
-    public void testVisitorUpdate() {
-        visitors.add(new VisitorEntity(0, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20190405132030.mp4", "02000011", "20200404132030", false));
-        visitors.add(new VisitorEntity(1, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20190305132030.mp4", "Door", "20200401132030", false));
-        visitors.add(new VisitorEntity(2, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20190205132030.mp4", "Door", "20200320132030", false));
-        visitors.add(new VisitorEntity(3, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20190105132030.mp4", "Motion", "20200319132030", false));
-        visitors.add(new VisitorEntity(4, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20180805132030.mp4", "Motion", "20200315132030", false));
-        visitors.add(new VisitorEntity(5, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20180605132030.mp4", "02000011", "20200311132030", false));
-        visitors.add(new VisitorEntity(6, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20180505132030.mp4", "02000011", "20200212132030", false));
-        visitors.add(new VisitorEntity(7, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20180405132030.mp4", "02000011", "20200211132030", false));
-        visitors.add(new VisitorEntity(8, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20180305132030.mp4", "Motion", "20200209132030", false));
-        visitors.add(new VisitorEntity(9, "/9j/4AAEAAD/2wBDAAYEBAQFBAYFBQYJBgUG/20180205132030.mp4", "02000011", "20200101132030", false));
-        if ( callback == null ) return;
-        callback.onUpdateVisitor(visitors);
-    }
-    public void deleteVisitors(List<Integer> ids) {
-        for ( int id : ids ) {
+    public void deleteVisitors(List<String> ids) {
+        /*
+        for ( String id : ids ) {
             VisitorEntity entity = findVisitor(id);
             if ( entity == null ) continue;
             visitors.remove(entity);
         }
+
+         */
     }
-    public void deleteVisitor(int id) {
+    public void deleteVisitor(String id) {
+        /*
         VisitorEntity entity = findVisitor(id);
         if ( entity != null ) visitors.remove(entity);
+
+         */
     }
 
+    /*
     public List<VisitorEntity> getVisitor() { return visitors; }
 
-    private VisitorEntity findVisitor(int id) {
+    private VisitorEntity findVisitor(String id) {
         for ( VisitorEntity visitor: visitors ) {
-            if ( id == visitor.getId() ) return visitor;
+            if ( id.equals(visitor.getId()) ) return visitor;
         }
         return null;
     }
-
+*/
 }
