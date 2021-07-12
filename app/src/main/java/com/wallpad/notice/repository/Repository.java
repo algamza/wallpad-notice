@@ -1,26 +1,23 @@
 package com.wallpad.notice.repository;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.wallpad.IWallpadData;
 import com.wallpad.notice.model.DeliveryModel;
 import com.wallpad.notice.model.NoticeModel;
-import com.wallpad.notice.model.VoteModel;
 import com.wallpad.notice.model.VisitorModel;
+import com.wallpad.notice.model.VoteModel;
 import com.wallpad.notice.repository.common.Mapper;
 import com.wallpad.notice.repository.local.dao.DeliveryDao;
 import com.wallpad.notice.repository.local.dao.NoticeDao;
-import com.wallpad.notice.repository.local.dao.VoteDao;
 import com.wallpad.notice.repository.local.dao.VisitorDao;
+import com.wallpad.notice.repository.local.dao.VoteDao;
 import com.wallpad.notice.repository.local.entities.DeliveryEntity;
 import com.wallpad.notice.repository.local.entities.NoticeEntity;
+import com.wallpad.notice.repository.local.entities.VisitorEntity;
 import com.wallpad.notice.repository.local.entities.VoteDetailEntity;
 import com.wallpad.notice.repository.local.entities.VoteEntity;
-import com.wallpad.notice.repository.local.entities.VisitorEntity;
 import com.wallpad.notice.repository.local.entities.VoteInfoEntity;
 import com.wallpad.notice.repository.remote.ContentProviderHelper;
 import com.wallpad.notice.repository.remote.IWallpadServiceHelper;
@@ -127,6 +124,12 @@ public class Repository {
         executorService.execute(iWallpadServiceHelper::refreshVoteInfo);
         return vote;
     }
+
+    public LiveData<VoteModel> getVoteDetail(int masterKey) {
+        executorService.execute(()-> iWallpadServiceHelper.refreshVoteDetail(masterKey));
+        return Transformations.map(voteDao.getVoteEntity(masterKey), Mapper::mapToModel);
+    }
+
     public void readNoticeVote(int id) {
         executorService.execute(() -> voteDao.updateRead(id, true));
     }
@@ -198,18 +201,13 @@ public class Repository {
             executorService.execute(() -> {
                 voteDao.deleteNotInEntities(Mapper.getVoteKeys(entities));
                 voteDao.insertInfos(entities);
-                for ( VoteInfoEntity entity : entities ) {
-                    iWallpadServiceHelper.refreshVoteDetail(String.valueOf(entity.getMasterKey()));
-                }
             });
         }
 
         @Override
         public void onUpdateDetailVotes(List<VoteDetailEntity> entities) {
             if ( entities == null || entities.size() == 0 ) return;
-            executorService.execute(() -> {
-                voteDao.insertDetails(entities);
-            });
+            executorService.execute(() -> voteDao.insertDetails(entities));
         }
 
         @Override

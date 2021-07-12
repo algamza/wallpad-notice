@@ -62,7 +62,7 @@ public class Mapper {
                 mapToVoteState(info.getStatus()), info.isRead(), detailModels);
     }
 
-    private static VoteModel.TYPE mapToVoteType(int type) {
+    public static VoteModel.TYPE mapToVoteType(int type) {
         switch (type) {
             case 0: return VoteModel.TYPE.ALL;
             case 102: return VoteModel.TYPE.SELECT;
@@ -99,9 +99,13 @@ public class Mapper {
         List<RemoteVoteDetailEntity.Resource.Vote_Info_List> infos = resource.getVote_Info_List();
         for ( RemoteVoteDetailEntity.Resource.Vote_Info_List info : infos ) {
             votes.add(new VoteDetailEntity(Integer.parseInt(info.getVote_Info_Master_Seq()), Integer.parseInt(info.getVote_Info_Detail_Cd()),
-                    info.getVote_Info_Detail_Nm(), info.getVote_Info_Detail_Description(), Integer.parseInt(info.getVote_Pick()) == 0));
+                    info.getVote_Info_Detail_Nm(), info.getVote_Info_Detail_Description(), Integer.parseInt(info.getVote_Pick()) == 1));
         }
         return votes;
+    }
+
+    public static VoteModel.Detail mapToVoteDetail(VoteDetailEntity entity) {
+        return new VoteModel.Detail(entity.getDetailCode(), entity.getTitle(), entity.getDescription(), entity.isVote());
     }
 
     public static List<VoteInfoEntity> mapToVoteEntities(RemoteVoteEntity entity) {

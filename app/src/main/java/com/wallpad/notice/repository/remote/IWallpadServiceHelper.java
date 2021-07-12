@@ -69,7 +69,6 @@ public class IWallpadServiceHelper {
     public void refreshParcelInfo() {
         if ( iWallpadData == null ) return;
         try {
-            Log.d("KSKIM", "refreshParcelInfo");
             iWallpadData.refreshParcelInfo("128", "1");
         } catch (RemoteException e) {
             Log.e(TAG, "error="+e);
@@ -85,10 +84,10 @@ public class IWallpadServiceHelper {
         }
     }
 
-    public void refreshVoteDetail(String id) {
+    public void refreshVoteDetail(int masterKey) {
         if ( iWallpadData == null ) return;
         try {
-            iWallpadData.refreshVoteDetailInfo(id);
+            iWallpadData.refreshVoteDetailInfo(String.valueOf(masterKey));
         } catch (RemoteException e) {
             Log.e(TAG, "error="+e);
         }

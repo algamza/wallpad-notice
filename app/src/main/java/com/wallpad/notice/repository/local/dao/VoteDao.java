@@ -19,6 +19,14 @@ public interface VoteDao {
     @Query("SELECT * FROM VoteInfoEntity")
     LiveData<List<VoteEntity>> getEntities();
 
+    @Transaction
+    @Query("SELECT * FROM VoteDetailEntity WHERE masterKey =:masterKey")
+    LiveData<List<VoteDetailEntity>> getVoteDetailEntities(int masterKey);
+
+    @Transaction
+    @Query("SELECT * FROM VoteInfoEntity WHERE masterKey =:masterKey")
+    LiveData<VoteEntity> getVoteEntity(int masterKey);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertInfos(List<VoteInfoEntity> infos);
 

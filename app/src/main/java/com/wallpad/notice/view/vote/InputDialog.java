@@ -30,7 +30,7 @@ public class InputDialog extends BaseDialog {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(VoteDialogViewModel.class);
+        viewModel = new ViewModelProvider(this.getParentFragment()).get(VoteDialogViewModel.class);
         DialogInputBinding binding = DataBindingUtil.inflate(inflater, R.layout.dialog_input, container, false);
         binding.setLifecycleOwner(this);
         binding.setViewModel(viewModel);

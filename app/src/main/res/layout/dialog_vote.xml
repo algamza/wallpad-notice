@@ -76,7 +76,7 @@
                     android:paddingTop="24dp"
                     android:paddingEnd="28dp"
                     android:paddingBottom="16dp"
-                    android:text="@{Html.fromHtml(vote.vote.content)}"
+                    android:text="@{vote.vote.content==null?null:Html.fromHtml(vote.vote.content)}"
                     android:textColor="@color/dialog_font"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -3,6 +3,7 @@ package com.wallpad.notice.view.vote;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import androidx.annotation.NonNull;
@@ -59,6 +60,6 @@ public class VoteDialog extends BaseDialog {
 
     public void onClickVote() {
         InputDialog dialog = new InputDialog();
-        dialog.show(requireActivity().getSupportFragmentManager(), dialog.getTag());
+        dialog.show(this.getChildFragmentManager(), dialog.getTag());
     }
 }

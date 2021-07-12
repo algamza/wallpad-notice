@@ -1,5 +1,7 @@
 package com.wallpad.notice.view.vote;
 
+import android.util.Log;
+
 import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -23,29 +25,26 @@ public class VoteDialogViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    public void setId(int id) {
-        vote = Transformations.map(repository.getVote(), models -> {
-            List<Vote.Menu> menu = new ArrayList<>();
-            masterId = 0;
-            String title = "";
-            String content = "";
+    public void setId(int masterId) {
+        Log.d("KSKIM", "setId="+masterId);
+        this.masterId = masterId;
+        vote = Transformations.map(repository.getVoteDetail(masterId), model -> {
+            if ( model == null ) return null;
+            String title = model.getTitle();
+            String content =  model.getContent();
             boolean voteAble = false;
-            int resIdTextState = 0;
-            for (VoteModel model : models) {
-                if ( model.getMasterId() != id ) continue;
-                masterId = model.getMasterId();
-                title = model.getTitle();
-                content = model.getContent();
-                resIdTextState = mapToResIdTextState(model.getState());
-                int voteCount = 0;
+            int resIdTextState = mapToResIdTextState(model.getState());
+            int voteCount = 0;
+            List<Vote.Menu> menu = new ArrayList<>();
+            if ( model.getDetails() != null ) {
                 for ( VoteModel.Detail detail : model.getDetails() ) {
                     if ( detail.isVote() ) voteCount++;
                     menu.add(new Vote.Menu(detail.getVoteCode(), detail.getTitle(), detail.getContent(), detail.isVote()));
                 }
-                if ( model.getState() == VoteModel.STATE.VOTE_PROGRESS ) {
-                    if ( model.getSystem() == VoteModel.SYSTEM.SINGLE ) voteAble = (voteCount == 0);
-                    voteAble = true;
-                }
+            }
+            if ( model.getState() == VoteModel.STATE.VOTE_PROGRESS ) {
+                if ( model.getSystem() == VoteModel.SYSTEM.SINGLE ) voteAble = (voteCount == 0);
+                else voteAble = true;
             }
             return new Vote(masterId, title, content, resIdTextState, voteAble, menu);
         });
@@ -54,7 +53,10 @@ public class VoteDialogViewModel extends ViewModel {
     public LiveData<Vote> getVote() { return vote; }
     public LiveData<Integer> getVoteCode() { return voteCode; }
     public void setVoteCode(int voteCode) { this.voteCode.postValue(voteCode); }
-    public void applyVote() { repository.requestVote(masterId, voteCode.getValue()); }
+    public void applyVote() {
+        Log.d("KSKIM", "applyVote="+masterId);
+        repository.requestVote(masterId, voteCode.getValue());
+    }
 
     private int mapToResIdTextState(VoteModel.STATE state) {
         switch (state) {
