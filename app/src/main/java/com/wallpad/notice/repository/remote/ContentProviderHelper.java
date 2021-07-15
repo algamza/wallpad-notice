@@ -260,9 +260,10 @@ public class ContentProviderHelper {
 
     public void deleteVisitor(String id) {
         try {
-            String where = KEY_VISITOR_FILE_NAME+" = ?";
+            String where = KEY_VISITOR_FILE_NAME+"=?";
             String[] args = {id};
             context.getContentResolver().delete(Uri.parse(VISITOR_CONTENT_URI), where, args);
+            for ( String str: args ) deleteDir(str);
         } catch (Exception e) {
         }
     }
