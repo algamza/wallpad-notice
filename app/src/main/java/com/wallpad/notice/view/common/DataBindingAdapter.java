@@ -1,7 +1,12 @@
 package com.wallpad.notice.view.common;
 
 
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.Typeface;
+import android.media.ThumbnailUtils;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -33,6 +38,25 @@ public class DataBindingAdapter {
     public static void setText(TextView view, int id) {
         if ( id == 0 ) return;
         view.setText(id);
+    }
+
+    @BindingAdapter("thumbnail")
+    public static void setThumbnail(ImageView view, String path) {
+        if ( path == null || path.length() == 0 ) return;
+        try {
+            if ( path.contains("mp4") ) {
+                Bitmap thumb = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
+                Matrix matrix = new Matrix();
+                assert thumb != null;
+                Bitmap bitmap = Bitmap.createBitmap(thumb, 0, 0,
+                        thumb.getWidth(), thumb.getHeight(), matrix, true);
+                Glide.with(view.getContext()).load(bitmap).into(view);
+            } else {
+                Glide.with(view.getContext()).load(path).into(view);
+            }
+        } catch (Exception e) {
+            Log.d("DataBindingAdapter", e.toString());
+        }
     }
 
     @BindingAdapter("src")

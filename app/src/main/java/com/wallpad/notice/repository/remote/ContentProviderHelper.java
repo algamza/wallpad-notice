@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 
@@ -22,6 +23,7 @@ import com.wallpad.notice.repository.remote.entities.RemoteParcelNotifyEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteVoteDetailEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteVoteEntity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -39,7 +41,7 @@ public class ContentProviderHelper {
         void onUpdateNoticeNotify(NoticeEntity entity);
         void onUpdateVisitor(List<VisitorEntity> entities);
     }
-
+    private static final String TAG = ContentProviderHelper.class.getSimpleName();
     private static final String URI_INFO = "content://com.wallpad.service.provider.InfoContentProvider/t_info";
     public static final String CONTENT_KEY = "content";
     public static final String CONTENT_ID = "id";
@@ -213,7 +215,7 @@ public class ContentProviderHelper {
                                 String filename = cursor.getString(cursor.getColumnIndex(KEY_VISITOR_FILE_NAME));
                                 String type = cursor.getString(cursor.getColumnIndex(KEY_VISITOR_TYPE));
                                 String time = cursor.getString(cursor.getColumnIndex(KEY_VISITOR_TIME));
-                                entities.add(new VisitorEntity(time+filename, filename, type, time, false));
+                                entities.add(new VisitorEntity(filename, filename, type, time, false));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -226,32 +228,42 @@ public class ContentProviderHelper {
         if ( callback != null ) callback.onUpdateVisitor(entities);
     }
 
+    public void deleteVisitorAll() {
+        try {
+            context.getContentResolver().delete(Uri.parse(VISITOR_CONTENT_URI), null, null);
+        } catch (Exception e) {
+        }
+    }
+
     public void deleteVisitors(List<String> ids) {
-        /*
-        for ( String id : ids ) {
-            VisitorEntity entity = findVisitor(id);
-            if ( entity == null ) continue;
-            visitors.remove(entity);
+        try {
+            String where = KEY_VISITOR_FILE_NAME+"=?";
+            String[] args = ids.toArray(new String[0]);
+            context.getContentResolver().delete(Uri.parse(VISITOR_CONTENT_URI), where, args);
+            for ( String str: args ) deleteDir(str);
+        } catch (Exception e) {
+            Log.d(TAG, "deleteVisitors="+e.toString());
         }
-
-         */
     }
+
+    private void deleteDir(String path) {
+        try {
+            //Cursor c = context.getContentResolver().query()
+            File myFile = new File(path);
+            if (myFile.exists()) {
+                myFile.delete();
+            }
+        } catch (Exception ignored){
+            Log.e(TAG, ignored.getMessage());
+        }
+    }
+
     public void deleteVisitor(String id) {
-        /*
-        VisitorEntity entity = findVisitor(id);
-        if ( entity != null ) visitors.remove(entity);
-
-         */
-    }
-
-    /*
-    public List<VisitorEntity> getVisitor() { return visitors; }
-
-    private VisitorEntity findVisitor(String id) {
-        for ( VisitorEntity visitor: visitors ) {
-            if ( id.equals(visitor.getId()) ) return visitor;
+        try {
+            String where = KEY_VISITOR_FILE_NAME+" = ?";
+            String[] args = {id};
+            context.getContentResolver().delete(Uri.parse(VISITOR_CONTENT_URI), where, args);
+        } catch (Exception e) {
         }
-        return null;
     }
-*/
 }

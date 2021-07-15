@@ -9,19 +9,21 @@ import com.wallpad.notice.repository.Repository;
 
 public class VisitorDialogViewModel extends ViewModel {
     public final Repository repository;
-    private MutableLiveData<String> place = new MutableLiveData<>();
+    private MutableLiveData<Integer> place = new MutableLiveData<>();
     private MutableLiveData<String> date = new MutableLiveData<>();
     private MutableLiveData<String> screen = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isMedia = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isPrepare = new MutableLiveData<>(false);
 
     @ViewModelInject public VisitorDialogViewModel(Repository repository) {
         this.repository = repository;
     }
 
-    public LiveData<String> getPlace() {
+    public LiveData<Integer> getPlace() {
         return place;
     }
 
-    public void setPlace(String place) {
+    public void setPlace(Integer place) {
         this.place.postValue(place);
     }
 
@@ -39,6 +41,22 @@ public class VisitorDialogViewModel extends ViewModel {
 
     public void setScreen(String screen) {
         this.screen.postValue(screen);
+    }
+
+    public LiveData<Boolean> getIsMedia() {
+        return isMedia;
+    }
+
+    public void setIsMedia(boolean isMedia) {
+        this.isMedia.postValue(isMedia);
+    }
+
+    public LiveData<Boolean> getIsPrepare() {
+        return isPrepare;
+    }
+
+    public void setIsPrepare(boolean isPrepare) {
+        this.isPrepare.postValue(isPrepare);
     }
 
     public void deleteVisitor(String id) {

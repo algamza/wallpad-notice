@@ -161,14 +161,13 @@ public class Repository {
     }
     public void readNoticeVisitor(String id) { executorService.execute(() -> visitorDao.updateRead(id, true)); }
 
+    public void deleteVisitorAll() {
+
+    }
     public void deleteVisitors(List<String> ids) {
         executorService.execute(() -> {
             contentProviderHelper.deleteVisitors(ids);
             contentProviderHelper.requestVisitorInfo();
-            /*
-            visitorDao.deleteNotInclude(Mapper.getVisitorIds(contentProviderHelper.getVisitor()));
-            visitorDao.insertEntities(contentProviderHelper.getVisitor());
-             */
         });
     }
 
@@ -176,10 +175,6 @@ public class Repository {
         executorService.execute(() -> {
             contentProviderHelper.deleteVisitor(id);
             contentProviderHelper.requestVisitorInfo();
-            /*
-            visitorDao.deleteNotInclude(Mapper.getVisitorIds(contentProviderHelper.getVisitor()));
-            visitorDao.insertEntities(contentProviderHelper.getVisitor());
-             */
         });
     }
 

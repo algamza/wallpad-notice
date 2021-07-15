@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
+import com.wallpad.notice.R;
 import com.wallpad.notice.model.VisitorModel;
 import com.wallpad.notice.repository.Repository;
 import com.wallpad.notice.view.common.Mapper;
@@ -43,7 +44,7 @@ public class VisitorViewModel extends ViewModel {
 
     private final VisitorData.ICallback callback = new VisitorData.ICallback() {
         @Override
-        public void onClick(String id, String place, String date, String path) {
+        public void onClick(String id, int place, String date, String path) {
             readNotice(id);
             visitorCallback.postValue(new VisitorCallback(id, place, date, path));
         }
@@ -72,16 +73,15 @@ public class VisitorViewModel extends ViewModel {
         for ( VisitorData data : visitors.getValue() ) {
             if ( !data.isCheck() ) continue;
             ids.add(data.getId());
-            // TODO:
         }
         repository.deleteVisitors(ids);
     }
 
-    private String mapToPlace(String place) {
-        if ( place == null ) return "";
-        if ( place.contains("Door") ) return "세대현관";
-        if ( place.contains("Motion") ) return "동작감지";
-        return "로비";
+    private int mapToPlace(String place) {
+        if ( place == null ) return 0;
+        if ( place.contains("door") ) return R.string.STR_HOUSEHOLD_ENTRANCE;
+        if ( place.contains("lobby") ) return R.string.STR_COMMON_ENTRANCE;
+        return 0;
     }
 
     public static class Check {
@@ -112,11 +112,11 @@ public class VisitorViewModel extends ViewModel {
 
     public static class VisitorCallback {
         private String id;
-        private String place;
+        private int place;
         private String date;
         private String path;
 
-        public VisitorCallback(String id, String place, String date, String path) {
+        public VisitorCallback(String id, int place, String date, String path) {
             this.id = id;
             this.place = place;
             this.date = date;
@@ -131,11 +131,11 @@ public class VisitorViewModel extends ViewModel {
             this.id = id;
         }
 
-        public String getPlace() {
+        public int getPlace() {
             return place;
         }
 
-        public void setPlace(String place) {
+        public void setPlace(int place) {
             this.place = place;
         }
 
@@ -158,19 +158,19 @@ public class VisitorViewModel extends ViewModel {
 
     public static class VisitorData {
         public interface ICallback {
-            void onClick(String id, String place, String date, String path);
+            void onClick(String id, int place, String date, String path);
             void onClickCheck(String id, boolean check);
         }
 
         private ICallback callback;
         private String id;
         private String path;
-        private String place;
+        private int place;
         private String date;
         private boolean read;
         private boolean check;
 
-        public VisitorData(ICallback callback, String id, String path, String place, String date, boolean read, boolean check) {
+        public VisitorData(ICallback callback, String id, String path, int place, String date, boolean read, boolean check) {
             this.callback = callback;
             this.id = id;
             this.path = path;
@@ -204,11 +204,11 @@ public class VisitorViewModel extends ViewModel {
             this.path = path;
         }
 
-        public String getPlace() {
+        public int getPlace() {
             return place;
         }
 
-        public void setPlace(String place) {
+        public void setPlace(int place) {
             this.place = place;
         }
 

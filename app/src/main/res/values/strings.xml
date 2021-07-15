@@ -27,6 +27,8 @@
     <string name="STR_SELECT_DELETE">선택 삭제</string>
     <string name="STR_ALL_DELETE">전체 삭제</string>
     <string name="STR_CONFIRM">확인</string>
+    <string name="STR_COMMON_ENTRANCE">공동현관</string>
+    <string name="STR_HOUSEHOLD_ENTRANCE">세대현관</string>
 
     <string name="STR_IS_PROGRESS_COMPLETED">투표 완료되었습니다.</string>
     <string name="STR_IS_PROCEEDING">투표 진행중입니다.</string>
