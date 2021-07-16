@@ -77,7 +77,6 @@ public class VisitorDialog extends BaseDialog {
                 mediaPlayer.setDataSource(path);
                 mediaPlayer.setDisplay(holder);
                 mediaPlayer.prepareAsync();
-                mediaPlayer.start();
             } catch (IllegalArgumentException | IllegalStateException | IOException e) {
                 e.printStackTrace();
             }
@@ -99,6 +98,7 @@ public class VisitorDialog extends BaseDialog {
         @Override
         public void onPrepared(MediaPlayer mp) {
             viewModel.setIsPrepare(true);
+            mp.start();
         }
     };
 
