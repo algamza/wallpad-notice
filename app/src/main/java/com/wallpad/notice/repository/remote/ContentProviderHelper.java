@@ -58,6 +58,9 @@ public class ContentProviderHelper {
     public static final String KEY_VISITOR_TYPE = "type";
     public static final String KEY_VISITOR_TIME = "time";
 
+    public static final String KEY_VISITOR_INFO_ALL_MESSAGE = "KEY_VISITOR_INFO_ALL_MESSAGE";
+    public static final String KEY_VISITOR_INFO_FILENAME_MESSAGE = "KEY_VISITOR_INFO_FILENAME_MESSAGE";
+
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final Context context;
     private ICallback callback;
@@ -228,18 +231,11 @@ public class ContentProviderHelper {
         if ( callback != null ) callback.onUpdateVisitor(entities);
     }
 
-    public void deleteVisitorAll() {
+    public void deleteVisitors(List<String> ids, boolean isAll) {
         try {
-            context.getContentResolver().delete(Uri.parse(VISITOR_CONTENT_URI), null, null);
-        } catch (Exception e) {
-        }
-    }
-
-    public void deleteVisitors(List<String> ids) {
-        try {
-            String where = KEY_VISITOR_FILE_NAME+"=?";
             String[] args = ids.toArray(new String[0]);
-            context.getContentResolver().delete(Uri.parse(VISITOR_CONTENT_URI), where, args);
+            if ( isAll ) context.getContentResolver().delete(Uri.parse(VISITOR_CONTENT_URI), KEY_VISITOR_INFO_ALL_MESSAGE, null);
+            else context.getContentResolver().delete(Uri.parse(VISITOR_CONTENT_URI), KEY_VISITOR_INFO_FILENAME_MESSAGE, args);
             for ( String str: args ) deleteDir(str);
         } catch (Exception e) {
             Log.d(TAG, "deleteVisitors="+e.toString());

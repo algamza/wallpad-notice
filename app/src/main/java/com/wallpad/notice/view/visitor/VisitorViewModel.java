@@ -62,10 +62,8 @@ public class VisitorViewModel extends ViewModel {
 
     public void onClickRemoveAll() {
         List<String> ids = new ArrayList<>();
-        for ( VisitorData data : visitors.getValue() ) {
-            ids.add(data.getId());
-        }
-        repository.deleteVisitors(ids);
+        for ( VisitorData data : visitors.getValue() ) ids.add(data.getId());
+        repository.deleteVisitors(ids, true);
     }
 
     public void onClickRemoveSelected() {
@@ -74,7 +72,7 @@ public class VisitorViewModel extends ViewModel {
             if ( !data.isCheck() ) continue;
             ids.add(data.getId());
         }
-        repository.deleteVisitors(ids);
+        repository.deleteVisitors(ids, false);
     }
 
     private int mapToPlace(String place) {

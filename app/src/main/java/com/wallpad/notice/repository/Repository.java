@@ -161,12 +161,9 @@ public class Repository {
     }
     public void readNoticeVisitor(String id) { executorService.execute(() -> visitorDao.updateRead(id, true)); }
 
-    public void deleteVisitorAll() {
-
-    }
-    public void deleteVisitors(List<String> ids) {
+    public void deleteVisitors(List<String> ids, boolean isAll) {
         executorService.execute(() -> {
-            contentProviderHelper.deleteVisitors(ids);
+            contentProviderHelper.deleteVisitors(ids, isAll);
             contentProviderHelper.requestVisitorInfo();
         });
     }
@@ -183,7 +180,7 @@ public class Repository {
     private final ContentProviderHelper.ICallback contentProviderCallback = new ContentProviderHelper.ICallback() {
         @Override
         public void onUpdateParcels(List<DeliveryEntity> entities) {
-            if ( entities == null || entities.size() == 0 ) return;
+            if ( entities == null ) return;
             executorService.execute(() -> {
                 deliveryDao.deleteNotInclude(Mapper.getDeliveryKeys(entities));
                 deliveryDao.insertEntities(entities);
@@ -198,7 +195,7 @@ public class Repository {
 
         @Override
         public void onUpdateVotes(List<VoteInfoEntity> entities) {
-            if ( entities == null || entities.size() == 0 ) return;
+            if ( entities == null ) return;
             executorService.execute(() -> {
                 voteDao.deleteNotInEntities(Mapper.getVoteKeys(entities));
                 voteDao.insertInfos(entities);
@@ -207,13 +204,13 @@ public class Repository {
 
         @Override
         public void onUpdateDetailVotes(List<VoteDetailEntity> entities) {
-            if ( entities == null || entities.size() == 0 ) return;
+            if ( entities == null ) return;
             executorService.execute(() -> voteDao.insertDetails(entities));
         }
 
         @Override
         public void onUpdateNotice(List<NoticeEntity> entities) {
-            if ( entities == null || entities.size() == 0 ) return;
+            if ( entities == null ) return;
             executorService.execute(() -> {
                 noticeDao.deleteNotInclude(Mapper.getNoticeIds(entities));
                 noticeDao.insertEntities(entities);
@@ -228,7 +225,7 @@ public class Repository {
 
         @Override
         public void onUpdateVisitor(List<VisitorEntity> entities) {
-            if ( entities == null || entities.size() == 0 ) return;
+            if ( entities == null ) return;
             executorService.execute(() -> {
                 visitorDao.deleteNotInclude(Mapper.getVisitorIds(entities));
                 visitorDao.insertEntities(entities);
