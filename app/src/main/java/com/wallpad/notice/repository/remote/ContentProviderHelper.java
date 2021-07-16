@@ -70,6 +70,7 @@ public class ContentProviderHelper {
         this.context = context;
         this.gson = gson;
         registObserver();
+
     }
 
     public void setCallback(ICallback callback) { this.callback = callback; }
@@ -82,7 +83,16 @@ public class ContentProviderHelper {
         context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_VOTING_COMPLETE_NOTIFY), false, observer);
         context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_NOTICE_INFO), false, observer);
         context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_NOTICE_NOTIFY), false, observer);
+        context.getContentResolver().registerContentObserver(Uri.parse(VISITOR_CONTENT_URI), false, visitorObserver);
     }
+
+    private final ContentObserver visitorObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            requestVisitorInfo();
+        }
+    };
 
     private final ContentObserver observer = new ContentObserver(new Handler()) {
         @Override
