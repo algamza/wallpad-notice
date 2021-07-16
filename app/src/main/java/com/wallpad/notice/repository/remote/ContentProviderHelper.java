@@ -252,6 +252,12 @@ public class ContentProviderHelper {
         }
     }
 
+    public void deleteVisitor(String id) {
+        List<String> ids = new ArrayList<>();
+        ids.add(id);
+        deleteVisitors(ids, false);
+    }
+
     private void deleteDir(String path) {
         try {
             //Cursor c = context.getContentResolver().query()
@@ -261,16 +267,6 @@ public class ContentProviderHelper {
             }
         } catch (Exception ignored){
             Log.e(TAG, ignored.getMessage());
-        }
-    }
-
-    public void deleteVisitor(String id) {
-        try {
-            String where = KEY_VISITOR_FILE_NAME+"=?";
-            String[] args = {id};
-            context.getContentResolver().delete(Uri.parse(VISITOR_CONTENT_URI), where, args);
-            for ( String str: args ) deleteDir(str);
-        } catch (Exception e) {
         }
     }
 }
