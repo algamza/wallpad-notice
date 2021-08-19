@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment;
 
 public class BaseDialog  extends DialogFragment {
     private static final String dialogAction = "com.wallpad.statusbar.action.DIALOG_ON";
-    private static final String dialogActionPackage = "com.kdiwin.wallpad.statusbar";
+    private static final String dialogActionPackage = "com.wallpad.statusbar";
     private static final String actionKey = "on";
 
     @NonNull
