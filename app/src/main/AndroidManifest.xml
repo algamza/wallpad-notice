@@ -12,7 +12,7 @@
         android:name="com.wallpad.notice.Notice"
         android:label="@string/STR_NOTICE"
         android:supportsRtl="true"
-        android:theme="@style/KDWallPad.Dark.CotaCharcoal">
+        android:theme="@style/KDWallPad">
         <activity
             android:name="com.wallpad.notice.view.MainActivity">
             <intent-filter>
