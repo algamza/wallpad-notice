@@ -7,17 +7,22 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LifecycleService;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
 import com.wallpad.IWallpadData;
+import com.wallpad.notice.R;
 import com.wallpad.notice.model.DeliveryModel;
 import com.wallpad.notice.model.NoticeModel;
 import com.wallpad.notice.model.VisitorModel;
 import com.wallpad.notice.model.VoteModel;
 import com.wallpad.notice.repository.Repository;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -33,6 +38,8 @@ public class NoticeService extends LifecycleService {
     private int visitorNewCount = 0;
     private static final String SETTINGS_NEW_MESSAGE_COUNT = "com.wallpad.settings.massage";
     private boolean bound = false;
+    private Timer timer = new Timer();
+    private boolean noticeToastEnable = false;
 
     @Override
     public void onCreate() {
@@ -58,6 +65,12 @@ public class NoticeService extends LifecycleService {
             for ( VisitorModel model : models ) if ( !model.isRead() ) count++;
             updateCount(count, 3);
         });
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                noticeToastEnable = true;
+            }
+        }, 10000);
     }
 
     @Override
@@ -73,8 +86,14 @@ public class NoticeService extends LifecycleService {
             case 2: referendumNewCount = count; break;
             case 3: visitorNewCount = count; break;
         }
-        Settings.Global.putInt(getContentResolver(), SETTINGS_NEW_MESSAGE_COUNT,
-                deliveryNewCount + notificationNewCount + referendumNewCount + visitorNewCount);
+
+        int allCount = deliveryNewCount + notificationNewCount + referendumNewCount + visitorNewCount;
+        int currentCount = Settings.Global.getInt(getContentResolver(), SETTINGS_NEW_MESSAGE_COUNT, 0);
+
+        if ( currentCount < allCount )
+            Toast.makeText(getApplicationContext(), getString(R.string.STR_DESCRIPTION_NEW_NOTICE), Toast.LENGTH_LONG).show();
+
+        Settings.Global.putInt(getContentResolver(), SETTINGS_NEW_MESSAGE_COUNT, allCount);
     }
 
     private void bindIGSmartService() {

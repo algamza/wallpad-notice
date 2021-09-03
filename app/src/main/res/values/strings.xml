@@ -54,4 +54,5 @@
     <string name="STR_ALL_REMOVE">전체\n지움</string>
     <string name="STR_CANCEL">취소</string>
     <string name="STR_APPLY">적용</string>
+    <string name="STR_DESCRIPTION_NEW_NOTICE">새로운 알림이 있습니다.</string>
 </resources>
