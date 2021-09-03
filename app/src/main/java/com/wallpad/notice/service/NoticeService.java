@@ -90,7 +90,7 @@ public class NoticeService extends LifecycleService {
         int allCount = deliveryNewCount + notificationNewCount + referendumNewCount + visitorNewCount;
         int currentCount = Settings.Global.getInt(getContentResolver(), SETTINGS_NEW_MESSAGE_COUNT, 0);
 
-        if ( currentCount < allCount )
+        if ( (currentCount < allCount) && noticeToastEnable)
             Toast.makeText(getApplicationContext(), getString(R.string.STR_DESCRIPTION_NEW_NOTICE), Toast.LENGTH_LONG).show();
 
         Settings.Global.putInt(getContentResolver(), SETTINGS_NEW_MESSAGE_COUNT, allCount);
