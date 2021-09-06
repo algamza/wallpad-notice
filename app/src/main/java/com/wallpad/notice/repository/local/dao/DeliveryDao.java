@@ -5,9 +5,12 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.wallpad.notice.repository.local.entities.DeliveryEntity;
+import com.wallpad.notice.repository.local.entities.DeliveryReadEntity;
+import com.wallpad.notice.repository.local.entities.ReadDeliveryEntity;
 
 import java.util.List;
 
@@ -25,9 +28,6 @@ public interface DeliveryDao {
     @Update
     void updateEntity(DeliveryEntity entity);
 
-    @Query("UPDATE DeliveryEntity SET read=:read WHERE id=:id")
-    void updateRead(long id, boolean read);
-
     @Query("DELETE FROM DeliveryEntity WHERE id = :id")
     void deleteEntity(long id);
 
@@ -36,4 +36,11 @@ public interface DeliveryDao {
 
     @Query("DELETE FROM DeliveryEntity WHERE id NOT IN (:ids)")
     void deleteNotInclude(List<Long> ids);
+
+    @Transaction
+    @Query("SELECT * FROM DeliveryEntity")
+    LiveData<List<DeliveryReadEntity>> getDeliveryReadEntities();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertDeliveryReadEntity(ReadDeliveryEntity entity);
 }

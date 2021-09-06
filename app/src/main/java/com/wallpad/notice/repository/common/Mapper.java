@@ -1,16 +1,21 @@
 package com.wallpad.notice.repository.common;
 
-import android.util.Log;
-
 import com.wallpad.notice.model.DeliveryModel;
 import com.wallpad.notice.model.NoticeModel;
-import com.wallpad.notice.model.VoteModel;
 import com.wallpad.notice.model.VisitorModel;
+import com.wallpad.notice.model.VoteModel;
 import com.wallpad.notice.repository.local.entities.DeliveryEntity;
+import com.wallpad.notice.repository.local.entities.DeliveryReadEntity;
 import com.wallpad.notice.repository.local.entities.NoticeEntity;
+import com.wallpad.notice.repository.local.entities.NoticeReadEntity;
+import com.wallpad.notice.repository.local.entities.ReadDeliveryEntity;
+import com.wallpad.notice.repository.local.entities.ReadNoticeEntity;
+import com.wallpad.notice.repository.local.entities.ReadVisitorEntity;
+import com.wallpad.notice.repository.local.entities.ReadVoteEntity;
+import com.wallpad.notice.repository.local.entities.VisitorEntity;
+import com.wallpad.notice.repository.local.entities.VisitorReadEntity;
 import com.wallpad.notice.repository.local.entities.VoteDetailEntity;
 import com.wallpad.notice.repository.local.entities.VoteEntity;
-import com.wallpad.notice.repository.local.entities.VisitorEntity;
 import com.wallpad.notice.repository.local.entities.VoteInfoEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteNoticeEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteNoticeNotifyEntity;
@@ -24,12 +29,13 @@ import java.util.List;
 
 public class Mapper {
 
-    public static NoticeModel mapToNoticeModel(NoticeEntity entity) {
-        return new NoticeModel(entity.getId(), entity.getTitle(), entity.getContent(), entity.getDate(), entity.getPath(), entity.isRead());
+    public static NoticeModel mapToNoticeModel(NoticeReadEntity entity) {
+        NoticeEntity notice = entity.getNotice();
+        ReadNoticeEntity read = entity.getRead();
+        if ( notice == null ) return null;
+        return new NoticeModel(notice.getId(), notice.getTitle(), notice.getContent(), notice.getDate(), notice.getPath(), read!=null);
     }
-    public static NoticeEntity mapToNoticeEntity(NoticeModel model) {
-        return new NoticeEntity(model.getId(), model.getTitle(), model.getContent(), model.getDate(), model.getPath(), model.isRead());
-    }
+
     public static List<NoticeEntity> mapToEntities(RemoteNoticeEntity notice) {
         List<NoticeEntity> entities = new ArrayList<>();
         if ( notice == null ) return entities;
@@ -39,7 +45,7 @@ public class Mapper {
         if ( list == null || list.size() == 0 ) return entities;
         for (RemoteNoticeEntity.Resource.Notice_Board_List content : list ) {
             entities.add(new NoticeEntity(Integer.parseInt(content.getNotice_Board_Seq()), content.getNotice_Board_Title(),
-                    content.getNotice_Board_Contents(), content.getReg_Date(), content.getNotice_Board_File_Path(), false));
+                    content.getNotice_Board_Contents(), content.getReg_Date(), content.getNotice_Board_File_Path()));
         }
         return entities;
     }
@@ -47,19 +53,20 @@ public class Mapper {
     public static NoticeEntity mapToEntity(RemoteNoticeNotifyEntity notice) {
         if ( notice == null ) return null;
         return new NoticeEntity(Integer.parseInt(notice.getNotice_Board_Seq()), notice.getNotice_Board_Title(),
-                notice.getNotice_Board_Contents(), notice.getReg_Date(), notice.getNotice_Board_File_Path(), false);
+                notice.getNotice_Board_Contents(), notice.getReg_Date(), notice.getNotice_Board_File_Path());
     }
 
     public static VoteModel mapToModel(VoteEntity entity) {
         List<VoteModel.Detail> detailModels = new ArrayList<>();
         VoteInfoEntity info = entity.getInfo();
+        ReadVoteEntity read = entity.getRead();
         List<VoteDetailEntity> details = entity.getDetails();
         for ( VoteDetailEntity detail : details ) {
             detailModels.add(new VoteModel.Detail(detail.getDetailCode(), detail.getTitle(), detail.getDescription(), detail.isVote()));
         }
         return new VoteModel(info.getMasterKey(), mapToVoteType(info.getType()), info.getTitle(), info.getDescription(),
                 info.getStartDate(), info.getEndDate(), info.getOptionCount(), mapToVoteSystem(info.getVoteSystem()),
-                mapToVoteState(info.getStatus()), info.isRead(), detailModels);
+                mapToVoteState(info.getStatus()), read!=null, detailModels);
     }
 
     public static VoteModel.TYPE mapToVoteType(int type) {
@@ -123,17 +130,18 @@ public class Mapper {
             votes.add(new VoteInfoEntity(Integer.parseInt(info.getVote_Info_Master_Cd()), Integer.parseInt(info.getVote_Info_Type()),
                     info.getVote_Info_Title(), info.getVote_Info_Description(), info.getVote_Info_Start_Date(),
                     info.getVote_Info_End_Date(), Integer.parseInt(info.getVote_Info_Option_Cnt()),
-                    Integer.parseInt(info.getVote_Info_System()), Integer.parseInt(info.getStatus()), false));
+                    Integer.parseInt(info.getVote_Info_System()), Integer.parseInt(info.getStatus())));
         }
         return votes;
     }
 
-    public static DeliveryModel mapToDeliveryModel(DeliveryEntity entity) {
-        return new DeliveryModel(entity.getId(), entity.getArriveTime(), entity.getPickupTime(), entity.getBoxNum(), entity.isReceipt(), entity.isRead());
+    public static DeliveryModel mapToDeliveryModel(DeliveryReadEntity entity) {
+        DeliveryEntity delivery = entity.getDelivery();
+        ReadDeliveryEntity read = entity.getRead();
+        if ( delivery == null ) return null;
+        return new DeliveryModel(delivery.getId(), delivery.getArriveTime(), delivery.getPickupTime(), delivery.getBoxNum(), delivery.isReceipt(), read!=null);
     }
-    public static DeliveryEntity mapToDeliveryEntity(DeliveryModel model) {
-        return new DeliveryEntity(model.getId(), model.getPickupTime(), model.getArriveTime(), model.getBoxNum(), model.isReceipt(), model.isRead());
-    }
+
     public static List<DeliveryEntity> mapToDeliveryEntities(RemoteParcelEntity parcel) {
         List<DeliveryEntity> entities = new ArrayList<>();
         if ( parcel == null ) return entities;
@@ -147,8 +155,7 @@ public class Mapper {
                     delivery.getArrive_Time(),
                     delivery.getReceive_Time(),
                     Integer.parseInt(delivery.getDelivery_Box_Info()),
-                    Integer.parseInt(delivery.getDelivery_Event_Type()) == 1,
-                    false));
+                    Integer.parseInt(delivery.getDelivery_Event_Type()) == 1));
         }
         return entities;
     }
@@ -159,8 +166,7 @@ public class Mapper {
                 Integer.parseInt(delivery.getDelivery_Box_Info())),
                 delivery.getEvent_Time(), "",
                 Integer.parseInt(delivery.getDelivery_Box_Info()),
-                Integer.parseInt(delivery.getDelivery_Event_Type()) == 1,
-                false);
+                Integer.parseInt(delivery.getDelivery_Event_Type()) == 1);
     }
 
     public static List<Long> getDeliveryKeys(List<DeliveryEntity> entities) {
@@ -187,11 +193,11 @@ public class Mapper {
         return keys;
     }
 
-    public static VisitorModel mapToVisitorModel(VisitorEntity entity) {
-        return new VisitorModel(entity.getId(), entity.getScreen(), entity.getPlace(), entity.getDate(), entity.isRead());
-    }
-    public static VisitorEntity mapToVisitorEntity(VisitorModel model) {
-        return new VisitorEntity(model.getId(), model.getPath(), model.getPlace(), model.getDate(), model.isRead());
+    public static VisitorModel mapToVisitorModel(VisitorReadEntity entity) {
+        VisitorEntity visitor = entity.getVisitor();
+        ReadVisitorEntity read = entity.getRead();
+        if ( visitor == null ) return null;
+        return new VisitorModel(visitor.getId(), visitor.getScreen(), visitor.getPlace(), visitor.getDate(), read!=null);
     }
 
     public static List<String> getVisitorIds(List<VisitorEntity> entities) {

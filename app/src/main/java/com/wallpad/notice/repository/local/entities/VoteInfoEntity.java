@@ -14,9 +14,8 @@ public class VoteInfoEntity {
     private int optionCount;
     private int voteSystem;
     private int status;
-    private boolean read;
 
-    public VoteInfoEntity(int masterKey, int type, String title, String description, String startDate, String endDate, int optionCount, int voteSystem, int status, boolean read) {
+    public VoteInfoEntity(int masterKey, int type, String title, String description, String startDate, String endDate, int optionCount, int voteSystem, int status) {
         this.masterKey = masterKey;
         this.type = type;
         this.title = title;
@@ -26,7 +25,6 @@ public class VoteInfoEntity {
         this.optionCount = optionCount;
         this.voteSystem = voteSystem;
         this.status = status;
-        this.read = read;
     }
 
     public int getMasterKey() {
@@ -99,13 +97,5 @@ public class VoteInfoEntity {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public boolean isRead() {
-        return read;
-    }
-
-    public void setRead(boolean read) {
-        this.read = read;
     }
 }

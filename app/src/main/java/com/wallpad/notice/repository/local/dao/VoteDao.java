@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
+import com.wallpad.notice.repository.local.entities.ReadVoteEntity;
 import com.wallpad.notice.repository.local.entities.VoteDetailEntity;
 import com.wallpad.notice.repository.local.entities.VoteEntity;
 import com.wallpad.notice.repository.local.entities.VoteInfoEntity;
@@ -42,6 +43,6 @@ public interface VoteDao {
     @Query("DELETE FROM VoteInfoEntity WHERE masterKey NOT IN (:keys)")
     void deleteNotInEntities(List<Integer> keys);
 
-    @Query("UPDATE VoteInfoEntity SET read=:read WHERE masterKey=:masterKey")
-    void updateRead(int masterKey, boolean read);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertVoteReadEntity(ReadVoteEntity entity);
 }

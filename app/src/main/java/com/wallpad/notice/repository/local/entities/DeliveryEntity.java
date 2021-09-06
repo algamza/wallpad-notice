@@ -11,15 +11,13 @@ public class DeliveryEntity {
     private String pickupTime;
     private int boxNum;
     private boolean receipt;
-    private boolean read;
 
-    public DeliveryEntity(long id, String arriveTime, String pickupTime, int boxNum, boolean receipt, boolean read) {
+    public DeliveryEntity(long id, String arriveTime, String pickupTime, int boxNum, boolean receipt) {
         this.id = id;
         this.arriveTime = arriveTime;
         this.pickupTime = pickupTime;
         this.boxNum = boxNum;
         this.receipt = receipt;
-        this.read = read;
     }
 
     public long getId() {
@@ -60,13 +58,5 @@ public class DeliveryEntity {
 
     public void setReceipt(boolean receipt) {
         this.receipt = receipt;
-    }
-
-    public boolean isRead() {
-        return read;
-    }
-
-    public void setRead(boolean read) {
-        this.read = read;
     }
 }

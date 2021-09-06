@@ -14,10 +14,17 @@ public class VoteEntity {
             entity = VoteDetailEntity.class
     )
     private List<VoteDetailEntity> details;
+    @Relation(
+            parentColumn = "masterKey",
+            entityColumn = "id",
+            entity = ReadVoteEntity.class
+    )
+    private ReadVoteEntity read;
 
-    public VoteEntity(VoteInfoEntity info, List<VoteDetailEntity> details) {
+    public VoteEntity(VoteInfoEntity info, List<VoteDetailEntity> details, ReadVoteEntity read) {
         this.info = info;
         this.details = details;
+        this.read = read;
     }
 
     public VoteInfoEntity getInfo() {
@@ -34,5 +41,13 @@ public class VoteEntity {
 
     public void setDetails(List<VoteDetailEntity> details) {
         this.details = details;
+    }
+
+    public ReadVoteEntity getRead() {
+        return read;
+    }
+
+    public void setRead(ReadVoteEntity read) {
+        this.read = read;
     }
 }

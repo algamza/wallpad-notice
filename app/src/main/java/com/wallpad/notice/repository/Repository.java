@@ -16,8 +16,15 @@ import com.wallpad.notice.repository.local.dao.NoticeDao;
 import com.wallpad.notice.repository.local.dao.VisitorDao;
 import com.wallpad.notice.repository.local.dao.VoteDao;
 import com.wallpad.notice.repository.local.entities.DeliveryEntity;
+import com.wallpad.notice.repository.local.entities.DeliveryReadEntity;
 import com.wallpad.notice.repository.local.entities.NoticeEntity;
+import com.wallpad.notice.repository.local.entities.NoticeReadEntity;
+import com.wallpad.notice.repository.local.entities.ReadDeliveryEntity;
+import com.wallpad.notice.repository.local.entities.ReadNoticeEntity;
+import com.wallpad.notice.repository.local.entities.ReadVisitorEntity;
+import com.wallpad.notice.repository.local.entities.ReadVoteEntity;
 import com.wallpad.notice.repository.local.entities.VisitorEntity;
+import com.wallpad.notice.repository.local.entities.VisitorReadEntity;
 import com.wallpad.notice.repository.local.entities.VoteDetailEntity;
 import com.wallpad.notice.repository.local.entities.VoteEntity;
 import com.wallpad.notice.repository.local.entities.VoteInfoEntity;
@@ -70,9 +77,9 @@ public class Repository {
         this.deliveryDao = deliveryDao;
         this.visitorDao = visitorDao;
 
-        notices = Transformations.map(noticeDao.getEntities(), entities -> {
+        notices = Transformations.map(noticeDao.getNoticeReadEntities(), entities -> {
             List<NoticeModel> models = new ArrayList<>();
-            for ( NoticeEntity entity : entities ) models.add(Mapper.mapToNoticeModel(entity));
+            for ( NoticeReadEntity entity : entities ) models.add(Mapper.mapToNoticeModel(entity));
             return models;
         });
 
@@ -82,15 +89,15 @@ public class Repository {
             return models;
         });
 
-        deliveries = Transformations.map(deliveryDao.getEntities(), entities -> {
+        deliveries = Transformations.map(deliveryDao.getDeliveryReadEntities(), entities -> {
             List<DeliveryModel> models = new ArrayList<>();
-            for ( DeliveryEntity entity : entities ) models.add(Mapper.mapToDeliveryModel(entity));
+            for ( DeliveryReadEntity entity : entities ) models.add(Mapper.mapToDeliveryModel(entity));
             return models;
         });
 
-        visitors = Transformations.map(visitorDao.getEntities(), entities -> {
+        visitors = Transformations.map(visitorDao.getVisitorReadEntities(), entities -> {
             List<VisitorModel> models = new ArrayList<>();
-            for ( VisitorEntity entity : entities ) models.add(Mapper.mapToVisitorModel(entity));
+            for ( VisitorReadEntity entity : entities ) models.add(Mapper.mapToVisitorModel(entity));
             return models;
         });
     }
@@ -119,7 +126,7 @@ public class Repository {
     }
 
     public void readNoticeNotification(int id) {
-        executorService.execute(() -> noticeDao.updateRead(id, true));
+        executorService.execute(() -> noticeDao.insertNoticeReadEntity(new ReadNoticeEntity(id)));
     }
 
     public LiveData<List<VoteModel>> getVote() {
@@ -133,7 +140,7 @@ public class Repository {
     }
 
     public void readNoticeVote(int id) {
-        executorService.execute(() -> voteDao.updateRead(id, true));
+        executorService.execute(() -> voteDao.insertVoteReadEntity(new ReadVoteEntity(id)));
     }
     public void requestVote(int masterId, int voteCode) {
         iWallpadServiceHelper.requestVoting(masterId, voteCode);
@@ -152,14 +159,14 @@ public class Repository {
     }
 
     public void readNoticeDelivery(long id) {
-        executorService.execute(() -> deliveryDao.updateRead(id, true));
+        executorService.execute(() -> deliveryDao.insertDeliveryReadEntity(new ReadDeliveryEntity(id)));
     }
 
     public LiveData<List<VisitorModel>> getVisitors() {
         executorService.execute(contentProviderHelper::requestVisitorInfo);
         return visitors;
     }
-    public void readNoticeVisitor(String id) { executorService.execute(() -> visitorDao.updateRead(id, true)); }
+    public void readNoticeVisitor(String id) { executorService.execute(() -> visitorDao.insertVisitorReadEntity(new ReadVisitorEntity(id))); }
 
     public void deleteVisitors(List<String> ids, boolean isAll) {
         executorService.execute(() -> {

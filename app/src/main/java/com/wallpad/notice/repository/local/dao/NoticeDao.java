@@ -5,9 +5,12 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.wallpad.notice.repository.local.entities.NoticeEntity;
+import com.wallpad.notice.repository.local.entities.NoticeReadEntity;
+import com.wallpad.notice.repository.local.entities.ReadNoticeEntity;
 
 import java.util.List;
 
@@ -25,9 +28,6 @@ public interface NoticeDao {
     @Update
     void updateEntity(NoticeEntity entity);
 
-    @Query("UPDATE NoticeEntity SET read=:read WHERE id=:id")
-    void updateRead(int id, boolean read);
-
     @Query("DELETE FROM NoticeEntity WHERE id = :id")
     void deleteEntity(int id);
 
@@ -36,4 +36,11 @@ public interface NoticeDao {
 
     @Query("DELETE FROM NoticeEntity WHERE id NOT IN (:ids)")
     void deleteNotInclude(List<Integer> ids);
+
+    @Transaction
+    @Query("SELECT * FROM NoticeEntity")
+    LiveData<List<NoticeReadEntity>> getNoticeReadEntities();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertNoticeReadEntity(ReadNoticeEntity entity);
 }

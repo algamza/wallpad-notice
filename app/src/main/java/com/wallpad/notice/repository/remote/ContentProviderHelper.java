@@ -228,7 +228,7 @@ public class ContentProviderHelper {
                                 String filename = cursor.getString(cursor.getColumnIndex(KEY_VISITOR_FILE_NAME));
                                 String type = cursor.getString(cursor.getColumnIndex(KEY_VISITOR_TYPE));
                                 String time = cursor.getString(cursor.getColumnIndex(KEY_VISITOR_TIME));
-                                entities.add(new VisitorEntity(filename, filename, type, time, false));
+                                entities.add(new VisitorEntity(filename, filename, type, time));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

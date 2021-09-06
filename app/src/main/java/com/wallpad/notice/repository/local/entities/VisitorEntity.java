@@ -12,14 +12,12 @@ public class VisitorEntity {
     private String screen;
     private String place;
     private String date;
-    private boolean read;
 
-    public VisitorEntity(String id, String screen, String place, String date, boolean read) {
+    public VisitorEntity(String id, String screen, String place, String date) {
         this.id = id;
         this.screen = screen;
         this.place = place;
         this.date = date;
-        this.read = read;
     }
 
     public String getId() {
@@ -52,13 +50,5 @@ public class VisitorEntity {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public boolean isRead() {
-        return read;
-    }
-
-    public void setRead(boolean read) {
-        this.read = read;
     }
 }
