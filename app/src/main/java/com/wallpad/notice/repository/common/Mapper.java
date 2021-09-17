@@ -44,6 +44,7 @@ public class Mapper {
         List<RemoteNoticeEntity.Resource.Notice_Board_List> list = resource.getNotice_Board_List();
         if ( list == null || list.size() == 0 ) return entities;
         for (RemoteNoticeEntity.Resource.Notice_Board_List content : list ) {
+            if ( content.getNotice_Board_Seq() == null ) continue;
             entities.add(new NoticeEntity(Integer.parseInt(content.getNotice_Board_Seq()), content.getNotice_Board_Title(),
                     content.getNotice_Board_Contents(), content.getReg_Date(), content.getNotice_Board_File_Path()));
         }
@@ -52,6 +53,7 @@ public class Mapper {
 
     public static NoticeEntity mapToEntity(RemoteNoticeNotifyEntity notice) {
         if ( notice == null ) return null;
+        if ( notice.getNotice_Board_Seq() == null ) return null;
         return new NoticeEntity(Integer.parseInt(notice.getNotice_Board_Seq()), notice.getNotice_Board_Title(),
                 notice.getNotice_Board_Contents(), notice.getReg_Date(), notice.getNotice_Board_File_Path());
     }
