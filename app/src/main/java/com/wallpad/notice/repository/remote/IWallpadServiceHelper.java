@@ -110,4 +110,22 @@ public class IWallpadServiceHelper {
             Log.e(TAG, "error="+e);
         }
     }
+
+    public void requestVisitorImageConfirm(String path, String fileName) {
+        if ( iWallpadData == null ) return;
+        try {
+            iWallpadData.requestVisitorImageConfirm(path, fileName);
+        } catch (RemoteException e) {
+            Log.e(TAG, "error="+e);
+        }
+    }
+
+    public void requestVisitorImageDelete(String path, String fileName) {
+        if ( iWallpadData == null ) return;
+        try {
+            iWallpadData.requestVisitorImageDelete(path, fileName);
+        } catch (RemoteException e) {
+            Log.e(TAG, "error="+e);
+        }
+    }
 }

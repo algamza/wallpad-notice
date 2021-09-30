@@ -166,12 +166,27 @@ public class Repository {
         executorService.execute(contentProviderHelper::requestVisitorInfo);
         return visitors;
     }
-    public void readNoticeVisitor(String id) { executorService.execute(() -> visitorDao.insertVisitorReadEntity(new ReadVisitorEntity(id))); }
+    public void readNoticeVisitor(String id) {
+        executorService.execute(() -> {
+            visitorDao.insertVisitorReadEntity(new ReadVisitorEntity(id));
+            iWallpadServiceHelper.requestVisitorImageConfirm(id, findFileName(id));
+        });
+    }
+
+    private String findFileName(String fullPath) {
+        if ( fullPath == null ) return "";
+        String[] strs = fullPath.split("/");
+        if ( strs == null || strs.length == 0 ) return "";
+        return strs[strs.length-1];
+    }
 
     public void deleteVisitors(List<String> ids, boolean isAll) {
         executorService.execute(() -> {
             contentProviderHelper.deleteVisitors(ids, isAll);
             contentProviderHelper.requestVisitorInfo();
+            for ( String id : ids ) {
+                iWallpadServiceHelper.requestVisitorImageDelete(id, findFileName(id));
+            }
         });
     }
 
@@ -179,6 +194,7 @@ public class Repository {
         executorService.execute(() -> {
             contentProviderHelper.deleteVisitor(id);
             contentProviderHelper.requestVisitorInfo();
+            iWallpadServiceHelper.requestVisitorImageDelete(id, findFileName(id));
         });
     }
 
