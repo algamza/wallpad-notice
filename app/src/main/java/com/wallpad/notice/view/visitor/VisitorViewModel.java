@@ -15,6 +15,8 @@ import com.wallpad.notice.view.common.Mapper;
 import com.wallpad.notice.view.notification.NotificationViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class VisitorViewModel extends ViewModel {
@@ -26,6 +28,7 @@ public class VisitorViewModel extends ViewModel {
     @ViewModelInject public VisitorViewModel(Repository repository) {
         this.repository = repository;
         visitors = Transformations.map(repository.getVisitors(), models -> {
+            Collections.sort(models, (o1, o2) -> Long.compare(Long.parseLong(o2.getDate()), Long.parseLong(o1.getDate())));
             List<VisitorData> data = new ArrayList<>();
             for ( VisitorModel model : models ) {
                 data.add(new VisitorData(

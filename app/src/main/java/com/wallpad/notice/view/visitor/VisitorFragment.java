@@ -1,6 +1,7 @@
 package com.wallpad.notice.view.visitor;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.wallpad.notice.databinding.FragmentVisitorBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -37,10 +39,7 @@ public class VisitorFragment extends Fragment {
         binding.setViewModel(viewModel);
         binding.recyclerView.setAdapter(adapter);
         binding.setLifecycleOwner(this);
-        viewModel.getVisitors().observe(getViewLifecycleOwner(), data -> {
-            //Collections.sort(data);
-            adapter.setData(data);
-        });
+        viewModel.getVisitors().observe(getViewLifecycleOwner(), data -> adapter.setData(data));
         viewModel.getVisitorCallback().observe(getViewLifecycleOwner(), data -> {
             VisitorDialog dialog = new VisitorDialog(data.getId(), data.getPlace(), data.getDate(), data.getPath());
             dialog.show(requireActivity().getSupportFragmentManager(), dialog.getTag());

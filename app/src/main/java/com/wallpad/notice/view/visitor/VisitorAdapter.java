@@ -14,6 +14,8 @@ import com.wallpad.notice.view.notification.NotificationAdapter;
 import com.wallpad.notice.view.notification.NotificationViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
