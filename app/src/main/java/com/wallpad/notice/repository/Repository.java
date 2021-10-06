@@ -184,9 +184,9 @@ public class Repository {
         executorService.execute(() -> {
             contentProviderHelper.deleteVisitors(ids, isAll);
             contentProviderHelper.requestVisitorInfo();
-            for ( String id : ids ) {
-                iWallpadServiceHelper.requestVisitorImageDelete(id, findFileName(id));
-            }
+            List<String> files = new ArrayList<>();
+            for ( String id : ids ) files.add(findFileName(id));
+            iWallpadServiceHelper.requestVisitorImageDelete(files, isAll);
         });
     }
 

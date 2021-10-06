@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.wallpad.IWallpadData;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 
@@ -124,6 +126,15 @@ public class IWallpadServiceHelper {
         if ( iWallpadData == null ) return;
         try {
             iWallpadData.requestVisitorImageDelete(path, fileName);
+        } catch (RemoteException e) {
+            Log.e(TAG, "error="+e);
+        }
+    }
+
+    public void requestVisitorImageDelete(List<String> files, boolean all) {
+        if ( iWallpadData == null ) return;
+        try {
+            iWallpadData.requestVisitorImageMultiDelete(all?"1":"2", files);
         } catch (RemoteException e) {
             Log.e(TAG, "error="+e);
         }

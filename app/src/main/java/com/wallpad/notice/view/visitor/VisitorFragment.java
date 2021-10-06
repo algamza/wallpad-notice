@@ -44,9 +44,7 @@ public class VisitorFragment extends Fragment {
             VisitorDialog dialog = new VisitorDialog(data.getId(), data.getPlace(), data.getDate(), data.getPath());
             dialog.show(requireActivity().getSupportFragmentManager(), dialog.getTag());
         });
-        viewModel.getVisitorCheck().observe(getViewLifecycleOwner(), data -> {
-            adapter.updateData(data.getId(), data.isCheck());
-        });
+        viewModel.getVisitorCheck().observe(getViewLifecycleOwner(), data -> adapter.updateData(data.getId(), data.isCheck()));
         return binding.getRoot();
     }
 }
