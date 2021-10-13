@@ -5,6 +5,9 @@
         <variable
             name="viewModel"
             type="com.wallpad.notice.view.visitor.VisitorViewModel" />
+        <variable
+            name="view"
+            type="com.wallpad.notice.view.visitor.VisitorFragment" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -74,7 +77,7 @@
             android:textColor="@{@color/card_font}"
             android:textSize="23sp"
             android:background="@color/dialog_font_0_3"
-            android:onClick="@{()->viewModel.onClickRemoveSelected()}"
+            android:onClick="@{()->view.onClickRemoveSelected()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -94,7 +97,7 @@
             android:textColor="@{@color/card_font}"
             android:textSize="23sp"
             android:background="@color/dialog_font_0_3"
-            android:onClick="@{()->viewModel.onClickRemoveAll()}"
+            android:onClick="@{()->view.onClickRemoveAll()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

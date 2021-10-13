@@ -20,6 +20,7 @@ import com.wallpad.notice.repository.remote.entities.RemoteNoticeNotifyEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteParcelEntity;
 import com.wallpad.notice.repository.local.entities.DeliveryEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteParcelNotifyEntity;
+import com.wallpad.notice.repository.remote.entities.RemoteResponse;
 import com.wallpad.notice.repository.remote.entities.RemoteVoteDetailEntity;
 import com.wallpad.notice.repository.remote.entities.RemoteVoteEntity;
 
@@ -40,6 +41,8 @@ public class ContentProviderHelper {
         void onUpdateNotice(List<NoticeEntity> entities);
         void onUpdateNoticeNotify(NoticeEntity entity);
         void onUpdateVisitor(List<VisitorEntity> entities);
+        void onUpdateVisitorDelete(RemoteResponse response);
+        void onUpdateVisitorMultiDelete(RemoteResponse response);
     }
     private static final String TAG = ContentProviderHelper.class.getSimpleName();
     private static final String URI_INFO = "content://com.wallpad.service.provider.InfoContentProvider/t_info";
@@ -52,6 +55,8 @@ public class ContentProviderHelper {
     public static final String ID_VOTING_COMPLETE_NOTIFY = "13";     //2VO01_03
     public static final String ID_NOTICE_INFO = "14";                                      //2NB01_01
     public static final String ID_NOTICE_NOTIFY = "15";                                    //2NB01_02
+    public static final String ID_VISITOR_IMAGE_DELETE = "41";                             //2VV01_02
+    public static final String ID_VISITOR_IMAGE_MULTI_DELETE = "48";                       //2VV01_02
 
     public static final String VISITOR_CONTENT_URI = "content://com.wallpad.service.provider.VisitorInfoContentProvider/t_visitorInfo";
     public static final String KEY_VISITOR_FILE_NAME = "filename";
@@ -83,6 +88,8 @@ public class ContentProviderHelper {
         context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_VOTING_COMPLETE_NOTIFY), false, observer);
         context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_NOTICE_INFO), false, observer);
         context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_NOTICE_NOTIFY), false, observer);
+        context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_VISITOR_IMAGE_DELETE), false, observer);
+        context.getContentResolver().registerContentObserver(Uri.parse(URI_INFO+"/"+ID_VISITOR_IMAGE_MULTI_DELETE), false, observer);
         context.getContentResolver().registerContentObserver(Uri.parse(VISITOR_CONTENT_URI), false, visitorObserver);
     }
 
@@ -112,7 +119,43 @@ public class ContentProviderHelper {
             case ID_VOTE_DETAIL_INFO: updateVoteDetail(Integer.parseInt(ID_VOTE_DETAIL_INFO)); break;
             case ID_NOTICE_INFO: updateNoticeInfo(Integer.parseInt(ID_NOTICE_INFO)); break;
             case ID_NOTICE_NOTIFY: updateNoticeNotify(Integer.parseInt(ID_NOTICE_NOTIFY)); break;
+            case ID_VISITOR_IMAGE_MULTI_DELETE: updateVisitorMultiDeleteNotify(); break;
+            case ID_VISITOR_IMAGE_DELETE: updateVisitorDeleteNotify(); break;
         }
+    }
+
+    private void updateVisitorMultiDeleteNotify() {
+        executorService.execute(() -> {
+            RemoteResponse entity = null;
+            try (Cursor cursor = context.getContentResolver().query(Uri.parse(URI_INFO), null, null, null, null)) {
+                if (cursor == null || !cursor.moveToFirst()) return;
+                do {
+                    if ( cursor.getString(cursor.getColumnIndex(CONTENT_ID)).equals(ID_VISITOR_IMAGE_MULTI_DELETE) ) {
+                        String response = cursor.getString(cursor.getColumnIndex(CONTENT_KEY));
+                        entity = gson.fromJson(response, RemoteResponse.class);
+                    }
+                } while (cursor.moveToNext());
+            } catch (Exception ignored) { }
+            if ( callback == null || entity == null ) return;
+            callback.onUpdateVisitorMultiDelete(entity);
+        });
+    }
+
+    private void updateVisitorDeleteNotify() {
+        executorService.execute(() -> {
+            RemoteResponse entity = null;
+            try (Cursor cursor = context.getContentResolver().query(Uri.parse(URI_INFO), null, null, null, null)) {
+                if (cursor == null || !cursor.moveToFirst()) return;
+                do {
+                    if ( cursor.getString(cursor.getColumnIndex(CONTENT_ID)).equals(ID_VISITOR_IMAGE_DELETE) ) {
+                        String response = cursor.getString(cursor.getColumnIndex(CONTENT_KEY));
+                        entity = gson.fromJson(response, RemoteResponse.class);
+                    }
+                } while (cursor.moveToNext());
+            } catch (Exception ignored) { }
+            if ( callback == null || entity == null ) return;
+            callback.onUpdateVisitorDelete(entity);
+        });
     }
 
     private void updateNoticeInfo(int id) {

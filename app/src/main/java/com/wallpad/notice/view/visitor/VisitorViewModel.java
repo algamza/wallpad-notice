@@ -63,13 +63,13 @@ public class VisitorViewModel extends ViewModel {
     public LiveData<VisitorCallback> getVisitorCallback() { return visitorCallback; }
     public LiveData<Check> getVisitorCheck() { return visitorCheck; }
 
-    public void onClickRemoveAll() {
+    public void removeAll() {
         List<String> ids = new ArrayList<>();
         for ( VisitorData data : visitors.getValue() ) ids.add(data.getId());
         repository.deleteVisitors(ids, true);
     }
 
-    public void onClickRemoveSelected() {
+    public void removeSelected() {
         List<String> ids = new ArrayList<>();
         for ( VisitorData data : visitors.getValue() ) {
             if ( !data.isCheck() ) continue;

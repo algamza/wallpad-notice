@@ -31,6 +31,7 @@ import com.wallpad.notice.repository.local.entities.VoteInfoEntity;
 import com.wallpad.notice.repository.remote.ContentProviderHelper;
 import com.wallpad.notice.repository.remote.IWallpadServiceHelper;
 import com.wallpad.notice.repository.remote.TestHelper;
+import com.wallpad.notice.repository.remote.entities.RemoteResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -180,10 +181,14 @@ public class Repository {
         return strs[strs.length-1];
     }
 
+    private boolean visitorRemoveAll = false;
+    private List<String> visitorRemoteIds = new ArrayList<>();
+
     public void deleteVisitors(List<String> ids, boolean isAll) {
         executorService.execute(() -> {
-            contentProviderHelper.deleteVisitors(ids, isAll);
-            contentProviderHelper.requestVisitorInfo();
+            visitorRemoveAll = isAll;
+            visitorRemoteIds.clear();
+            visitorRemoteIds.addAll(ids);
             List<String> files = new ArrayList<>();
             for ( String id : ids ) files.add(findFileName(id));
             iWallpadServiceHelper.requestVisitorImageDelete(files, isAll);
@@ -192,8 +197,9 @@ public class Repository {
 
     public void deleteVisitor(String id) {
         executorService.execute(() -> {
-            contentProviderHelper.deleteVisitor(id);
-            contentProviderHelper.requestVisitorInfo();
+            visitorRemoveAll = false;
+            visitorRemoteIds.clear();
+            visitorRemoteIds.add(id);
             iWallpadServiceHelper.requestVisitorImageDelete(id, findFileName(id));
         });
     }
@@ -253,6 +259,30 @@ public class Repository {
                 visitorDao.deleteNotInclude(Mapper.getVisitorIds(entities));
                 visitorDao.insertEntities(entities);
             });
+        }
+
+        @Override
+        public void onUpdateVisitorDelete(RemoteResponse response) {
+            if ( response == null ) return;
+            if ( Integer.parseInt(response.getError_Cd()) == 0 ) {
+                if ( !visitorRemoteIds.isEmpty() ) contentProviderHelper.deleteVisitor(visitorRemoteIds.get(0));
+                contentProviderHelper.requestVisitorInfo();
+            } else {
+                visitorRemoteIds.clear();
+                visitorRemoveAll = false;
+            }
+        }
+
+        @Override
+        public void onUpdateVisitorMultiDelete(RemoteResponse response) {
+            if ( response == null ) return;
+            if ( Integer.parseInt(response.getError_Cd()) == 0 ) {
+                contentProviderHelper.deleteVisitors(visitorRemoteIds, visitorRemoveAll);
+                contentProviderHelper.requestVisitorInfo();
+            } else {
+                visitorRemoteIds.clear();
+                visitorRemoveAll = false;
+            }
         }
     };
 }

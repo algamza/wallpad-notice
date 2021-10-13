@@ -5,9 +5,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -29,7 +31,6 @@ public class VisitorFragment extends Fragment {
     private VisitorViewModel viewModel;
     @Inject
     VisitorAdapter adapter;
-    List<VisitorViewModel.VisitorData> data = new ArrayList<>();
 
     @Nullable
     @Override
@@ -37,6 +38,7 @@ public class VisitorFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(VisitorViewModel.class);
         FragmentVisitorBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_visitor, container, false);
         binding.setViewModel(viewModel);
+        binding.setView(this);
         binding.recyclerView.setAdapter(adapter);
         binding.setLifecycleOwner(this);
         viewModel.getVisitors().observe(getViewLifecycleOwner(), data -> adapter.setData(data));
@@ -46,5 +48,23 @@ public class VisitorFragment extends Fragment {
         });
         viewModel.getVisitorCheck().observe(getViewLifecycleOwner(), data -> adapter.updateData(data.getId(), data.isCheck()));
         return binding.getRoot();
+    }
+
+    public void onClickRemoveAll() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setPositiveButton(getString(R.string.STR_CONFIRM), (dialog, which) -> viewModel.removeAll());
+        alertDialog.setNegativeButton(getString(R.string.STR_CANCEL), (dialog, which) -> { });
+        AlertDialog alert = alertDialog.create();
+        alert.setTitle(R.string.STR_QUESTION_VISITOR_ALL_ITEM_DELETE);
+        alert.show();
+    }
+
+    public void onClickRemoveSelected() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setPositiveButton(getString(R.string.STR_CONFIRM), (dialog, which) -> viewModel.removeSelected());
+        alertDialog.setNegativeButton(getString(R.string.STR_CANCEL), (dialog, which) -> { });
+        AlertDialog alert = alertDialog.create();
+        alert.setTitle(R.string.STR_QUESTION_VISITOR_SELECT_ITEM_DELETE);
+        alert.show();
     }
 }

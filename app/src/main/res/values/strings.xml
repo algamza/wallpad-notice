@@ -55,4 +55,7 @@
     <string name="STR_CANCEL">취소</string>
     <string name="STR_APPLY">적용</string>
     <string name="STR_DESCRIPTION_NEW_NOTICE">새로운 알림이 있습니다.</string>
+
+    <string name="STR_QUESTION_VISITOR_SELECT_ITEM_DELETE">선택한 방문자를 삭제하시겠습니까?</string>
+    <string name="STR_QUESTION_VISITOR_ALL_ITEM_DELETE">전체 방문자를 삭제하시겠습니까?</string>
 </resources>
