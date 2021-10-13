@@ -14,6 +14,8 @@ public class VisitorDialogViewModel extends ViewModel {
     private MutableLiveData<String> screen = new MutableLiveData<>();
     private MutableLiveData<Boolean> isMedia = new MutableLiveData<>();
     private MutableLiveData<Boolean> isPrepare = new MutableLiveData<>(false);
+    private MutableLiveData<Integer> progressMax = new MutableLiveData<>(100);
+    private MutableLiveData<Integer> progress = new MutableLiveData<>(0);
 
     @ViewModelInject public VisitorDialogViewModel(Repository repository) {
         this.repository = repository;
@@ -57,6 +59,18 @@ public class VisitorDialogViewModel extends ViewModel {
 
     public void setIsPrepare(boolean isPrepare) {
         this.isPrepare.postValue(isPrepare);
+    }
+
+    public LiveData<Integer> getProgressMax() {
+        return progressMax;
+    }
+
+    public LiveData<Integer> getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress.postValue(progress);
     }
 
     public void deleteVisitor(String id) {

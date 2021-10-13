@@ -8,6 +8,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -22,19 +23,28 @@ import com.wallpad.notice.databinding.DialogVisitorBinding;
 import com.wallpad.notice.view.common.BaseDialog;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+import static android.os.Looper.getMainLooper;
+
 @AndroidEntryPoint
 public class VisitorDialog extends BaseDialog {
+    private  DialogVisitorBinding binding;
     private VisitorDialogViewModel viewModel;
     private final String id;
     private final int place;
     private final String date;
     private final String path;
     @Inject MediaPlayer mediaPlayer;
+    private boolean handlerStart = false;
+    private boolean isStop = false;
+    private SurfaceHolder surfaceHolder;
+    final Handler handler = new Handler(getMainLooper());
+
     public VisitorDialog(String id, int place, String date, String path) {
         this.id = id;
         this.place = place;
@@ -53,7 +63,7 @@ public class VisitorDialog extends BaseDialog {
         viewModel.setPlace(this.place);
         viewModel.setScreen(this.path);
         viewModel.setIsMedia(path.contains("mp4"));
-        DialogVisitorBinding binding = DialogVisitorBinding.inflate(LayoutInflater.from(getContext()));
+        binding = DialogVisitorBinding.inflate(LayoutInflater.from(getContext()));
         binding.setLifecycleOwner(this);
         binding.setView(this);
         binding.setVisitor(viewModel);
@@ -63,23 +73,22 @@ public class VisitorDialog extends BaseDialog {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        handlerStart = true;
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
+        handlerStart = false;
     }
 
     private final SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
-            try {
-                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mediaPlayer.setOnErrorListener(errorListener);
-                mediaPlayer.setOnPreparedListener(preparedListener);
-                mediaPlayer.setDataSource(path);
-                mediaPlayer.setDisplay(holder);
-                mediaPlayer.prepareAsync();
-            } catch (IllegalArgumentException | IllegalStateException | IOException e) {
-                e.printStackTrace();
-            }
+            surfaceHolder = holder;
+            prepare();
         }
 
         @Override
@@ -99,6 +108,15 @@ public class VisitorDialog extends BaseDialog {
         public void onPrepared(MediaPlayer mp) {
             viewModel.setIsPrepare(true);
             mp.start();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if ( viewModel == null ) return;
+                    float progress = ((float) mp.getCurrentPosition() / mp.getDuration()) * 100;
+                    viewModel.setProgress((int)progress);
+                    if ( handlerStart ) handler.postDelayed(this, 100);
+                }
+            }, 0);
         }
     };
 
@@ -111,12 +129,35 @@ public class VisitorDialog extends BaseDialog {
         dismiss();
     }
 
+    private void prepare() {
+        if ( mediaPlayer == null ) return;
+        try {
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.setOnErrorListener(errorListener);
+            mediaPlayer.setOnPreparedListener(preparedListener);
+            mediaPlayer.setDataSource(path);
+            mediaPlayer.setDisplay(surfaceHolder);
+            mediaPlayer.prepareAsync();
+        } catch (IllegalArgumentException | IllegalStateException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void onClickPlayPause() {
         if ( mediaPlayer.isPlaying() ) mediaPlayer.pause();
-        else mediaPlayer.start();
+        else if ( isStop ) {
+            prepare();
+            isStop = false;
+        }
+        else {
+            mediaPlayer.start();
+        }
     }
 
     public void onClickStop() {
+        mediaPlayer.setDisplay(null);
         mediaPlayer.stop();
+        mediaPlayer.reset();
+        isStop = true;
     }
 }

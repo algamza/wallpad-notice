@@ -89,6 +89,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="600dp"
+            android:layout_height="20dp"
+            android:max="@{visitor.progressMax}"
+            app:goneUnless="@{visitor.isMedia}"
+            android:progressDrawable="@drawable/visitor_progressbar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            app:progress="@{visitor.progress}"
+            app:layout_constraintEnd_toEndOf="@+id/surface"
+            app:layout_constraintStart_toStartOf="@+id/surface"
+            app:layout_constraintTop_toBottomOf="@+id/surface" />
+
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
