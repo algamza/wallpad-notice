@@ -52,7 +52,7 @@ public class DataBindingAdapter {
                         thumb.getWidth(), thumb.getHeight(), matrix, true);
                 Glide.with(view.getContext()).load(bitmap).into(view);
             } else {
-                Glide.with(view.getContext()).load(path).into(view);
+                Glide.with(view.getContext()).load(path).override(view.getWidth(), view.getHeight()).into(view);
             }
         } catch (Exception e) {
             Log.d("DataBindingAdapter", e.toString());
