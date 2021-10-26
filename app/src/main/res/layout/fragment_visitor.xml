@@ -78,6 +78,8 @@
             android:textSize="23sp"
             android:background="@color/dialog_font_0_3"
             android:onClick="@{()->view.onClickRemoveSelected()}"
+            android:clickable="@{viewModel.hasCheck}"
+            android:alpha="@{viewModel.hasCheck?1.0f:0.2f}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -98,6 +100,8 @@
             android:textSize="23sp"
             android:background="@color/dialog_font_0_3"
             android:onClick="@{()->view.onClickRemoveAll()}"
+            android:clickable="@{viewModel.hasItem}"
+            android:alpha="@{viewModel.hasItem?1.0f:0.2f}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

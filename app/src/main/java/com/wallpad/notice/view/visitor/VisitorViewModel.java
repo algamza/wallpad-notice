@@ -24,6 +24,8 @@ public class VisitorViewModel extends ViewModel {
     private final LiveData<List<VisitorData>> visitors;
     private final MutableLiveData<VisitorCallback> visitorCallback = new MutableLiveData<>();
     private final MutableLiveData<Check> visitorCheck = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> hasCheck = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> hasItem = new MutableLiveData<>(false);
 
     @ViewModelInject public VisitorViewModel(Repository repository) {
         this.repository = repository;
@@ -41,6 +43,7 @@ public class VisitorViewModel extends ViewModel {
                         false
                 ));
             }
+            hasItem.postValue(data.size()!=0);
             return data;
         });
     }
@@ -54,14 +57,40 @@ public class VisitorViewModel extends ViewModel {
 
         @Override
         public void onClickCheck(String id, boolean check) {
+            if ( visitors != null && visitors.getValue() != null ) {
+                int count = getCheckItemCount(visitors.getValue());
+                if ( check ) count++;
+                else count--;
+                hasCheck.postValue(count>0);
+            }
             visitorCheck.postValue(new Check(id, check));
         }
     };
+
+    private int getCheckItemCount(List<VisitorData> visitors) {
+        if ( visitors == null ) return 0;
+        int count = 0;
+        for ( VisitorData data : visitors ) {
+            if ( data.isCheck() ) count++;
+        }
+        return count;
+    }
 
     private void readNotice(String id) { repository.readNoticeVisitor(id); }
     public LiveData<List<VisitorData>> getVisitors() { return visitors; }
     public LiveData<VisitorCallback> getVisitorCallback() { return visitorCallback; }
     public LiveData<Check> getVisitorCheck() { return visitorCheck; }
+
+    public LiveData<Boolean> getHasCheck() {
+        return hasCheck;
+    }
+    public void setHasCheck(boolean hasCheck) { this.hasCheck.postValue(hasCheck);}
+
+    public LiveData<Boolean> getHasItem() {
+        return hasItem;
+    }
+
+    public void setHasItem(boolean hasItem) { this.hasItem.postValue(hasItem);}
 
     public void removeAll() {
         List<String> ids = new ArrayList<>();
