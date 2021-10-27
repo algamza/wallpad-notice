@@ -4,34 +4,26 @@
         <variable
             name="menu"
             type="com.wallpad.notice.view.vote.VoteDialogViewModel.Vote.Menu" />
+        <import type="android.graphics.Typeface"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="672dp"
         android:layout_height="32dp">
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_information_done"
-            app:goneUnless="@{menu.vote}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="1dp"
             android:ellipsize="end"
             android:gravity="start|center_vertical"
             android:maxWidth="640dp"
             android:maxLines="1"
-            android:text="@{@string/STR_VOTE_MENU_INT_STR(menu.voteCode, menu.title)}"
-            android:textColor="@color/dialog_font"
+            android:text="@{@string/STR_VOTE_MENU_INT_STR(menu.voteCode, menu.title, menu.voteCount)}"
+            android:textColor="@{menu.vote?@color/vote_select:@color/vote_menu}"
             android:textSize="22sp"
+            app:textStyle="@{menu.vote?Typeface.BOLD:Typeface.NORMAL}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

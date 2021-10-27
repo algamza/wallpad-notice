@@ -68,13 +68,15 @@ public class RemoteVoteDetailEntity {
             private String Vote_Info_Detail_Nm;
             private String Vote_Info_Detail_Description;
             private String Vote_Pick;
+            private String Vote_Pick_Count;
 
-            public Vote_Info_List(String vote_Info_Master_Seq, String vote_Info_Detail_Cd, String vote_Info_Detail_Nm, String vote_Info_Detail_Description, String vote_Pick) {
+            public Vote_Info_List(String vote_Info_Master_Seq, String vote_Info_Detail_Cd, String vote_Info_Detail_Nm, String vote_Info_Detail_Description, String vote_Pick, String vote_Pick_Count) {
                 Vote_Info_Master_Seq = vote_Info_Master_Seq;
                 Vote_Info_Detail_Cd = vote_Info_Detail_Cd;
                 Vote_Info_Detail_Nm = vote_Info_Detail_Nm;
                 Vote_Info_Detail_Description = vote_Info_Detail_Description;
                 Vote_Pick = vote_Pick;
+                Vote_Pick_Count = vote_Pick_Count;
             }
 
             public String getVote_Info_Master_Seq() {
@@ -115,6 +117,14 @@ public class RemoteVoteDetailEntity {
 
             public void setVote_Pick(String vote_Pick) {
                 Vote_Pick = vote_Pick;
+            }
+
+            public String getVote_Pick_Count() {
+                return Vote_Pick_Count;
+            }
+
+            public void setVote_Pick_Count(String vote_Pick_Count) {
+                Vote_Pick_Count = vote_Pick_Count;
             }
         }
     }

@@ -38,7 +38,7 @@
     <string name="STR_PROCEEDING">진행중</string>
     <string name="STR_BEFORE_PROCEEDING">진행전</string>
 
-    <string name="STR_VOTE_MENU_INT_STR">%1$d.%2$s</string>
+    <string name="STR_VOTE_MENU_INT_STR">%1$d.%2$s (투표수:%3$d)</string>
 
     <string name="STR_NUM_0">0</string>
     <string name="STR_NUM_1">1</string>

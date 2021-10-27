@@ -64,7 +64,7 @@ public class Mapper {
         ReadVoteEntity read = entity.getRead();
         List<VoteDetailEntity> details = entity.getDetails();
         for ( VoteDetailEntity detail : details ) {
-            detailModels.add(new VoteModel.Detail(detail.getDetailCode(), detail.getTitle(), detail.getDescription(), detail.isVote()));
+            detailModels.add(new VoteModel.Detail(detail.getDetailCode(), detail.getTitle(), detail.getDescription(), detail.isVote(), detail.getVoteCount()));
         }
         return new VoteModel(info.getMasterKey(), mapToVoteType(info.getType()), info.getTitle(), info.getDescription(),
                 info.getStartDate(), info.getEndDate(), info.getOptionCount(), mapToVoteSystem(info.getVoteSystem()),
@@ -108,13 +108,14 @@ public class Mapper {
         List<RemoteVoteDetailEntity.Resource.Vote_Info_List> infos = resource.getVote_Info_List();
         for ( RemoteVoteDetailEntity.Resource.Vote_Info_List info : infos ) {
             votes.add(new VoteDetailEntity(Integer.parseInt(info.getVote_Info_Master_Seq()), Integer.parseInt(info.getVote_Info_Detail_Cd()),
-                    info.getVote_Info_Detail_Nm(), info.getVote_Info_Detail_Description(), Integer.parseInt(info.getVote_Pick()) == 1));
+                    info.getVote_Info_Detail_Nm(), info.getVote_Info_Detail_Description(), Integer.parseInt(info.getVote_Pick()) == 1,
+                    info.getVote_Pick_Count()==null||info.getVote_Pick_Count().isEmpty()?0:Integer.parseInt(info.getVote_Pick_Count())));
         }
         return votes;
     }
 
     public static VoteModel.Detail mapToVoteDetail(VoteDetailEntity entity) {
-        return new VoteModel.Detail(entity.getDetailCode(), entity.getTitle(), entity.getDescription(), entity.isVote());
+        return new VoteModel.Detail(entity.getDetailCode(), entity.getTitle(), entity.getDescription(), entity.isVote(), entity.getVoteCount());
     }
 
     public static List<VoteInfoEntity> mapToVoteEntities(RemoteVoteEntity entity) {

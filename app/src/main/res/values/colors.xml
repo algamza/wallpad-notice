@@ -197,4 +197,7 @@
 
     <color name="input_num_back">#f2f2f2</color>
     <color name="input_num">#3c3b3b</color>
+
+    <color name="vote_menu">#aa000000</color>
+    <color name="vote_select">#ff000000</color>
 </resources>

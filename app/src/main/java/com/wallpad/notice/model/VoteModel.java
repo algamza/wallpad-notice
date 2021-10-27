@@ -136,12 +136,14 @@ public class VoteModel {
         private String title;
         private String content;
         private boolean vote;
+        private int voteCount;
 
-        public Detail(int voteCode, String title, String content, boolean vote) {
+        public Detail(int voteCode, String title, String content, boolean vote, int voteCount) {
             this.voteCode = voteCode;
             this.title = title;
             this.content = content;
             this.vote = vote;
+            this.voteCount = voteCount;
         }
 
         public int getVoteCode() {
@@ -174,6 +176,14 @@ public class VoteModel {
 
         public void setVote(boolean vote) {
             this.vote = vote;
+        }
+
+        public int getVoteCount() {
+            return voteCount;
+        }
+
+        public void setVoteCount(int voteCount) {
+            this.voteCount = voteCount;
         }
     }
 }

@@ -40,6 +40,8 @@ public class InputDialog extends DialogFragment {
     }
 
     public void onClickNum(int num) {
+        int code = viewModel.getVoteCode().getValue()*10+num;
+        if ( code > 99 ) return;
         viewModel.setVoteCode(viewModel.getVoteCode().getValue()*10+num);
     }
 

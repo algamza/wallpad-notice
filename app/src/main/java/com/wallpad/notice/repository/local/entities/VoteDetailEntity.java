@@ -9,13 +9,15 @@ public class VoteDetailEntity {
     private String title;
     private String description;
     private boolean vote;
+    private int voteCount;
 
-    public VoteDetailEntity(int masterKey, int detailCode, String title, String description, boolean vote) {
+    public VoteDetailEntity(int masterKey, int detailCode, String title, String description, boolean vote, int voteCount) {
         this.masterKey = masterKey;
         this.detailCode = detailCode;
         this.title = title;
         this.description = description;
         this.vote = vote;
+        this.voteCount = voteCount;
     }
 
     public int getMasterKey() {
@@ -56,5 +58,13 @@ public class VoteDetailEntity {
 
     public void setVote(boolean vote) {
         this.vote = vote;
+    }
+
+    public int getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(int voteCount) {
+        this.voteCount = voteCount;
     }
 }

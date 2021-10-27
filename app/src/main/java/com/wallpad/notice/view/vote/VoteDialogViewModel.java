@@ -38,7 +38,7 @@ public class VoteDialogViewModel extends ViewModel {
             if ( model.getDetails() != null ) {
                 for ( VoteModel.Detail detail : model.getDetails() ) {
                     if ( detail.isVote() ) voteCount++;
-                    menu.add(new Vote.Menu(detail.getVoteCode(), detail.getTitle(), detail.getContent(), detail.isVote()));
+                    menu.add(new Vote.Menu(detail.getVoteCode(), detail.getTitle(), detail.getContent(), detail.isVote(), detail.getVoteCount()));
                 }
             }
             if ( model.getState() == VoteModel.STATE.VOTE_PROGRESS ) {
@@ -135,12 +135,14 @@ public class VoteDialogViewModel extends ViewModel {
             private String title;
             private String content;
             private boolean vote;
+            private int voteCount;
 
-            public Menu(int voteCode, String title, String content, boolean vote) {
+            public Menu(int voteCode, String title, String content, boolean vote, int voteCount) {
                 this.voteCode = voteCode;
                 this.title = title;
                 this.content = content;
                 this.vote = vote;
+                this.voteCount = voteCount;
             }
 
             public int getVoteCode() {
@@ -173,6 +175,14 @@ public class VoteDialogViewModel extends ViewModel {
 
             public void setVote(boolean vote) {
                 this.vote = vote;
+            }
+
+            public int getVoteCount() {
+                return voteCount;
+            }
+
+            public void setVoteCount(int voteCount) {
+                this.voteCount = voteCount;
             }
         }
     }

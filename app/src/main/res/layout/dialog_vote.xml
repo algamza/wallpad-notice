@@ -10,8 +10,9 @@
             type="com.wallpad.notice.view.vote.VoteDialog" />
         <import type="android.text.Html"/>
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@color/dialog_back">
 
@@ -56,8 +57,8 @@
             android:fadeScrollbars="false"
             android:orientation="vertical"
             android:scrollbarSize="12dp"
-            android:scrollbarThumbVertical="@color/white"
-            android:scrollbarTrackVertical="@color/black_alpha_20"
+            android:scrollbarThumbVertical="@color/white_alpha_30"
+            android:scrollbarTrackVertical="@color/black_alpha_30"
             android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +101,7 @@
                     android:layout_height="21dp"
                     android:layout_marginStart="28dp"
                     android:layout_marginTop="26dp"
-                    android:src="@drawable/ic_information_warning"
+                    android:src="@drawable/ic_error"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/frameLayout2" />
 
@@ -135,9 +136,9 @@
             android:layout_width="754dp"
             android:layout_height="64dp"
             android:layout_marginTop="463dp"
+            android:background="@color/dark_15"
             android:orientation="horizontal"
             android:weightSum="2"
-            android:background="@color/dark_15"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -147,12 +148,12 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:alpha="@{vote.vote.voteAble?1.0f:0.2f}"
+                android:clickable="@{vote.vote.voteAble}"
                 android:gravity="center"
                 android:onClick="@{()->view.onClickVote()}"
-                android:clickable="@{vote.vote.voteAble}"
                 android:text="@string/STR_VOTE"
                 android:textColor="@color/content_text"
-                android:alpha="@{vote.vote.voteAble?1.0f:0.2f}"
                 android:textSize="23sp"
                 android:textStyle="bold" />
 
@@ -171,8 +172,8 @@
         <FrameLayout
             android:layout_width="1dp"
             android:layout_height="57dp"
-            android:background="@color/content_text"
             android:alpha="0.2"
+            android:background="@color/content_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
